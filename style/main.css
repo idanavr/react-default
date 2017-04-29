@@ -4,6 +4,22 @@ body {
     background-color:#7cb3b0;
 }
 
+button {
+    border-radius: 5px;
+    background-color: #454bff;
+    padding: 5px;
+    border: 2px solid black;
+    font: 25px 'Merienda One', Helvetica, sans-serif;    
+}
+button:hover {
+    background-color: black;
+    color: #454bff;
+}
+button:active {
+    background-color: #394bff;
+    color:black;
+}
+
 .container {
     margin: auto;
     padding-top:10px;
@@ -44,4 +60,5 @@ body {
 ul {
     list-style-type: none;
     /*cursor:pointer;*/
+    padding: 0px;
 }

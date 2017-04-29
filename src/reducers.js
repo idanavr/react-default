@@ -2,10 +2,10 @@ import {combineReducers} from 'redux';
 import Users from './../data.json';
 import usersReducer from './components/usersList/usersList.reducer';
 
-const getUsers = () => Users;
+// const getUsers = () => Users;
 
 const allReducers = combineReducers({
-getUsers,
+// getUsers,
 usersReducer
 })
 export default allReducers;

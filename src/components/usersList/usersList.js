@@ -1,33 +1,37 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 
-import userClickAction from './usersList.action';
+import userClickAction, {nextUserListFunc, prevUserListFunc, filterUserListFunc} from './usersList.action';
 
 class userList extends Component {
 
 
     render() {
-        let {userClick, selectedUser, usersList} = this.props;
+        let {userClick, selectedUser, displayList, nextUsersPage, prevUsersPage, filterUsers} = this.props;
         let userinfo = '';
-        if(!selectedUser)
+        if(Object.keys(selectedUser).length == 0)
             userinfo = 'select user to see more information';
-        else
+        else{
              userinfo = <ul> {Object.keys(selectedUser).map(function(key, index) {
               return (<li key={key}> {key + " : " + selectedUser[key]} </li>) ;
-            })} </ul>
+            })}  </ul>
+        }
         return (
             <div>
             <div>
                 <h1>
                     User List:
                 </h1>
+                <input placeholder="Search by first name" type="text" onChange={(expr) => filterUsers(expr.target.value)} />
                 <ul>
                     {
-                        usersList.slice(0,5).map((user) => {
+                        displayList.map((user) => {
                             return <li key={user.id} onClick={() => userClick(user)}>{user.first_name}</li>
                         })
                     }
                 </ul>
+                <button className="btn" onClick={() => prevUsersPage()} > Back </button>
+                <button onClick={() => nextUsersPage()} > Next </button>
                 </div>
                 <div>
                 <h3>User Info:</h3>
@@ -40,14 +44,17 @@ class userList extends Component {
 
 function mapStateToProps(state) {
     return {
-        usersList: state.getUsers,
-        selectedUser: state.usersReducer
+        selectedUser: state.usersReducer.selectedUser,
+        displayList: state.usersReducer.displayList
     }
 }
 
 function mapDispatchToProps(dispatch, ownProps){
     return{
-        userClick: (user) => dispatch(userClickAction(user))
+        nextUsersPage: () => dispatch(nextUserListFunc()),
+        prevUsersPage: () => dispatch(prevUserListFunc()),
+        userClick: (user) => dispatch(userClickAction(user)),
+        filterUsers: (expr) => dispatch(filterUserListFunc(expr))
     }
 }
 
