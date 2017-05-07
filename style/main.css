@@ -6,18 +6,28 @@ body {
 
 button {
     border-radius: 5px;
-    background-color: #454bff;
+    background-color: #028bff;
     padding: 5px;
     border: 2px solid black;
-    font: 25px 'Merienda One', Helvetica, sans-serif;    
+    font: 25px 'Merienda One', Helvetica, sans-serif;
+    margin: 0px 10px;    
 }
 button:hover {
-    background-color: black;
-    color: #454bff;
+    background-color: #123bff;
 }
 button:active {
-    background-color: #394bff;
-    color:black;
+    background-color: #4981ff;
+}
+
+input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font: inherit;
+    font-size: 15px;
+}
+input:focus {
+    border-color: #66afe8
 }
 
 .container {
@@ -61,4 +71,5 @@ ul {
     list-style-type: none;
     /*cursor:pointer;*/
     padding: 0px;
+    cursor: pointer;
 }

@@ -4,18 +4,21 @@
   "description": "Some description",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot"
-    ,"build": "webpack -p"
+    "start": "node server.js",
+    "stest": "nodemon server.js",
+    "build": "webpack -p"
   },
   "keywords": [],
   "author": "Idan",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.15.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-logger": "^1.1.0",
     "react-redux": "^5.0.4",
-    "react-router": "^2.5.2",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "react-thunk": "^1.0.0",
     "redux": "^3.6.0"
   },
@@ -27,9 +30,11 @@
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.0",
     "json-loader": "^0.5.4",
+    "nodemon": "^1.11.0",
     "postcss-loader": "^0.13.0",
     "style-loader": "^0.16.1",
     "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.4"
+    "webpack-dev-middleware": "^1.10.2",
+    "webpack-hot-middleware": "^2.18.0"
   }
 }

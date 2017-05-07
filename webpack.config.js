@@ -1,5 +1,8 @@
+const webpack = require('webpack');
+
 module.exports = {
   entry: [
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
     './src/index.js'
   ],
   output: {
@@ -7,6 +10,11 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js'
   },
+  plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ],
   module: {
     loaders: // start loaders
     [{
