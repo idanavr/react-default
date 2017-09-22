@@ -1,5 +1,5 @@
-import {combineReducers} from 'redux';
-import Users from './../data.json';
+import { combineReducers } from 'redux';
+// import Users from './../data.json';
 import usersReducer from './components/usersList/usersList.reducer';
 
 // const getUsers = () => Users;
@@ -7,5 +7,5 @@ import usersReducer from './components/usersList/usersList.reducer';
 const allReducers = combineReducers({
 // getUsers,
 usersReducer
-})
+});
 export default allReducers;

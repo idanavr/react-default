@@ -1,0 +1,6 @@
+{
+    "name": "React Default Website",
+    "description": "Start your first ReactJS project with this kit!",
+    "repository": "https://github.com/idanavr/reactDefault/",
+    "keywords": ["reactdefault", "node", "react", "js", "redux"]
+}
