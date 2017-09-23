@@ -44,7 +44,6 @@
         "consistent-return": "warn",
         "consistent-this": "warn",
         "default-case": "warn",
-        "dot-location": "warn",
         "dot-notation": "warn",
         "eol-last": "off",
         "eqeqeq": "warn",

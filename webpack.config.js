@@ -1,3 +1,4 @@
+/* eslint-disable */
 const webpack = require('webpack');
 const env =  (process.env.NODE_ENV || 'dev').trim();
 const isDevMode = env !== "production";

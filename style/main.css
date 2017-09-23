@@ -71,5 +71,7 @@ ul {
     list-style-type: none;
     /*cursor:pointer;*/
     padding: 0px;
+}
+li {
     cursor: pointer;
 }

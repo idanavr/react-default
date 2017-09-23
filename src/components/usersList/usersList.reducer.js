@@ -1,12 +1,20 @@
-import UsersList from './../../../data.json';
+let originalUserList = [];
 const usersInPage = 5;
-let newDisplayList = UsersList.slice(0, usersInPage);
-const defaultState = { selectedUser: {}, page: 0, displayList: newDisplayList };
+let newDisplayList = originalUserList.slice(0, usersInPage);
+const defaultState = { selectedUser: {}, page: 0, displayList: [], msg: null };
 let newPage = 0;
 let filterExpr = '';
 
 export default function (state = defaultState, action) {
     switch (action.type) {
+        case 'getUserList':
+            console.log('display list is:', action.originalList);
+            originalUserList = action.originalList;
+            return { ...state, msg: null };
+
+        case 'loadingUserList':
+            return { ...state, msg: action.msg };
+
         case 'showSelectedUser':
             console.log('selected :', action.payload.first_name);
             return { ...state, selectedUser: action.payload };
@@ -32,8 +40,8 @@ export default function (state = defaultState, action) {
             console.log(action.payload);
             newPage = 0;
             filterExpr = action.payload.toLowerCase();
-            newDisplayList = fillterUsers(filterExpr).slice(newPage, newPage + usersInPage)
-            return { ...state, page: newPage, displayList: newDisplayList }
+            newDisplayList = fillterUsers(filterExpr).slice(newPage, newPage + usersInPage);
+            return { ...state, page: newPage, displayList: newDisplayList };
 
 
         default:
@@ -42,5 +50,5 @@ export default function (state = defaultState, action) {
 }
 
 function fillterUsers(expr) {
-    return UsersList.filter((user) => user.first_name.toLowerCase().includes(expr))
+    return originalUserList.filter((user) => user.first_name.toLowerCase().includes(expr));
 }

@@ -2,23 +2,39 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import userClickAction, { nextUserListFunc, prevUserListFunc, filterUserListFunc } from './usersList.action';
+import userClickAction, { getUsersListFunc, nextUserListFunc, prevUserListFunc, filterUserListFunc } from './usersList.action';
 
 class userList extends Component {
-
+    componentWillMount (){
+        console.log('componentWillMount ');
+        this.props.getUsersList();
+     }
 
     render() {
-        const { userClick, selectedUser, displayList, nextUsersPage, prevUsersPage, filterUsers } = this.props;
+        const { userClick, selectedUser, displayList, nextUsersPage, prevUsersPage, filterUsers, messageToDisplay } = this.props;
         let userinfo = '';
+        let userListBlock = '';
+        if (messageToDisplay === null) {
+            userListBlock =
+                displayList.map((user) =>
+                    <li key={user.id} onClick={() => userClick(user)}>
+                        {user.first_name}
+                    </li>);
+        } else {
+            userListBlock = messageToDisplay;
+        }
+
         if(Object.keys(selectedUser).length === 0)
             userinfo = 'select user to see more information';
         else{
              userinfo = 
-                <ul> {Object.keys(selectedUser).map((key) => 
-                    <li key={key}>
-                        {`${key} : ${selectedUser[key]}`}
-                    </li>)}
-                </ul>;
+                 <ul> {Object.keys(selectedUser)
+                     .filter((key) => key !== '_id')
+                     .map((key) =>
+                         <li key={key}>
+                             {`${key} : ${selectedUser[key]}`}
+                         </li>)}
+                 </ul>;
         }
         return (
             <div>
@@ -28,12 +44,7 @@ class userList extends Component {
                     </h1>
                     <input placeholder="Search by first name" type="text" onChange={(expr) => filterUsers(expr.target.value)} />
                     <ul>
-                        {
-                            displayList.map((user) =>
-                                <li key={user.id} onClick={() => userClick(user)}>
-                                    {user.first_name}
-                                </li>)
-                        }
+                    { userListBlock }
                     </ul>
                     <button className="btn" onClick={() => prevUsersPage()} > Back </button>
                     <button onClick={() => nextUsersPage()} > Next </button>
@@ -50,12 +61,14 @@ class userList extends Component {
 function mapStateToProps(state) {
     return {
         selectedUser: state.usersReducer.selectedUser,
-        displayList: state.usersReducer.displayList
+        displayList: state.usersReducer.displayList,
+        messageToDisplay: state.usersReducer.msg
     };
 }
 
 function mapDispatchToProps(dispatch){ // may also get the value of 'ownProps'
     return{
+        getUsersList: () => dispatch(getUsersListFunc()),
         nextUsersPage: () => dispatch(nextUserListFunc()),
         prevUsersPage: () => dispatch(prevUserListFunc()),
         userClick: (user) => dispatch(userClickAction(user)),
@@ -64,9 +77,11 @@ function mapDispatchToProps(dispatch){ // may also get the value of 'ownProps'
 }
 
 userList.propTypes = {
-    userClick: PropTypes.func.isRequired,
+    // messageToDisplay: PropTypes.string,
     selectedUser: PropTypes.object,
     displayList: PropTypes.array.isRequired,
+    getUsersList: PropTypes.func.isRequired,
+    userClick: PropTypes.func.isRequired,    
     nextUsersPage: PropTypes.func.isRequired,
     prevUsersPage: PropTypes.func.isRequired,
     filterUsers: PropTypes.func.isRequired
