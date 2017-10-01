@@ -8,6 +8,7 @@ My project include:
 - React.js
 - Redux
 - Node.js
+- Eslint
 
 Look at package.json to see the whole list, or just clone it and start your project !
 

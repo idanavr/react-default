@@ -6,7 +6,7 @@ import userClickAction, { getUsersListFunc, nextUserListFunc, prevUserListFunc, 
 
 class userList extends Component {
     componentWillMount (){
-        console.log('componentWillMount ');
+        console.log('componentWillMount');
         this.props.getUsersList();
      }
 
@@ -17,7 +17,7 @@ class userList extends Component {
         if (messageToDisplay === null) {
             userListBlock =
                 displayList.map((user) =>
-                    <li key={user.id} onClick={() => userClick(user)}>
+                    <li key={user.email} onClick={() => userClick(user)}>
                         {user.first_name}
                     </li>);
         } else {
@@ -39,9 +39,9 @@ class userList extends Component {
         return (
             <div>
                 <div>
-                    <h1>
+                    <h2>
                         User List:
-                    </h1>
+                    </h2>
                     <input placeholder="Search by first name" type="text" onChange={(expr) => filterUsers(expr.target.value)} />
                     <ul>
                     { userListBlock }
@@ -67,7 +67,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch){ // may also get the value of 'ownProps'
-    return{
+    return {
         getUsersList: () => dispatch(getUsersListFunc()),
         nextUsersPage: () => dispatch(nextUserListFunc()),
         prevUsersPage: () => dispatch(prevUserListFunc()),
@@ -77,7 +77,7 @@ function mapDispatchToProps(dispatch){ // may also get the value of 'ownProps'
 }
 
 userList.propTypes = {
-    // messageToDisplay: PropTypes.string,
+    messageToDisplay: PropTypes.string,
     selectedUser: PropTypes.object,
     displayList: PropTypes.array.isRequired,
     getUsersList: PropTypes.func.isRequired,

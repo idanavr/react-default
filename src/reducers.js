@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
-// import Users from './../data.json';
 import usersReducer from './components/usersList/usersList.reducer';
-
-// const getUsers = () => Users;
+import registerReducer from './components/register/register.reducer';
 
 const allReducers = combineReducers({
-// getUsers,
-usersReducer
+usersReducer,
+registerReducer
 });
 export default allReducers;

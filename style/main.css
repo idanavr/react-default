@@ -1,22 +1,25 @@
 @import 'https://fonts.googleapis.com/css?family=Merienda+One';
 
 body {
-    background-color:#7cb3b0;
+    background-color:#e9ebee;
+    margin: 0px;
 }
 
 button {
     border-radius: 5px;
-    background-color: #028bff;
+    background-color: #ccc;
     padding: 5px;
+    width:10%;
     border: 2px solid black;
     font: 25px 'Merienda One', Helvetica, sans-serif;
-    margin: 0px 10px;    
+    margin: 0px 10px;
+    cursor: pointer;
 }
 button:hover {
-    background-color: #123bff;
+    background-color: #eee;
 }
 button:active {
-    background-color: #4981ff;
+    background-color: #aaa;
 }
 
 input {
@@ -31,21 +34,25 @@ input:focus {
 }
 
 .container {
-    margin: auto;
     padding-top:10px;
-    width:60%;
-    height:100%;
-    min-height: 600px;
-    background-color: #6bb3b0;
-    border: 1px solid black;
-    border-radius:10px;
+    width: 1000px;
+    margin: 0 auto;
     font:  25px 'Merienda One', Helvetica, sans-serif;
+    text-align: center;
+}
+
+.header {
+    /* padding-bottom: 20px; */
+    background: lavender;
+    border-bottom: 1px solid black;
+    font-size: 20px;
+    height: 40px;
+    line-height: 40px;
 }
 
 .navbar {
-    padding:10px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid black;
+    width: 1000px;
+    margin: 0 auto;
 }
 
 .navbar a, a:visited {
@@ -60,11 +67,10 @@ input:focus {
     color: black;
 }
 .navbar a:active{
-    color: cyan;
+    color: #4350FF;
 }
-
-.content {
-    text-align: center;
+.rightNav{
+    float: right;
 }
 
 ul {
@@ -74,4 +80,14 @@ ul {
 }
 li {
     cursor: pointer;
+    margin: 10px;
+}
+
+.footer {
+    background: #929191;
+    border-top: 1px black solid;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
 }

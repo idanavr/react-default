@@ -18,20 +18,22 @@ module.exports = {
   },
   plugins: isDevMode ? [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+  })
   ] : [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
 
            // Eliminate comments
-              comments: false,
+              comments: true,
       
-          // Compression specific options
              compress: {
-               // remove warnings
                   warnings: false,
       
-               // Drop console statements
                   drop_console: true
              },
           })
