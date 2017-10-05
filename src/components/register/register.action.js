@@ -17,18 +17,15 @@ export function createUserFunc(data) {
             body: JSON.stringify(data)
         })
         .then((res) => {
-            if(res.status === 400)
-                dispatch({ type: creatingUserMsg, msg: 'User creation failed' });
-            else
+            if(res.status === 201)
                 dispatch({ type: creatingUserMsg, msg: 'User was created!' });
+            else
+                dispatch({ type: creatingUserMsg, msg: 'User creation failed' });
+                
             })
-        // .then((res) => { 
-        //     console.log(res);
-        //     dispatch({ type: creatingUserMsg, msg: 'User was created!' });
-        // })
         .catch((err) => { 
             console.log(err); 
-            dispatch({ type: creatingUserMsg, msg: 'User creation failed, error: ', err });
+            dispatch({ type: creatingUserMsg, msg: 'User creation failed' });
         });
     }
     };

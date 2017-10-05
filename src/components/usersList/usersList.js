@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import userClickAction, { getUsersListFunc, nextUserListFunc, prevUserListFunc, filterUserListFunc } from './usersList.action';
+import userClickAction, { getUsersListFunc, nextUserListFunc, prevUserListFunc, filterUserListFunc, deleteUserByIdFunc } from './usersList.action';
 
 class userList extends Component {
     componentWillMount (){
@@ -11,14 +11,14 @@ class userList extends Component {
      }
 
     render() {
-        const { userClick, selectedUser, displayList, nextUsersPage, prevUsersPage, filterUsers, messageToDisplay } = this.props;
+        const { userClick, selectedUser, displayList, nextUsersPage, prevUsersPage, filterUsers, messageToDisplay, deleteUserById } = this.props;
         let userinfo = '';
         let userListBlock = '';
         if (messageToDisplay === null) {
             userListBlock =
                 displayList.map((user) =>
                     <li key={user.email} onClick={() => userClick(user)}>
-                        {user.first_name}
+                        {user.firstName}
                     </li>);
         } else {
             userListBlock = messageToDisplay;
@@ -34,6 +34,9 @@ class userList extends Component {
                          <li key={key}>
                              {`${key} : ${selectedUser[key]}`}
                          </li>)}
+                         <li>
+                            <input type="button" value="Delete" onClick={() => deleteUserById(selectedUser._id) } />
+                         </li>
                  </ul>;
         }
         return (
@@ -72,7 +75,8 @@ function mapDispatchToProps(dispatch){ // may also get the value of 'ownProps'
         nextUsersPage: () => dispatch(nextUserListFunc()),
         prevUsersPage: () => dispatch(prevUserListFunc()),
         userClick: (user) => dispatch(userClickAction(user)),
-        filterUsers: (expr) => dispatch(filterUserListFunc(expr))
+        filterUsers: (expr) => dispatch(filterUserListFunc(expr)),
+        deleteUserById: (userId) => dispatch(deleteUserByIdFunc(userId))
     };
 }
 
@@ -84,7 +88,8 @@ userList.propTypes = {
     userClick: PropTypes.func.isRequired,    
     nextUsersPage: PropTypes.func.isRequired,
     prevUsersPage: PropTypes.func.isRequired,
-    filterUsers: PropTypes.func.isRequired
+    filterUsers: PropTypes.func.isRequired,
+    deleteUserById: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(userList);

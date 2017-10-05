@@ -16,7 +16,7 @@ export default function (state = defaultState, action) {
             return { ...state, msg: action.msg };
 
         case 'showSelectedUser':
-            console.log('selected :', action.payload.first_name);
+            console.log('selected :', action.payload.firstName);
             return { ...state, selectedUser: action.payload };
 
         case 'nextUserList':
@@ -28,7 +28,6 @@ export default function (state = defaultState, action) {
             return state;
 
         case 'prevUserList':
-            console.log(newPage);
             newPage = state.page - usersInPage;
             newDisplayList = fillterUsers(filterExpr).slice(newPage, newPage + usersInPage);
             if (newDisplayList.length !== 0)
@@ -37,12 +36,22 @@ export default function (state = defaultState, action) {
             return state;
 
         case 'filterUserList':
-            console.log(action.payload);
             newPage = 0;
             filterExpr = action.payload.toLowerCase();
             newDisplayList = fillterUsers(filterExpr).slice(newPage, newPage + usersInPage);
             return { ...state, page: newPage, displayList: newDisplayList };
 
+        case 'removeUser':
+            console.log('removing user: ', originalUserList);
+            for(let i = 0; i < originalUserList.length; i++) {
+                if(originalUserList[i]['_id'] === action.payload) {
+                    originalUserList.splice(i,1);
+                }
+             }
+             newPage = 0;
+             newDisplayList = fillterUsers(filterExpr).slice(newPage, newPage + usersInPage);
+             
+            return { ...state, displayList: newDisplayList };
 
         default:
             return state;
@@ -50,5 +59,5 @@ export default function (state = defaultState, action) {
 }
 
 function fillterUsers(expr) {
-    return originalUserList.filter((user) => user.first_name.toLowerCase().includes(expr));
+    return originalUserList.filter((user) => user.firstName.toLowerCase().includes(expr));
 }
