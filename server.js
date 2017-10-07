@@ -67,12 +67,12 @@ app.post('/api/users', (req, res) => {
     newUser.gender = req.body.gender;
 
     newUser.save(function(err, user) {
-        if(err){
+        if(err) {
             console.log(err);
             res.status(400);
             res.end();
         }
-        else{
+        else {
             res.status(201);
             res.send(user);
         }

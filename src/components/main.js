@@ -1,18 +1,22 @@
+/* global process */
 import React from 'react';
-// import {Router, Route, Link, IndexRoute, browserHistory, hashHistory, Redirect, withRouter} from 'react-router';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import css from './../../style/main.css';
-
 import Navbar from './nav';
 
 import rootReducer from '../reducers';
 import { createLogger } from 'redux-logger';
 import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { applyMiddleware ,createStore } from 'redux'; // may also export 'applyMiddleware'
-const middleware = applyMiddleware(createLogger(), ReduxThunk);
+import { applyMiddleware ,createStore } from 'redux';
+
+const middlewares = [ReduxThunk];
+if(process.env.NODE_ENV !== 'production') {
+    middlewares.push(createLogger());
+    console.log(process.env);
+}
+const middleware = applyMiddleware(...middlewares);
 const store = createStore(rootReducer, { }, middleware);
-// const store = createStore(rootReducer);
 
 import About from './aboutus';
 import usersList from './usersList/usersList';

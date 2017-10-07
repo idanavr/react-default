@@ -47,16 +47,16 @@ class register extends Component {
             Register
             </h2>
                 <ul>
-                    <li><input id="fName" type="text" placeholder="First Name" /></li>
-                    <li><input id="lName" type="text" placeholder="Last Name" /></li>
-                    <li><input id="email" type="text" placeholder="email" /></li>
+                    <li><input type="text" id="fName" placeholder="First Name" /></li>
+                    <li><input type="text" id="lName" placeholder="Last Name" /></li>
+                    <li><input type="text" id="email" placeholder="email" /></li>
                     <li style={{ 'font-size': '20px' }}>
                         <label htmlFor="radioMale">Male</label>
-                        <input id="radioMale" type="radio" name="gender" value="male" />
+                        <input type="radio" id="radioMale" name="gender" value="male" />
                         <label htmlFor="radioFemale">Female</label>
-                        <input id="radioFemale" type="radio" name="gender" value="female" />
+                        <input type="radio" id="radioFemale" name="gender" value="female" />
                     </li>
-                    <li><input type="button" value="Submit" onClick={ () => beforeCreateUser() } /></li>
+                    <li><button onClick={ () => beforeCreateUser() } > Submit </button></li>
                 </ul>
                 <h3> { newUserStatus } </h3>
             </div>

@@ -21,8 +21,8 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
-      "window.jQuery": "jquery"
-  })
+      "window.jQuery": "jquery",
+    }),
   ] : [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -35,8 +35,13 @@ module.exports = {
                   warnings: false,
       
                   drop_console: true
-             },
-          })
+              },
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
   ],
   module: {
     loaders: // start loaders

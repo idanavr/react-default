@@ -50,5 +50,5 @@ export function deleteUserByIdFunc(id) {
                 dispatch({ type: showSelectedUser, payload: '' });
                 dispatch({ type: removeUser, payload: id });
             });
-    }
+    };
 }

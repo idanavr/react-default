@@ -2,24 +2,32 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+function emailValidator(email) {
+    return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/).test(email);
+  }
+
 const userSchema = new Schema(
     {
         firstName: {
             type: String,
-            required: true,
+            required: [true, 'First name is required'],
         },
         lastName: {
             type: String,
-            required: true,
+            required: [true, 'Last name is required'],
         },
         email: {
             type: String,
-            required: true,
+            required: [true, 'Email name is required'],
             unique: true,
+            validate: {
+                validator: emailValidator,
+                message: '{VALUE} is not a valid email'
+              },
         },
         gender: {
             type: String,
-            required: true,
+            required: [true, 'Gender is required'],
         },
         // date: {
         //     type: Date,

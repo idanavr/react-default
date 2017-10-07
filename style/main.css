@@ -11,7 +11,7 @@ button {
     padding: 5px;
     width:10%;
     border: 2px solid black;
-    font: 25px 'Merienda One', Helvetica, sans-serif;
+    font: 20px 'Merienda One', Helvetica, sans-serif;
     margin: 0px 10px;
     cursor: pointer;
 }

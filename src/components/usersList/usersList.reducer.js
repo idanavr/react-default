@@ -44,14 +44,16 @@ export default function (state = defaultState, action) {
         case 'removeUser':
             console.log('removing user: ', originalUserList);
             for(let i = 0; i < originalUserList.length; i++) {
-                if(originalUserList[i]['_id'] === action.payload) {
+                if(originalUserList[i]._id === action.payload) {
                     originalUserList.splice(i,1);
+                    break;
                 }
              }
-             newPage = 0;
+             if(newDisplayList.length - 1 === 0)
+                newPage -= usersInPage;
              newDisplayList = fillterUsers(filterExpr).slice(newPage, newPage + usersInPage);
              
-            return { ...state, displayList: newDisplayList };
+            return { ...state, page: newPage, displayList: newDisplayList };
 
         default:
             return state;

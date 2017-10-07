@@ -35,7 +35,7 @@ class userList extends Component {
                              {`${key} : ${selectedUser[key]}`}
                          </li>)}
                          <li>
-                            <input type="button" value="Delete" onClick={() => deleteUserById(selectedUser._id) } />
+                            <button onClick={() => deleteUserById(selectedUser._id) }> Delete </button>
                          </li>
                  </ul>;
         }

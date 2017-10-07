@@ -128,7 +128,7 @@
         "no-octal-escape": "warn",
         "no-param-reassign": "warn",
         "no-path-concat": "warn",
-        "no-process-env": "warn",
+        "no-process-env": "off",
         "no-process-exit": "warn",
         "no-proto": "warn",
         "no-prototype-builtins": "warn",
