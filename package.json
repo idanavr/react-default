@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "stest": "nodemon server.js",
+    "dev": "nodemon server.js",
     "build": "SET NODE_ENV=production && webpack",
     "devbuild": "webpack",
     "test": "mocha ./**/*.spec.js --compilers js:babel-core/register",
@@ -15,8 +15,11 @@
   "author": "Idan",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.16.2",
     "body-parser": "^1.18.2",
     "express": "^4.15.2",
+    "helmet": "^3.8.2",
+    "jsonwebtoken": "^8.0.1",
     "mongodb": "^2.2.31",
     "mongoose": "^4.11.12",
     "prop-types": "^15.5.10",

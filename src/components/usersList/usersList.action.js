@@ -1,25 +1,21 @@
-const showSelectedUser = 'showSelectedUser';
-const getUserList = 'getUserList';
-const loadingUserList = 'loadingUserList';
-const nextUserList = 'nextUserList';
-const prevUserList = 'prevUserList';
-const filterUserList = 'filterUserList';
-const removeUser = 'removeUser';
-
-export default (user) => ({ type: showSelectedUser, payload :user });
-
+export const showSelectedUser = 'showSelectedUser';
+export const getUserList = 'getUserList';
+export const loadingUserList = 'loadingUserList';
+export const nextUserList = 'nextUserList';
+export const prevUserList = 'prevUserList';
+export const filterUserList = 'filterUserList';
+export const removeUser = 'removeUser';
+import axios from 'axios';
 
 export function getUsersListFunc() {
-    console.log('loading list started');
     return (dispatch) => {
-        console.log('loading list');
+        console.log('loading list..');
         dispatch({ type: loadingUserList, msg: 'loading...' });
 
-        return fetch('/api/users')
-            .then((res) => res.json())
-            .then((res) => dispatch({ type: getUserList, originalList: res }))
+        return axios.get('/api/users')
+            .then((res) => dispatch({ type: getUserList, originalList: res.data }))
             .then(() => dispatch({ type: filterUserList, payload: '' }))
-            .catch((err) => dispatch({ type: loadingUserList, msg: err }));
+            .catch(() => dispatch({ type: loadingUserList, msg: 'loading failed' }));
     };
 }
 
@@ -35,17 +31,15 @@ export function filterUserListFunc(expr) {
     return { type: filterUserList, payload: expr };
 }
 
+export function userClickAction(user) { 
+    return { type: showSelectedUser, payload :user };
+}
+
 export function deleteUserByIdFunc(id) {
 
     return (dispatch) => {
         console.log('Deleting user: ', id);
-        return fetch('/api/users', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id })
-        })
+        return axios.delete('/api/users', { data: { id } })
             .then(() => {
                 dispatch({ type: showSelectedUser, payload: '' });
                 dispatch({ type: removeUser, payload: id });

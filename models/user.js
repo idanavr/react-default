@@ -25,6 +25,10 @@ const userSchema = new Schema(
                 message: '{VALUE} is not a valid email'
               },
         },
+        password: {
+            type: String,
+            required: [true, 'Password is required'],
+        },
         gender: {
             type: String,
             required: [true, 'Gender is required'],

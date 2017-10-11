@@ -84,10 +84,8 @@ li {
 }
 
 .footer {
-    background: #929191;
-    border-top: 1px black solid;
-    position: absolute;
+    margin: 50px auto 30px;
     bottom: 0;
     text-align: center;
-    width: 100%;
+    width: 1000px;
 }

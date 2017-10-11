@@ -1,4 +1,6 @@
-const creatingUserMsg = 'creatingUserMsg';
+export const creatingUserMsg = 'creatingUserMsg';
+import axios from 'axios';
+// import { LoginFunc } from '../login/login.action';
 
 export function createUserFunc(data) {
     return (dispatch) => {
@@ -8,17 +10,12 @@ export function createUserFunc(data) {
         else {
             dispatch({ type: creatingUserMsg, msg: 'Creating user..' });
 
-            fetch('/api/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+            axios.post('/api/users', data)
                 .then((res) => {
-                    if (res.status === 201)
-                        dispatch({ type: creatingUserMsg, msg: 'User was created!' });
-                    else
+                    if (res.status === 201) {
+                        dispatch({ type: creatingUserMsg, msg: '' });
+                        // window.location = '/'; // change it
+                    } else
                         dispatch({ type: creatingUserMsg, msg: 'User creation failed' });
 
                 })

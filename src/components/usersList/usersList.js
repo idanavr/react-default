@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import userClickAction, { getUsersListFunc, nextUserListFunc, prevUserListFunc, filterUserListFunc, deleteUserByIdFunc } from './usersList.action';
+import { userClickAction, getUsersListFunc, nextUserListFunc, prevUserListFunc, filterUserListFunc, deleteUserByIdFunc } from './usersList.action';
 
 class userList extends Component {
     componentWillMount (){
-        console.log('componentWillMount');
         this.props.getUsersList();
      }
+
+    // componentWillUpdate (nextProps){
+    //     if (!nextProps.authority) {
+    //         this.props.history.push('/login');
+    //     }
+    //  }
 
     render() {
         const { userClick, selectedUser, displayList, nextUsersPage, prevUsersPage, filterUsers, messageToDisplay, deleteUserById } = this.props;
@@ -54,7 +59,7 @@ class userList extends Component {
                 </div>
                 <div>
                     <h3>User Info:</h3>
-                    {userinfo}
+                    { userinfo }
                 </div>
             </div>
         );
@@ -65,7 +70,8 @@ function mapStateToProps(state) {
     return {
         selectedUser: state.usersReducer.selectedUser,
         displayList: state.usersReducer.displayList,
-        messageToDisplay: state.usersReducer.msg
+        messageToDisplay: state.usersReducer.msg,
+        authority: state.loginReducer.auth,
     };
 }
 

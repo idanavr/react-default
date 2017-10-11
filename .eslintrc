@@ -55,7 +55,6 @@
         "function-paren-newline": "warn",
         "generator-star-spacing": "warn",
         "getter-return": "warn",
-        "global-require": "warn",
         "guard-for-in": "warn",
         "handle-callback-err": "warn",
         "id-blacklist": "warn",
@@ -77,7 +76,12 @@
         "max-params": "warn",
         "max-statements-per-line": "warn",
         "multiline-ternary": "warn",
-        "new-cap": "warn",
+        "new-cap": [
+            "warn",
+            {
+                "capIsNew": false
+            }
+        ],
         "new-parens": "warn",
         "newline-after-var": "off",
         "newline-per-chained-call": "warn",
@@ -186,7 +190,6 @@
         "prefer-destructuring": "warn",
         "prefer-numeric-literals": "warn",
         "prefer-promise-reject-warns": "off",
-        "prefer-reflect": "warn",
         "prefer-rest-params": "warn",
         "prefer-spread": "warn",
         "prefer-template": "warn",

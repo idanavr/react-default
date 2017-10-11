@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { createUserFunc } from './register.action';
+import { LoginFunc } from '../login/login.action';
 
 class register extends Component {
 
+    // componentWillMount() {
+    //     console.log('authority', this.props.authority);
+    //     if(this.props.authority) {
+    //         this.props.history.push('/');
+    //     }
+    // }
 
     render() {
         
-        const { newUserStatus, createUser } = this.props;
+        const { newUserStatus, createUser, userLogin } = this.props;
 
         function checkValidation(newUser){
             const gender = document.querySelector('input[name="gender"]:checked');
@@ -19,6 +26,8 @@ class register extends Component {
                 newUser.errors = 'Please write last name';
             else if(!newUser.email.replace(/\s/g, '').length)
                 newUser.errors = 'Please write your email';
+            else if(!newUser.password.replace(/\s/g, '').length)
+                newUser.errors = 'Please write a password';
             else if(!gender)
                 newUser.errors = 'Please select gender';
             else
@@ -28,17 +37,18 @@ class register extends Component {
         }
 
         function beforeCreateUser() {
-            let newUser = { };
+            let newUser = {};
             newUser.firstName = document.getElementById('fName').value;
             newUser.lastName = document.getElementById('lName').value;
             newUser.email = document.getElementById('email').value;
+            newUser.password = document.getElementById('password').value;
             newUser = checkValidation(newUser);
-            // if(gender && newUser.firstName.replace(/\s/g, '').length && newUser.lastName.replace(/\s/g, '').length && newUser.email.replace(/\s/g, '').length)
-            //     newUser.gender = gender.value;
-            // else
-            //     newUser.errors = 'Please fill all the fields';
+            
             console.log('user for action: ', newUser);
-            createUser(newUser);
+            Promise.resolve(createUser(newUser)) // change it - for some reason .then doen't wait for the last dispatch to be done
+            .then(() => setTimeout(() => {
+                userLogin(newUser);
+            }, 500)); 
         }
 
         return(
@@ -49,8 +59,9 @@ class register extends Component {
                 <ul>
                     <li><input type="text" id="fName" placeholder="First Name" /></li>
                     <li><input type="text" id="lName" placeholder="Last Name" /></li>
-                    <li><input type="text" id="email" placeholder="email" /></li>
-                    <li style={{ 'font-size': '20px' }}>
+                    <li><input type="text" id="email" placeholder="Email" /></li>
+                    <li><input type="password" id="password" placeholder="Password" /></li>
+                    <li style={{ 'fontSize': '20px' }}>
                         <label htmlFor="radioMale">Male</label>
                         <input type="radio" id="radioMale" name="gender" value="male" />
                         <label htmlFor="radioFemale">Female</label>
@@ -66,18 +77,20 @@ class register extends Component {
 
 function mapStateToProps(state) {
     return {
-        newUserStatus: state.registerReducer.msg
+        newUserStatus: state.registerReducer.msg,
+        authority: state.loginReducer.auth,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        createUser: (data) => dispatch(createUserFunc(data)) 
+        createUser: (data) => dispatch(createUserFunc(data)),
+        userLogin: (data) => dispatch(LoginFunc(data)),
     };
 }
 
 register.propTypes = {
-    newUserStatus: PropTypes.string.isRequired,
+    newUserStatus: PropTypes.string,
     createUser: PropTypes.func.isRequired
 };
 
