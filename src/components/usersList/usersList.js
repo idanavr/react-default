@@ -9,12 +9,6 @@ class userList extends Component {
         this.props.getUsersList();
      }
 
-    // componentWillUpdate (nextProps){
-    //     if (!nextProps.authority) {
-    //         this.props.history.push('/login');
-    //     }
-    //  }
-
     render() {
         const { userClick, selectedUser, displayList, nextUsersPage, prevUsersPage, filterUsers, messageToDisplay, deleteUserById } = this.props;
         let userinfo = '';
@@ -87,13 +81,14 @@ function mapDispatchToProps(dispatch){ // may also get the value of 'ownProps'
 }
 
 userList.propTypes = {
-    messageToDisplay: PropTypes.string,
     selectedUser: PropTypes.object,
     displayList: PropTypes.array.isRequired,
+    messageToDisplay: PropTypes.string,
+    authority: PropTypes.string.isRequired,
     getUsersList: PropTypes.func.isRequired,
-    userClick: PropTypes.func.isRequired,    
     nextUsersPage: PropTypes.func.isRequired,
     prevUsersPage: PropTypes.func.isRequired,
+    userClick: PropTypes.func.isRequired,    
     filterUsers: PropTypes.func.isRequired,
     deleteUserById: PropTypes.func.isRequired
 };

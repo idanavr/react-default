@@ -8,7 +8,6 @@ const checkAuthority = require('./middlewares');
 const privatekey = require('./jwtKey');
 
 router.get('/:token', checkAuthority, (req, res) => {
-        console.log(res.locals.user);
         res.send({ user: { firstName :res.locals.user.firstName } });
 });
 

@@ -91,7 +91,9 @@ function mapDispatchToProps(dispatch) {
 
 register.propTypes = {
     newUserStatus: PropTypes.string,
-    createUser: PropTypes.func.isRequired
+    authority: PropTypes.string,
+    createUser: PropTypes.func.isRequired,
+    userLogin: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(register);

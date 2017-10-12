@@ -1,5 +1,6 @@
 import React, { Component } from 'react';  
 import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 
 export default function(ComposedComponent, authorityType) {  
   class Authentication extends Component {
@@ -28,6 +29,10 @@ export default function(ComposedComponent, authorityType) {
   function mapStateToProps(state) {
     return { auth: state.loginReducer.auth };
   }
+
+Authentication.propTypes = {
+  auth: PropTypes.string.isRequired,
+};
 
   return connect(mapStateToProps)(Authentication);
 }

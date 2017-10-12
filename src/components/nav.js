@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
+import { NavLink, withRouter } from 'react-router-dom';
 import { LogoutFunc } from './login/login.action';
 
 class Navbar extends Component {
 
 	render() {
 
-		const { authorities, Logout, user } = this.props;
+		const { authorities, Logout, user, css } = this.props;
 
 		function beforeLogout() {
 			Logout();
@@ -15,25 +16,25 @@ class Navbar extends Component {
 
 		let nav = '';
 		if (authorities)
-			nav = 
-			<div className={this.props.css.navbar}>
-				<Link to="/"> Home </Link>
-				<Link to="/about"> About us </Link>
-				<Link to="/users"> Users </Link>
-				<div className={this.props.css.rightNav}>
-					{user.firstName},<Link to="#" onClick={() => beforeLogout()}> Logout </Link>
-				</div>
-			</div>;
+			nav =
+				<div className={css.navbar}>
+					<NavLink activeClassName={css.activeLink} exact to="/"> Home </NavLink>
+					<NavLink activeClassName={css.activeLink} exact to="/about"> About us </NavLink>
+					<NavLink activeClassName={css.activeLink} to="/users"> Users </NavLink>
+					<div className={css.rightNav}>
+						{user.firstName},<NavLink to="#" onClick={() => beforeLogout()}> Logout </NavLink>
+					</div>
+				</div>;
 		else
-			nav = 
-			<div className={this.props.css.navbar}>
-				<Link to="/">Home</Link>
-				<Link to="/about"> About us</Link>
-				<div className={this.props.css.rightNav}>
-					<Link to="/login"> Login</Link>
-					<Link to="/register"> Register</Link>
-				</div>
-			</div>;
+			nav =
+				<div className={css.navbar}>
+					<NavLink activeClassName={css.activeLink} exact to="/">Home</NavLink>
+					<NavLink activeClassName={css.activeLink} exact to="/about"> About us</NavLink>
+					<div className={css.rightNav}>
+						<NavLink activeClassName={css.activeLink} exact to="/login"> Login</NavLink>
+						<NavLink activeClassName={css.activeLink} exact to="/register"> Register</NavLink>
+					</div>
+				</div>;
 
 
 		return (
@@ -57,5 +58,10 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
+Navbar.propTypes = {
+	authorities: PropTypes.string.isRequired,
+	user: PropTypes.object,
+	Logout: PropTypes.func.isRequired,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

@@ -28,19 +28,18 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
 
-           // Eliminate comments
-              comments: true,
+      output: {
+        comments: false,
+      },
+
+      compress: {
+        warnings: false,
+        drop_console: true
+      },
       
-             compress: {
-                  warnings: false,
-      
-                  drop_console: true
-              },
     }),
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(env)
-      }
+      'process.env.NODE_ENV': JSON.stringify(env)
     }),
   ],
   module: {

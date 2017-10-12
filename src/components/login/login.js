@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { LoginFunc } from './login.action';
 
 class Login extends Component {
-
-    // componentWillMount() {
-    //     console.log('authority', this.props.authority);
-    //     if(this.props.authority) {
-    //         this.props.history.push('/');
-    //     }
-    // }
-
+    
     render() {
         const { tryLogin, errorMsg } = this.props;
 
@@ -54,5 +48,11 @@ function mapDispatchToProps(dispatch) {
         tryLogin : (data) => dispatch(LoginFunc(data)),
     };
 }
+
+Login.propTypes = {
+    errorMsg: PropTypes.string,
+    authority: PropTypes.string.isRequired,
+    tryLogin: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

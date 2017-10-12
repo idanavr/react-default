@@ -14,7 +14,6 @@ export function createUserFunc(data) {
                 .then((res) => {
                     if (res.status === 201) {
                         dispatch({ type: creatingUserMsg, msg: '' });
-                        // window.location = '/'; // change it
                     } else
                         dispatch({ type: creatingUserMsg, msg: 'User creation failed' });
 

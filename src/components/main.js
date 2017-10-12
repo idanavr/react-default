@@ -1,9 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import css from './../../style/main.css';
 import Navbar from './nav';
-
-import { connect } from 'react-redux';
 
 import { checkTokenFunc } from './login/login.action';
 
@@ -37,22 +37,29 @@ class Main extends React.Component {
                 If you have any questions or requests, feel free to contact me. <br /><br />
                 Enjoy it!
             </div>;
-   
-
+            
+        if (this.props.authority !== null) {
+            return (
+                <BrowserRouter>
+                    <Container>
+                        <Switch>
+                            <Route exact path="/" component={Welcome} />
+                            <Route path="/about" component={About} />
+                            <Route path="/users" component={authCheck(UsersList, 1)} />
+                            <Route path="/login" component={authCheck(Login, 0)} />
+                            <Route path="/register" component={authCheck(Register, 0)} />
+                            <Route path="*" component={NoMatch} />
+                        </Switch>
+                    </Container>
+                </BrowserRouter>
+            );
+        } 
         return (
-            <BrowserRouter className="default">
-                <Container>
-                    <Switch>rew@rew.com
-                        <Route exact path="/" component={Welcome} />
-                        <Route path="/about" component={About} />
-                        <Route path="/users" component={authCheck(UsersList, 1)} />
-                        <Route path="/login" component={authCheck(Login, 0)} />
-                        <Route path="/register" component={authCheck(Register, 0)} />
-                        <Route path="*" component={NoMatch} />
-                    </Switch>
-                </Container>
-            </BrowserRouter>
+            <div className={css.loadingPage}>
+                <img src="/loading.gif" title="loading" />
+            </div>
         );
+        
     }
 }
 function mapStateToProps(state) {
@@ -66,5 +73,10 @@ function mapDispatchToProps(dispatch) {
         checkToken: (token) => dispatch(checkTokenFunc(token)),
     };
 }
+
+Main.propTypes = {
+    authority: PropTypes.string,
+    checkToken: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
