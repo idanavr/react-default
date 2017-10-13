@@ -21,22 +21,22 @@ class register extends Component {
             const gender = document.querySelector('input[name="gender"]:checked');
 
             if(!newUser.firstName.replace(/\s/g, '').length)
-                newUser.errors = 'Please write first name';
+                newUser.errors = 'First name is required';
             else if(!newUser.lastName.replace(/\s/g, '').length)
-                newUser.errors = 'Please write last name';
+                newUser.errors = 'Last name is required';
             else if(!newUser.email.replace(/\s/g, '').length)
-                newUser.errors = 'Please write your email';
+                newUser.errors = 'Email name is required';
             else if(!newUser.password.replace(/\s/g, '').length)
-                newUser.errors = 'Please write a password';
+                newUser.errors = 'Password is required';
             else if(!gender)
-                newUser.errors = 'Please select gender';
+                newUser.errors = 'Gender is required';
             else
                 newUser.gender = gender.value;
             
             return newUser;
         }
 
-        function beforeCreateUser() {
+        function beforeCreateUser(e) {
             let newUser = {};
             newUser.firstName = document.getElementById('fName').value;
             newUser.lastName = document.getElementById('lName').value;
@@ -49,28 +49,29 @@ class register extends Component {
             .then(() => setTimeout(() => {
                 userLogin(newUser);
             }, 500)); 
+            e.preventDefault();
         }
 
         return(
-            <div>
+            <form onSubmit={(e) => beforeCreateUser(e)} role="form">
             <h2>
             Register
             </h2>
                 <ul>
-                    <li><input type="text" id="fName" placeholder="First Name" /></li>
-                    <li><input type="text" id="lName" placeholder="Last Name" /></li>
-                    <li><input type="text" id="email" placeholder="Email" /></li>
-                    <li><input type="password" id="password" placeholder="Password" /></li>
+                    <li><input type="text" id="fName" placeholder="First Name" required /></li>
+                    <li><input type="text" id="lName" placeholder="Last Name" required /></li>
+                    <li><input type="email" id="email" placeholder="Email" required /></li>
+                    <li><input type="password" id="password" placeholder="Password" required /></li>
                     <li style={{ 'fontSize': '20px' }}>
                         <label htmlFor="radioMale">Male</label>
-                        <input type="radio" id="radioMale" name="gender" value="male" />
+                        <input type="radio" id="radioMale" name="gender" value="male" required />
                         <label htmlFor="radioFemale">Female</label>
-                        <input type="radio" id="radioFemale" name="gender" value="female" />
+                        <input type="radio" id="radioFemale" name="gender" value="female" required />
                     </li>
-                    <li><button onClick={ () => beforeCreateUser() } > Submit </button></li>
+                    <li><button> Submit </button></li>
                 </ul>
                 <h3> { newUserStatus } </h3>
-            </div>
+            </form>
         );
     }
 }

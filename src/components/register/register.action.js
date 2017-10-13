@@ -15,7 +15,7 @@ export function createUserFunc(data) {
                     if (res.status === 201) {
                         dispatch({ type: creatingUserMsg, msg: '' });
                     } else
-                        dispatch({ type: creatingUserMsg, msg: 'User creation failed' });
+                        dispatch({ type: creatingUserMsg, msg: res.data });
 
                 })
                 .catch((err) => {

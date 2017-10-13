@@ -8,7 +8,7 @@ class Login extends Component {
     render() {
         const { tryLogin, errorMsg } = this.props;
 
-        function beforeLogin() {
+        function beforeLogin(e) {
             const userCredential = {};
 
             userCredential.email = document.getElementById('email').value;
@@ -20,18 +20,19 @@ class Login extends Component {
                 userCredential.errors = 'Please write password';
             
             tryLogin(userCredential);
+            e.preventDefault();
         }
         
         return (
-            <div>
+            <form onSubmit={(e) => beforeLogin(e) } role="form">
                 <h2> Log-In </h2>
                 <ul>
-                    <li><input id="email" type="text" placeholder="Email" /></li>
-                    <li><input id="password" type="password" placeholder="Password" /></li>
-                    <li><button onClick={() => beforeLogin() }>Enter</button></li>
+                    <li><input id="email" type="email" placeholder="Email" required /></li>
+                    <li><input id="password" type="password" placeholder="Password" required /></li>
+                    <li><button type="submit"> Enter </button></li>
                     <li>{ errorMsg }</li>
                 </ul>
-            </div>
+            </form>
         );
     }
 }

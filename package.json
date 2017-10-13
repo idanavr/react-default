@@ -1,17 +1,26 @@
 {
   "name": "react-default",
   "version": "1.0.0",
-  "description": "Start making your own project with it!",
+  "description": "Starter kit for reactjs",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
     "production": "SET NODE_ENV=production && node server.js",
     "build": "SET NODE_ENV=production && webpack",
+    "add": "npm run build && git add .",
     "test": "mocha ./**/*.spec.js --compilers js:babel-core/register",
     "eslint": "eslint **/*.js --ignore-pattern node_modules/"
   },
-  "keywords": [],
+  "keywords": [
+    "react default",
+    "react",
+    "redux",
+    "nodejs",
+    "mongoose",
+    "jwt",
+    "eslint"
+  ],
   "author": "Idan",
   "license": "MIT",
   "dependencies": {

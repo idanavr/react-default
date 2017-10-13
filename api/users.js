@@ -42,8 +42,8 @@ router.post('/', (req, res) => {
     newUser.save((err, user) => {
         if(err) {
             console.log(err);
-            res.status(400);
-            res.end();
+            const errors = Object.keys(err.errors).map((field) => err.errors[field].message);
+            res.send(errors[0]);
         } else {
             res.status(201);
             res.send(user);

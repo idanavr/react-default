@@ -17,7 +17,7 @@ export function LoginFunc(data) {
                         axios.defaults.headers.common['Authorization'] = `Bearer ${result.data.token}`;
                         dispatch({ type: loginSuccess, user: result.data.user, token: result.data.token });
                     } else if(result.status === 204)
-                        throw Error('Wrong email/password');
+                        throw Error('Wrong credentials');
                     else
                         throw Error('Connection failed');
                 })
