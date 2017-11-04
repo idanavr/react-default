@@ -1,5 +1,3 @@
-/* global require module */
-
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -32,7 +30,7 @@ router.get('/:id', checkAuthority, (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const newUser = new userModel();
+    const newUser = new userModel(); // eslint-disable-line new-cap
     newUser.firstName = req.body.firstName;
     newUser.lastName = req.body.lastName;
     newUser.email = req.body.email;

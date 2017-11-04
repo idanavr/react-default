@@ -1,6 +1,4 @@
-@import 'https://fonts.googleapis.com/css?family=Merienda+One';
-
-body {
+@import url(https://fonts.googleapis.com/css?family=Merienda+One);body {
     background-color:#e9ebee;
     margin: 0px;
 }
@@ -102,3 +100,4 @@ li {
     margin-top: -200px;
     margin-left: -250px;
 }
+/*# sourceMappingURL=main.css.map*/

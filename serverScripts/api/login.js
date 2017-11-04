@@ -1,11 +1,9 @@
-/* global require module */
-
 const express = require('express');
 const router = express.Router();
 const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 const checkAuthority = require('./middlewares');
-const privatekey = require('./jwtKey');
+const privatekey = require('../../config/jwtKey');
 
 router.get('/:token', checkAuthority, (req, res) => {
         res.send({ user: { firstName :res.locals.user.firstName } });

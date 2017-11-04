@@ -1,4 +1,3 @@
-/* global require module */
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 

@@ -6,9 +6,17 @@ import { LogoutFunc } from './login/login.action';
 
 class Navbar extends Component {
 
+	constructor(props) {
+		super(props);
+		this.props.history.listen((location) => {
+			this.props.ReactGA.set({ page: location.pathname + location.search });
+			this.props.ReactGA.pageview(location.pathname + location.search);
+		});
+	}
+
 	render() {
 
-		const { authorities, Logout, user, css } = this.props;
+		const { authorities, Logout, user } = this.props;
 
 		function beforeLogout() {
 			Logout();
@@ -17,28 +25,28 @@ class Navbar extends Component {
 		let nav = '';
 		if (authorities)
 			nav =
-				<div className={css.navbar}>
-					<NavLink activeClassName={css.activeLink} exact to="/"> Home </NavLink>
-					<NavLink activeClassName={css.activeLink} exact to="/about"> About us </NavLink>
-					<NavLink activeClassName={css.activeLink} to="/users"> Users </NavLink>
-					<div className={css.rightNav}>
+				<div className="navbar">
+					<NavLink activeClassName="activeLink" exact to="/"> Home </NavLink>
+					<NavLink activeClassName="activeLink" exact to="/about"> About us </NavLink>
+					<NavLink activeClassName="activeLink" to="/users"> Users </NavLink>
+					<div className="rightNav">
 						{user.firstName},<NavLink to="#" onClick={() => beforeLogout()}> Logout </NavLink>
 					</div>
 				</div>;
 		else
 			nav =
-				<div className={css.navbar}>
-					<NavLink activeClassName={css.activeLink} exact to="/">Home</NavLink>
-					<NavLink activeClassName={css.activeLink} exact to="/about"> About us</NavLink>
-					<div className={css.rightNav}>
-						<NavLink activeClassName={css.activeLink} exact to="/login"> Login</NavLink>
-						<NavLink activeClassName={css.activeLink} exact to="/register"> Register</NavLink>
+				<div className="navbar">
+					<NavLink activeClassName="activeLink" exact to="/">Home</NavLink>
+					<NavLink activeClassName="activeLink" exact to="/about"> About us</NavLink>
+					<div className="rightNav">
+						<NavLink activeClassName="activeLink" exact to="/login"> Login</NavLink>
+						<NavLink activeClassName="activeLink" exact to="/register"> Register</NavLink>
 					</div>
 				</div>;
 
 
 		return (
-			<nav className={this.props.css.header}>
+			<nav className="header">
 				{nav}
 			</nav>
 		);

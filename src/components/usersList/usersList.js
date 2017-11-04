@@ -45,7 +45,7 @@ class userList extends Component {
                         User List:
                     </h2>
                     <input placeholder="Search by first name" type="text" onChange={(expr) => filterUsers(expr.target.value)} />
-                    <ul>
+                    <ul id="userList">
                     { userListBlock }
                     </ul>
                     <button className="btn" onClick={() => prevUsersPage()} > Back </button>

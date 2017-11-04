@@ -2,11 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import css from './../../style/main.css';
-import Navbar from './nav';
-
+import './../../style/main.css';
 import { checkTokenFunc } from './login/login.action';
+// Google analytics
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-108374358-1');
+ReactGA.set({ page: location.pathname + location.search });
+ReactGA.pageview(location.pathname + location.search);
 
+import Navbar from './nav';
 import About from './about';
 import authCheck from './authCheck';
 import UsersList from './usersList/usersList';
@@ -22,9 +26,9 @@ class Main extends React.Component {
     render() {
         const Container = (props) =>
             <div>
-                <Navbar css={css} />
-                <div className={css.container}>{props.children}</div>
-                <div className={css.footer}>Copyrights © section</div>
+                <Navbar ReactGA={ReactGA} />
+                <div className="container">{props.children}</div>
+                <div className="footer">Copyrights © section</div>
             </div>;
         const NoMatch = () =>
             <div>
@@ -55,7 +59,7 @@ class Main extends React.Component {
             );
         } 
         return (
-            <div className={css.loadingPage}>
+            <div className="loadingPage">
                 <img src="/loading.gif" title="loading" />
             </div>
         );

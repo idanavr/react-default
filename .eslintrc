@@ -1,9 +1,9 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true
-    },
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "root": true,
+    "extends": [
+        "eslint:recommended", 
+        "plugin:react/recommended"
+    ],
     "parserOptions": {
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
@@ -14,9 +14,14 @@
     "plugins": [
         "react"
     ],
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
     "rules": {
         "accessor-pairs": "warn",
-        "array-bracket-newline": "warn",
+        "array-bracket-newline": "off",
         "array-bracket-spacing": "warn",
         "arrow-body-style": "warn",
         "arrow-parens": "warn",
@@ -31,7 +36,7 @@
         "block-spacing": "warn",
         "brace-style": "warn",
         "callback-return": "warn",
-        "camelcase": "warn",
+        "camelcase": "off",
         "class-methods-use-this": "off",
         "comma-dangle": "off",
         "comma-spacing": "off",
@@ -149,13 +154,13 @@
         "no-shadow": "warn",
         "no-shadow-restricted-names": "warn",
         "no-spaced-func": "warn",
-        "no-sync": "warn",
+        "no-sync": "off",
         "no-template-curly-in-string": "warn",
         "no-ternary": "warn",
         "no-throw-literal": "warn",
         "no-undef-init": "warn",
         "no-undefined": "warn",
-        "no-underscore-dangle": "warn",
+        "no-underscore-dangle": "off",
         "no-unmodified-loop-condition": "warn",
         "no-unneeded-ternary": "warn",
         "no-unused-expressions": "warn",
@@ -244,7 +249,7 @@
     "overrides": [
         {
             "files": [
-                "*.spec.js"
+                "*.test.js"
             ],
             "rules": {
                 "no-undef": "off",
