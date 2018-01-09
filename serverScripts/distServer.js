@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 const helmet = require('helmet');
+const compression = require('compression');
 
 const mongoose = require('mongoose');
 const db = require('../config/db.js');
@@ -13,6 +14,7 @@ mongoose.connect(db.connStr, {
 const port = process.env.PORT || 3000;
 
 app.use(helmet());
+app.use(compression());
 app.use(express.static(path.join(__dirname, '..', 'dist')));
 app.use(bodyParser.json());
 

@@ -70,6 +70,8 @@ Navbar.propTypes = {
 	authorities: PropTypes.string.isRequired,
 	user: PropTypes.object,
 	Logout: PropTypes.func.isRequired,
+	history: PropTypes.object.isRequired,
+	ReactGA: PropTypes.object
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

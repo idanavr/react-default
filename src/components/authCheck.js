@@ -32,6 +32,7 @@ export default function(ComposedComponent, authorityType) {
 
 Authentication.propTypes = {
   auth: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired
 };
 
   return connect(mapStateToProps)(Authentication);

@@ -244,7 +244,7 @@
         "react/jsx-uses-vars": "warn",
         "react/no-deprecated": "off",
         "no-console": "off", // webpack build will remove it anyway
-        "react/prop-types": "off"
+        "react/prop-types": "warn"
     },
     "overrides": [
         {
