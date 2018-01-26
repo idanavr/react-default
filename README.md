@@ -1,6 +1,6 @@
 # React Default
 
-This is an example of a basic react website.
+This is an example of a basic website using react and node.
 
 It may also be used as a start kit for a new projects.
 

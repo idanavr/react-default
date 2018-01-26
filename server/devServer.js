@@ -4,7 +4,7 @@ const app = express();
 const helmet = require('helmet');
 
 const mongoose = require('mongoose');
-const db = require('../config/db.js'); // insert your own db conection string
+const db = require('./config/db.js'); // insert your own db conection string
 mongoose.Promise = global.Promise;
 mongoose.connect(db.connStr, {
     useMongoClient: true
@@ -12,7 +12,7 @@ mongoose.connect(db.connStr, {
 const port = process.env.PORT || 3000;
 
 // webpack setting with hot reload
-const config = require('../config/webpack.config.dev');
+const config = require('./config/webpack.config.dev');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');

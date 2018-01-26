@@ -2,21 +2,21 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-console.log(path.join(__dirname, '..', 'dist'));
+console.log(path.join(__dirname, '..', '..', 'public'));
 module.exports = {
     devtool: 'source-map',
     entry: [
-            './src/index.js'
+            './client/index.js'
         ],
     output: {
-        path: path.join(__dirname, '..', 'dist'),
-        publicPath: '/',
+        path: path.join(__dirname, '..', '..', 'public'),
+        publicPath: './',
         filename: 'bundle.js'
     },
     plugins: [
         new ExtractTextPlugin('main.css'),
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            template: './client/index.html',
             inject: true,
             minify: {
                 removeComments: true,

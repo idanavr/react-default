@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import './../../style/main.css';
+import '../style/main.css';
 import { checkTokenFunc } from './login/login.action';
 // Google analytics
 import ReactGA from 'react-ga';

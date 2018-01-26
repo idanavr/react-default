@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 
 const mongoose = require('mongoose');
-const db = require('../config/db.js');
+const db = require('./config/db.js');
 mongoose.Promise = global.Promise;
 mongoose.connect(db.connStr, {
     useMongoClient: true
@@ -15,7 +15,7 @@ const port = process.env.PORT || 3000;
 
 app.use(helmet());
 app.use(compression());
-app.use(express.static(path.join(__dirname, '..', 'dist')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(bodyParser.json());
 
 const userApi = require('./api/users');
@@ -24,7 +24,7 @@ app.use('/api/users', userApi);
 app.use('/api/login', loginApi);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
 app.listen(port, (error) => {

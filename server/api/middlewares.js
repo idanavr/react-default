@@ -1,7 +1,7 @@
 /* eslint prefer-destructuring: off, callback-return: off */
 const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
-const privatekey = require('../../config/jwtKey');
+const privatekey = require('../config/jwtKey');
 
 function checkAuthority(req, res, next) {
     const { authorization: header } = req.headers;

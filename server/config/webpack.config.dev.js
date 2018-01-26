@@ -6,16 +6,16 @@ module.exports = {
     devtool: 'inline-source-map',
     entry: [
         'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-        './src/index.js'
+        './client/index.js'
     ],
     output: {
-        path: path.join(__dirname, '..', 'src'),
+        path: path.join(__dirname, '..', '..', 'public'),
         publicPath: '/',
         filename: 'bundle.js'
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            template: './client/index.html',
             inject: true
         }),
         new webpack.HotModuleReplacementPlugin()
