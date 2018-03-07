@@ -1,0 +1,75 @@
+.header {
+    background: lavender;
+    border-bottom: 1px solid black;
+    font-size: 20px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.navbar {
+    width: 1000px;
+    margin: 0 auto;
+}
+.navbar a, a:visited {
+    padding: 5px;
+    color: blue;
+    margin:10px;
+    text-decoration: none;
+}
+.navbar a:hover{
+    color: black;
+}
+.navbar a:active{
+    color: #4350FF;
+}
+.rightNav{
+    float: right;
+}
+.activeLink {
+    color: #00b6ff !important;
+}
+.small-menu {
+    display: none;
+    margin:10px;
+    height: 100%;
+}
+
+
+@media screen and (max-width: 1000px) {
+    .small-menu {
+        display: block;
+    }
+
+    .header {
+        background-color: transparent;
+        border-bottom: none;
+    }
+    .navbar {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        background-color: #b9b9e6;
+        height: 100%;
+        border-radius: 3px;
+        width:100px;
+        font: bold;
+        margin: 0px;
+        padding-top: 25px;
+        padding-left:10px;
+        left: -110px;
+    }
+    .open {
+        left:0;
+        transition-duration: 2s;
+    }
+
+    .navbar a {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .rightNav{
+        float: none;
+        margin-top: 10px;
+    }
+}

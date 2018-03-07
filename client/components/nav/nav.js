@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
-import { LogoutFunc } from './login/login.action';
+import './nav.css';
+import { LogoutFunc } from '../login/login.action';
 
 class Navbar extends Component {
 
@@ -12,30 +13,34 @@ class Navbar extends Component {
 			this.props.ReactGA.set({ page: location.pathname + location.search });
 			this.props.ReactGA.pageview(location.pathname + location.search);
 		});
+		this.state = { showMenu: false };
+	}
+
+	toggleMenu() {
+		this.setState({ showMenu: !this.state.showMenu });
+	}
+
+	beforeLogout() {
+		this.props.Logout();
 	}
 
 	render() {
-
-		const { authorities, Logout, user } = this.props;
-
-		function beforeLogout() {
-			Logout();
-		}
+		const { authorities, user } = this.props;
 
 		let nav = '';
 		if (authorities)
 			nav =
-				<div className="navbar">
+				<div className={`navbar ${(this.state.showMenu ? 'open' : '')}`}>
 					<NavLink activeClassName="activeLink" exact to="/"> Home </NavLink>
 					<NavLink activeClassName="activeLink" exact to="/about"> About us </NavLink>
 					<NavLink activeClassName="activeLink" to="/users"> Users </NavLink>
 					<div className="rightNav">
-						{user.firstName},<NavLink to="#" onClick={() => beforeLogout()}> Logout </NavLink>
+						{user.firstName},<NavLink to="#" onClick={() => this.beforeLogout()}> Logout </NavLink>
 					</div>
 				</div>;
 		else
 			nav =
-				<div className="navbar">
+				<div className={`navbar ${(this.state.showMenu ? 'open' : '')}`}>
 					<NavLink activeClassName="activeLink" exact to="/">Home</NavLink>
 					<NavLink activeClassName="activeLink" exact to="/about"> About us</NavLink>
 					<div className="rightNav">
@@ -43,10 +48,11 @@ class Navbar extends Component {
 						<NavLink activeClassName="activeLink" exact to="/register"> Register</NavLink>
 					</div>
 				</div>;
-
-
+				
 		return (
 			<nav className="header">
+				<img src={this.state.showMenu ? '/exit-menu.png' : '/small-menu.png'} className="small-menu"  onClick={() => this.toggleMenu()}>	
+				</img>
 				{nav}
 			</nav>
 		);

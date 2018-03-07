@@ -11,8 +11,11 @@ export default class AboutUs extends Component {
                 My name is Idan Avrahami <br />
                 I am serving at the army as a professional full stack developer <br />
                 Feel free to contact me for any question or request: <br />
-                <a href="https://www.linkedin.com/in/idanavrahami/">
-                    <img height="40px" src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" title="LinkedIn" />
+                <a href="https://github.com/idanavr">
+                    <img height="40px" src="/github.png" title="GitHub" />
+                </a>
+                <a href="https://www.linkedin.com/in/idanavrahami/" className="logo-link">
+                    <img height="40px" src="/linkedin.png" title="LinkedIn" />
                 </a>
             </div>
         );

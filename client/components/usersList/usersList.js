@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-
 import { userClickAction, getUsersListFunc, nextUserListFunc, prevUserListFunc, filterUserListFunc, deleteUserByIdFunc } from './usersList.action';
+import './usersList.css';
 
 class userList extends Component {
     componentWillMount (){

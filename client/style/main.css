@@ -1,6 +1,11 @@
 @import 'https://fonts.googleapis.com/css?family=Merienda+One';
 
+html {
+    width: 100%;
+}
+
 body {
+    width: 100%;
     background-color:#e9ebee;
     margin: 0px;
 }
@@ -9,7 +14,6 @@ button {
     border-radius: 5px;
     background-color: #ccc;
     padding: 5px;
-    width:10%;
     border: 2px solid black;
     font: 20px 'Merienda One', Helvetica, sans-serif;
     margin: 0px 10px;
@@ -43,55 +47,22 @@ li {
 
 .container {
     padding-top:10px;
-    width: 1000px;
-    margin: 0 auto;
+    /* width: 1000px; */
+    display: flex;
+    width: 80%;
+    margin: auto auto ;
     font:  25px 'Merienda One', Helvetica, sans-serif;
     text-align: center;
 }
-
-.header {
-    /* padding-bottom: 20px; */
-    background: lavender;
-    border-bottom: 1px solid black;
-    font-size: 20px;
-    height: 40px;
-    line-height: 40px;
-}
-
-.navbar {
-    width: 1000px;
-    margin: 0 auto;
-}
-.navbar a, a:visited {
-    /*border: 1px solid black;
-    border-radius:10px;*/
-    padding: 5px;
-    color: blue;
-    margin:10px;
-    text-decoration: none;
-}
-.navbar a:hover{
-    color: black;
-}
-.navbar a:active{
-    color: #4350FF;
-}
-.rightNav{
-    float: right;
-}
-.activeLink {
-    color: #00b6ff !important;
-}
-
-#userList li {
-    cursor: pointer;
+.container > form, div { /* Should be on all elements */
+    margin:auto;
 }
 
 .footer {
+    width: 80%;
     margin: 50px auto 30px;
     bottom: 0;
     text-align: center;
-    width: 1000px;
 }
 
 .loadingPage {

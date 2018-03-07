@@ -10,7 +10,7 @@ ReactGA.initialize('UA-108374358-1');
 ReactGA.set({ page: location.pathname + location.search });
 ReactGA.pageview(location.pathname + location.search);
 
-import Navbar from './nav';
+import Navbar from './nav/nav';
 import About from './about';
 import authCheck from './authCheck';
 import UsersList from './usersList/usersList';

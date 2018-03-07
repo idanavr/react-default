@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 const helmet = require('helmet');
@@ -29,8 +30,8 @@ const userApi = require('./api/users');
 const loginApi = require('./api/login');
 app.use('/api/users', userApi);
 app.use('/api/login', loginApi);
+app.use(express.static(path.join(__dirname, '..', 'public')));
 // app.set('view engine', 'ejs');
-// app.use('/style', express.static(path.join(__dirname, 'style')));
 
 app.get('*', (req, res) => {
     const htmlBuffer = devMiddleware.fileSystem.readFileSync(`${config.output.path}/index.html`);

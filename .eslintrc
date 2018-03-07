@@ -80,7 +80,6 @@
         "max-nested-callbacks": "warn",
         "max-params": "warn",
         "max-statements-per-line": "warn",
-        "multiline-ternary": "warn",
         "new-cap": [
             "warn",
             {
@@ -156,7 +155,6 @@
         "no-spaced-func": "warn",
         "no-sync": "off",
         "no-template-curly-in-string": "warn",
-        "no-ternary": "warn",
         "no-throw-literal": "warn",
         "no-undef-init": "warn",
         "no-undefined": "warn",
