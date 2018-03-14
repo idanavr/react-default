@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 console.log(path.join(__dirname, '..', '..', 'public'));
 module.exports = {
     devtool: 'source-map',
@@ -15,6 +16,9 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin('main.css'),
+        new OptimizeCssAssetsPlugin({
+            cssProcessorOptions: { discardComments: { removeAll: true } }
+        }),
         new HtmlWebpackPlugin({
             template: './client/index.html',
             inject: true,
