@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import '../style/main.css';
+import '../style/animate.css';
+import '../style/font-awesome/css/fontawesome-all.css';
 import { checkTokenFunc } from './login/login.action';
 // Google analytics
 import ReactGA from 'react-ga';
@@ -11,7 +13,7 @@ ReactGA.set({ page: location.pathname + location.search });
 ReactGA.pageview(location.pathname + location.search);
 
 import Navbar from './nav/nav';
-import About from './about';
+import About from './about/about';
 import authCheck from './authCheck';
 import UsersList from './usersList/usersList';
 import Register from './register/register';

@@ -16,7 +16,7 @@ class userList extends Component {
         if (messageToDisplay === null) {
             userListBlock =
                 displayList.map((user) =>
-                    <li key={user.email} onClick={() => userClick(user)}>
+                    <li className="animated jackInTheBox" key={user.email} onClick={() => userClick(user)}>
                         {user.firstName}
                     </li>);
         } else {
@@ -27,7 +27,7 @@ class userList extends Component {
             userinfo = 'select user to see more information';
         else{
              userinfo = 
-                 <ul> {Object.keys(selectedUser)
+                 <ul className="animated bounceInUp"> {Object.keys(selectedUser)
                      .filter((key) => key !== '_id')
                      .map((key) =>
                          <li key={key}>

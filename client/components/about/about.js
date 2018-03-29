@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './about.css';
 
 export default class AboutUs extends Component {
 
@@ -12,10 +13,10 @@ export default class AboutUs extends Component {
                 I am serving at the army as a professional full stack developer <br />
                 Feel free to contact me for any question or request: <br />
                 <a href="https://github.com/idanavr">
-                    <img height="40px" src="/github.png" title="GitHub" />
+                    <i className="fab fa-github icon github" title="GitHub"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/idanavrahami/" className="logo-link">
-                    <img height="40px" src="/linkedin.png" title="LinkedIn" />
+                <a href="https://www.linkedin.com/in/idanavrahami/">
+                    <i className="fab fa-linkedin icon linkedin" title="LinkedIn"></i>
                 </a>
             </div>
         );
