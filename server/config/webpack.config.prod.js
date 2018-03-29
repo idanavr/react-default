@@ -70,6 +70,10 @@ module.exports = {
             loader: ExtractTextPlugin.extract({
                 use: 'css-loader'
             })
+        },
+        {
+            test: /\.(ttf||eot||woff||woff2||svg)$/,
+            loader: 'url-loader'
         }] // end loaders
     },
     resolve: {

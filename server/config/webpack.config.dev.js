@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'inline-source-map',
@@ -14,6 +15,7 @@ module.exports = {
         filename: 'bundle.js'
     },
     plugins: [
+        new ExtractTextPlugin('main.css'),
         new HtmlWebpackPlugin({
             template: './client/index.html',
             inject: true
@@ -34,7 +36,13 @@ module.exports = {
         },
         {
             test: /\.css$/,
-            loader: 'style-loader!css-loader'
+            loader: ExtractTextPlugin.extract({
+                use: 'css-loader'
+            })
+        },
+        {
+            test: /\.(ttf||eot||woff||woff2||svg)$/,
+            loader: 'url-loader'
         }] // end loaders
     },
     resolve: {
