@@ -3,7 +3,7 @@ import userList from './usersList';
 
 // import assert from 'assert';
 import { expect } from 'chai';
-import jsdom from 'jsdom/lib/old-api';
+// import jsdom from 'jsdom/lib/old-api';
 import fs from 'fs';
 
 describe('Main test', () => {
