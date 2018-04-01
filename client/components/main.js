@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import '../style/main.css';
-import '../style/animate.css';
-import '../style/font-awesome/css/fontawesome-all.css';
+import '../assets/css/animate.css';
+import '../assets/css/font-awesome/css/fontawesome-all.css';
 import { checkTokenFunc } from './login/login.action';
 // Google analytics
 import ReactGA from 'react-ga';
@@ -62,7 +62,7 @@ class Main extends React.Component {
         } 
         return (
             <div className="loadingPage">
-                <img src="/loading.gif" title="loading" />
+                <i className="fa fa-spinner fa-pulse fa-3x" title="loading"></i>
             </div>
         );
         

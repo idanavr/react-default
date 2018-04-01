@@ -48,11 +48,20 @@ class Navbar extends Component {
 						<NavLink activeClassName="activeLink" exact to="/register"> Register</NavLink>
 					</div>
 				</div>;
-				
+
+		const smallMenu = this.state.showMenu
+			? <span className="small-menu fa-stack" onClick={() => this.toggleMenu()}>
+				<i className="far fa-times-circle fa-2x"></i>
+				</span>
+			: <span className="small-menu fa-stack" onClick={() => this.toggleMenu()}>
+				<i className="far fa-circle fa-stack-2x"></i>
+				<i className="fas fa-bars fa-stack-1x">
+				</i>
+			</span>;
+
 		return (
 			<nav className="header">
-				<img src={this.state.showMenu ? '/exit-menu.png' : '/small-menu.png'} className="small-menu"  onClick={() => this.toggleMenu()}>	
-				</img>
+				{smallMenu}
 				{nav}
 			</nav>
 		);

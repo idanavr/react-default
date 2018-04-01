@@ -18,6 +18,7 @@ module.exports = {
         new ExtractTextPlugin('main.css'),
         new HtmlWebpackPlugin({
             template: './client/index.html',
+            favicon: 'client/assets/images/favicon.ico',
             inject: true
         }),
         new webpack.HotModuleReplacementPlugin()
@@ -41,7 +42,7 @@ module.exports = {
             })
         },
         {
-            test: /\.(ttf||eot||woff||woff2||svg)$/,
+            test: /\.(ico||ttf||eot||woff||woff2||svg)$/,
             loader: 'url-loader'
         }] // end loaders
     },

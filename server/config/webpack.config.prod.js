@@ -21,6 +21,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: './client/index.html',
+            favicon: 'client/assets/images/favicon.ico',
             inject: true,
             minify: {
                 removeComments: true,
@@ -72,7 +73,7 @@ module.exports = {
             })
         },
         {
-            test: /\.(ttf||eot||woff||woff2||svg)$/,
+            test: /\.(ico||ttf||eot||woff||woff2||svg)$/,
             loader: 'url-loader'
         }] // end loaders
     },
