@@ -45,7 +45,7 @@ export default function (state = defaultState, action) {
         case removeUser:
             console.log('removing user: ', originalUserList);
             for(let i = 0; i < originalUserList.length; i++) {
-                if(originalUserList[i]._id === action.payload) {
+                if(originalUserList[i].id === action.payload) {
                     originalUserList.splice(i,1);
                     break;
                 }
@@ -62,5 +62,6 @@ export default function (state = defaultState, action) {
 }
 
 function fillterUsers(expr) {
+    console.log(originalUserList);
     return originalUserList.filter((user) => user.firstName.toLowerCase().includes(expr));
 }

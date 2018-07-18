@@ -1,67 +1,101 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const userModel = require('../models/user');
+const userBL = require('../BL/users');
+const logger = new (require('../logger'))('usersAPI');
 const checkAuthority = require('./middlewares');
 
-router.get('/', checkAuthority, (req, res) => {
-    userModel.find((err, users) => {
-        if(err)
+router.get('/', (req, res) => {
+    userBL.getUsers()
+    .then((users) => {
+        if(users.err) {
+            logger.error(users.err);
             res.status(400).end();
-        res.send(users);
+        } else
+            res.send(users);
+    })
+    .catch((error) => {
+        logger.error(error);
+        res.status(500).end();
     });
 });
 
-router.get('/:id', checkAuthority, (req, res) => {
-    if (req.params.id.length === 24) {
-        userModel.findOne({ _id: new mongoose.Types.ObjectId(req.params.id) }, (err, user) => {
-            if (err) {
-                res.status(400);
-                res.end();
-            } else if(!user) {
-                res.status(400);
-                res.send('No user was found.');
-            } else {
-                res.send(user);
-            }
-        });
-    } else
-        res.status(400).send('Invalid id.');
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    if (id.length === 24) {
+        userBL.getUser(id)
+            .then((user) => {
+                if (!user)
+                    res.status(404).end();
+                else
+                    res.send(user);
+            })
+            .catch((err) => {
+                logger.error(err);
+                res.status(500).end();
+            });
+    } else {
+        logger.warn('GET user by id - Invalid id');
+        res.status(400).end();
+    }
 });
 
 router.post('/', (req, res) => {
-    const newUser = new userModel(); // eslint-disable-line new-cap
-    newUser.firstName = req.body.firstName;
-    newUser.lastName = req.body.lastName;
-    newUser.email = req.body.email;
-    newUser.gender = req.body.gender;
-    newUser.password = req.body.password;
-
-    newUser.save((err, user) => {
-        if(err) {
-            console.log(err);
-            const errors = Object.keys(err.errors).map((field) => err.errors[field].message);
-            res.send(errors[0]);
+    userBL.saveUser(req.body)
+    .then((user) => {
+        if(user.err) {
+            logger.error(user.err, req.body);
+            res.status(400).end();
         } else {
-            res.status(201);
-            res.send(user);
+            res.status(201).send(user);
         }
+    })
+    .catch((err) => {
+        logger.error(err, req.body);
+        res.status(500).end();
     });
 });
 
-router.delete('/', checkAuthority, (req, res) => {
-    if(req.body) {
-        userModel.find({ _id: req.body.id }).remove()
-        .then((result) => {
-            res.status(200);
-            res.send(result);
+router.put('/:id'/* , checkAuthority */, (req, res) => {
+    if(!req.params.id) {
+        logger.warn('users PUT method doesn\'t have id in req.params');
+        res.status(404);
+    }
+    userBL.updateUser(req.params.id, req.body)
+        .then((user) => {
+            if(!user) {
+                logger.error(new Error('Update didn\'t return anything.'));
+            } else if (user.err) {
+                logger.error(user.err, { params: req.params, body: req.body });
+                res.status(400).end();
+            } else {
+                res.status(200).send(user);
+            }
         })
-        .catch(() => {
-            res.status(400).end();
+        .catch((err) => {
+            logger.error(err, { params: req.params, body: req.body });
+            res.status(500).end();
         });
+});
+
+router.delete('/', checkAuthority, (req, res) => {
+    const { id } = req.body;
+    if (id) {
+        userBL.deleteUser(id)
+            .then((user) => {
+                if (user.err) {
+                    logger.warn(user.err);
+                    res.status(400).end();
+                } else {
+                    res.status(200).send(user);
+                }
+            })
+            .catch((err) => {
+                logger.error(err);
+                res.status(500).end();
+            });
     } else {
-        res.status(400);
-        res.end();
+        logger.warn('DELETE user by id - Invalid id');
+        res.status(400).end();
     }
 });
 

@@ -1,46 +1,41 @@
 const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
 const app = express();
+module.exports = app;
+const config  = require('./config/config'); 
+global.config = config;
+const setRouting = require('./config/routing');
+const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
 const mongoose = require('mongoose');
-const db = require('./config/db.js'); // insert your own db conection string
+const dbConnString = config.connStr;
 mongoose.Promise = global.Promise;
-mongoose.connect(db.connStr, {
+mongoose.connect(dbConnString, {
     useMongoClient: true
 });
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || config.port;
 
 // webpack setting with hot reload
-const config = require('./config/webpack.config.dev');
+const webpackConfig = require('./config/webpack.config.dev');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
-const compiler = webpack(config);
-const devMiddleware = webpackDevMiddleware(compiler, { noInfo: true, hot: true, publicPath: config.output.publicPath });
+const compiler = webpack(webpackConfig);
+const devMiddleware = webpackDevMiddleware(compiler, { noInfo: true, hot: true, publicPath: webpackConfig.output.publicPath });
 app.use(devMiddleware);
 app.use(webpackHotMiddleware(compiler, { log: console.log }));
 
 app.use(helmet());
 app.use(bodyParser.json());
 
-const userApi = require('./api/users');
-const loginApi = require('./api/login');
-app.use('/api/users', userApi);
-app.use('/api/login', loginApi);
-app.use(express.static(path.join(__dirname, '..', 'public')));
+setRouting(app);
 // app.set('view engine', 'ejs');
-
-app.get('*', (req, res) => {
-    const htmlBuffer = devMiddleware.fileSystem.readFileSync(`${config.output.path}/index.html`);
-    res.send(htmlBuffer.toString());
-});
-
-app.listen(port, (error) => {
-    if (error)
-        console.log(error);
-    else
-        console.log('Listening on port ', port);
-});
+if (!module.parent) {
+    app.listen(port, (error) => {
+        if (error)
+            console.log(error);
+        else
+            console.log('Listening on port ', port);
+    });
+}

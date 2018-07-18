@@ -28,13 +28,13 @@ class userList extends Component {
         else{
              userinfo = 
                  <ul className="animated bounceInUp"> {Object.keys(selectedUser)
-                     .filter((key) => key !== '_id')
+                     .filter((key) => key !== 'id')
                      .map((key) =>
                          <li key={key}>
                              {`${key} : ${selectedUser[key]}`}
                          </li>)}
                          <li>
-                            <button onClick={() => deleteUserById(selectedUser._id) }> Delete </button>
+                            <button onClick={() => deleteUserById(selectedUser.id) }> Delete </button>
                          </li>
                  </ul>;
         }

@@ -1,35 +1,32 @@
 const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
 const app = express();
+module.exports = app;
+const config  = require('./config/config'); 
+global.config = config;
+const setRouting = require('./config/routing');
+const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const compression = require('compression');
 
 const mongoose = require('mongoose');
-const db = require('./config/db.js');
+const dbConnString = config.connStr;
 mongoose.Promise = global.Promise;
-mongoose.connect(db.connStr, {
+mongoose.connect(dbConnString, {
     useMongoClient: true
 });
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || config.port;
 
 app.use(helmet());
-app.use(compression());
-app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(bodyParser.json());
+app.use(compression());
 
-const userApi = require('./api/users');
-const loginApi = require('./api/login');
-app.use('/api/users', userApi);
-app.use('/api/login', loginApi);
+setRouting(app);
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-});
-
-app.listen(port, (error) => {
-    if (error)
-        console.log(error);
-    else
-        console.log('Listening on port ', port);
-});
+if (!module.parent) {
+    app.listen(port, (error) => {
+        if (error)
+            console.log(error);
+        else
+            console.log('Listening on port ', port);
+    });
+}
