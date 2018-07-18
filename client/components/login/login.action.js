@@ -16,13 +16,14 @@ export function LoginFunc(data) {
                         localStorage.setItem('jwtToken', result.data.token);
                         axios.defaults.headers.common['Authorization'] = `Bearer ${result.data.token}`;
                         dispatch({ type: loginSuccess, user: result.data.user, token: result.data.token });
-                    } else if(result.status === 204)
-                        throw Error('Wrong credentials');
-                    else
+                    } else
                         throw Error('Connection failed');
                 })
                 .catch((err) => {
-                    dispatch({ type: loginStatus, payload: err.message });
+                    if(err.response.status === 404)
+                        dispatch({ type: loginStatus, payload: 'Wrong credentials' });
+                    else
+                        dispatch({ type: loginStatus, payload: err.message });
                 });
         }
     };

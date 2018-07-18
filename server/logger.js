@@ -43,25 +43,13 @@ class logger {
         fs.appendFile(filePath, message, { flag: 'a' });
     }
 
-    // info(msg) {
-    //     this._saveLog(msg, 'Info');
-    // }
-
     info(msg, params) {
         this._saveLog(msg, 'Info', params);
     }
-    
-    // warn(msg) {
-    //     this._saveLog(msg, 'Warn');
-    // }
 
     warn(msg, params) {
         this._saveLog(msg, 'Warn', params);
     }
-
-    // error(err) {
-    //     this._saveLog(err, 'Error');
-    // }
 
     error(err, params) {
         this._saveLog(err, 'Error', params);

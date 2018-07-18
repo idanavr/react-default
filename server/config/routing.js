@@ -3,7 +3,7 @@ const path = require('path');
 const distFolder = require('./webpack.config.dev').output.path;
 
 module.exports = (app) => {
-    app.use(express.static(path.join(__dirname, '..', '..', 'public')));    
+    app.use(express.static(path.join(__dirname, '..', '..', 'public')));
 
     const userApi = require('../api/users');
     const loginApi = require('../api/login');

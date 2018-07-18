@@ -2,21 +2,25 @@
 const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 const privatekey = global.config.jwtKey;
+const logger = new (require('../logger'))('Middlewares');
 
 function checkAuthority(req, res, next) {
     const { authorization } = req.headers;
-    if(process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'test')
+    if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'test')
         next();
-    else if(authorization) {
+    else if (authorization) {
         const token = authorization.split(' ')[1];
         jwt.verify(token, privatekey, (err, decoded) => {
-            if(err) 
-                res.status(403).end();
-            else {
+            if (err) {
+                logger.error(err, req.headers);
+                res.status(401).end();
+            } else {
                 userModel.findOne({ _id: decoded.id }, (error, user) => {
-                    if(error || !user)
-                        res.status(403).end();
-                    else {
+                    if (error || !user) {
+                        if (error)
+                            logger.error(error, decoded);
+                        res.status(401).end();
+                    } else {
                         res.locals.user = user;
                         next();
                     }
@@ -24,8 +28,8 @@ function checkAuthority(req, res, next) {
             }
         });
     } else {
-        console.log('no token - checkAuthority');
-        res.status(403).end();
+        logger.warn(new Error('checkAuthority - no token'), req.headers);
+        res.status(401).end();
     }
 }
 

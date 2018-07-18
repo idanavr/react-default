@@ -23,7 +23,7 @@ module.exports = {
                 }
                 const responseUser = responseAdapters.createResponseUserModel(user);
                 return responseUser;
-            }), 
+            }),
 
     saveUser: (params) => {
         const newUser = new userModel(); // eslint-disable-line new-cap
@@ -32,15 +32,14 @@ module.exports = {
         newUser.email = params.email;
         newUser.password = params.password;
         newUser.gender = params.gender;
-        
+
         return newUser.save((err, user) => {
             if (err)
                 return { err };
 
             // return responseAdapters.createResponseUserModel(user); // return doesn't come from this row (returns db schema from 'save' function), also cause error in responseModels.js
-            return user; 
-        })
-        .catch((err) => ({ err }));
+            return user;
+        }).catch((err) => ({ err }));
     },
 
     updateUser: (userId, params) => userModel.findById(userId)
@@ -65,13 +64,13 @@ module.exports = {
 
     deleteUser: (id) =>
         userModel.find({ _id: id }).remove()
-            // .then((user) => {
-            //     if (user.err) {
-            //         return { err: user.err };
-            //     }
-            //     return user;
-            // })
-            // .catch((err) => (
-            //     { err }
-            // ))
+    // .then((user) => {
+    //     if (user.err) {
+    //         return { err: user.err };
+    //     }
+    //     return user;
+    // })
+    // .catch((err) => (
+    //     { err }
+    // ))
 };

@@ -25,26 +25,26 @@ module.exports = {
     ],
     module: {
         loaders: // start loaders
-        [{
-            exclude: /node_modules/,
-            test: /\.js$/,
-            loader: 'babel-loader'
-        },
-        {
-            exclude: /node_modules/,
-            test: /\.json$/,
-            loader: 'json-loader'
-        },
-        {
-            test: /\.css$/,
-            loader: ExtractTextPlugin.extract({
-                use: 'css-loader'
-            })
-        },
-        {
-            test: /\.(ico||ttf||eot||woff||woff2||svg)$/,
-            loader: 'url-loader'
-        }] // end loaders
+            [{
+                exclude: /node_modules/,
+                test: /\.js$/,
+                loader: 'babel-loader'
+            },
+            {
+                exclude: /node_modules/,
+                test: /\.json$/,
+                loader: 'json-loader'
+            },
+            {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract({
+                    use: 'css-loader'
+                })
+            },
+            {
+                test: /\.(ico||ttf||eot||woff||woff2||svg)$/,
+                loader: 'url-loader'
+            }] // end loaders
     },
     resolve: {
         extensions: ['.js', '.jsx']

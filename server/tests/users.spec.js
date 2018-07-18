@@ -34,7 +34,6 @@ describe('Users', () => {
 
     after((done) => {
         const usersEmailList = Object.keys(usersTestData).map((user) => usersTestData[user].email);
-        // const usersEmailList = [usersTestData.generalUser.email, usersTestData.newUser.email, usersTestData.beforeUpdateUser.email, usersTestData.updateUser.email];
         userModel.remove({ email: { $in: usersEmailList } }, (err) => { 
            done();
         });

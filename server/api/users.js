@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userBL = require('../BL/users');
-const logger = new (require('../logger'))('usersAPI');
+const logger = new (require('../logger'))('Users API');
 const checkAuthority = require('./middlewares');
 
 router.get('/', (req, res) => {
@@ -55,7 +55,7 @@ router.post('/', (req, res) => {
     });
 });
 
-router.put('/:id'/* , checkAuthority */, (req, res) => {
+router.put('/:id' , checkAuthority , (req, res) => {
     if(!req.params.id) {
         logger.warn('users PUT method doesn\'t have id in req.params');
         res.status(404);
