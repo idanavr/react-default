@@ -7,7 +7,7 @@ const usersTestData = require('./test-data').users;
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../distServer');
+let server = require('../server');
 
 chai.should();
 chai.use(chaiHttp);

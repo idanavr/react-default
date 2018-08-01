@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm run build",
-    "start": "SET NODE_ENV=production && node server/distServer.js",
+    "start": "SET NODE_ENV=production && node server/server.js",
     "develop": "npm-run-all --parallel serverdebug:open *:watch",
-    "serverdebug:open": "nodemon server/devServer.js",
+    "serverdebug:open": "SET NODE_ENV=development && nodemon server/server.js",
     "prebuild": "npm-run-all --parallel test lint security-check",
     "build": "webpack --config ./server/config/webpack.config.prod",
     "preadd": "npm run build",
