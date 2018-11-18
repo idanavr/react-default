@@ -3,14 +3,16 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-console.log(path.join(__dirname, '..', '..', 'public'));
+const rootFolder = path.join(__dirname, '..', '..');
+const clientConfig = require(path.join(rootFolder, 'client', 'config.js'));
+
 module.exports = {
     devtool: 'source-map',
     entry: [
         './client/index.js'
     ],
     output: {
-        path: path.join(__dirname, '..', '..', 'public'),
+        path: path.join(rootFolder, 'public'),
         publicPath: './',
         filename: 'bundle.js'
     },
@@ -79,5 +81,8 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx']
+    },
+    externals: {
+        'config': JSON.stringify(clientConfig)
     }
 };

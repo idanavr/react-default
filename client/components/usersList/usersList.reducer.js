@@ -1,6 +1,6 @@
 import { getUserList, loadingUserList, showSelectedUser, nextUserList, prevUserList, filterUserList, removeUser } from './usersList.action';
+import { usersInPage } from 'config';
 let originalUserList = [];
-const usersInPage = 5;
 let newDisplayList = originalUserList.slice(0, usersInPage);
 const defaultState = { selectedUser: {}, page: 0, displayList: [], msg: null };
 let newPage = 0;

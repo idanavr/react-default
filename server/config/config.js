@@ -11,8 +11,7 @@ const config = {
     },
     common: {
         port: 3000,
-        jwtKey: 'somePrivateKey',
-        usersAmountToShow: 5,
+        jwtKey: 'somePrivateKey',        
     }
 };
 

@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const rootFolder = path.join(__dirname, '..', '..');
+const clientConfig = require(path.join(rootFolder, 'client', 'config.js'));
 
 module.exports = {
     devtool: 'inline-source-map',
@@ -10,7 +12,7 @@ module.exports = {
         './client/index.js'
     ],
     output: {
-        path: path.join(__dirname, '..', '..', 'public'),
+        path: path.join(rootFolder, 'public'),
         publicPath: '/',
         filename: 'bundle.js'
     },
@@ -52,5 +54,8 @@ module.exports = {
     devServer: {
         contentBase: './',
         port: 3000
+    },
+    externals: {
+        'config': JSON.stringify(clientConfig)
     }
 };
