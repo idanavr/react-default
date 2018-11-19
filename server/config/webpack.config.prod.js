@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const WebpackMd5Hash = require('webpack-md5-hash');
 const rootFolder = path.join(__dirname, '..', '..');
 const clientConfig = require(path.join(rootFolder, 'client', 'config.js'));
 
@@ -14,10 +15,11 @@ module.exports = {
     output: {
         path: path.join(rootFolder, 'public'),
         publicPath: './',
-        filename: 'bundle.js'
+        filename: 'bundle.[chunkhash].js'
     },
     plugins: [
-        new ExtractTextPlugin('main.css'),
+        new WebpackMd5Hash(),
+        new ExtractTextPlugin('main.[contenthash].css'),
         new OptimizeCssAssetsPlugin({
             cssProcessorOptions: { discardComments: { removeAll: true } }
         }),
