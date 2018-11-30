@@ -107,7 +107,7 @@
         "no-extend-native": "warn",
         "no-extra-bind": "warn",
         "no-extra-label": "warn",
-        "no-extra-parens": "warn",
+        "no-extra-parens": "off",
         "no-floating-decimal": "warn",
         "no-implicit-coercion": "warn",
         "no-implicit-globals": "warn",

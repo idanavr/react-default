@@ -40,7 +40,7 @@ export default function (state = defaultState, action) {
             newPage = 0;
             filterExpr = action.payload.toLowerCase();
             newDisplayList = fillterUsers(filterExpr).slice(newPage, newPage + usersInPage);
-            return { ...state, page: newPage, displayList: newDisplayList };
+            return { ...state, selectedUser: {}, page: newPage, displayList: newDisplayList };
 
         case removeUser:
             console.log('removing user: ', originalUserList);

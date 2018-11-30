@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
+const env = process.env.NODE_ENV && process.env.NODE_ENV.trim();
 module.exports = app;
 const config = require('./config/config');
+config.env = env;
 global.config = config;
 const setRouting = require('./config/routing');
 const bodyParser = require('body-parser');
@@ -17,7 +19,7 @@ mongoose.connect(dbConnString, {
 const port = process.env.PORT || config.port;
 
 // webpack setting with hot reload
-if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'development') {
+if (env === 'development') {
     const webpackConfig = require('./config/webpack.config.dev');
     const webpack = require('webpack');
     const webpackDevMiddleware = require('webpack-dev-middleware');

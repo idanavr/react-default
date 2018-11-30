@@ -1,4 +1,5 @@
 const config = {
+    minMillisecondToSaveState: 5000,
     usersInPage: 5,
 };
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const distFolder = require('./webpack.config.dev').output.path;
+const distFolder = require(`./webpack.config.${(global.config.env === 'development' ? 'dev' : 'prod')}`).output.path;
 
 module.exports = (app) => {
     app.use(express.static(path.join(__dirname, '..', '..', 'public')));

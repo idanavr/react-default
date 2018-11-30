@@ -13,7 +13,7 @@ class userList extends Component {
         const { userClick, selectedUser, displayList, nextUsersPage, prevUsersPage, filterUsers, messageToDisplay, deleteUserById } = this.props;
         let userinfo = '';
         let userListBlock = '';
-        if (messageToDisplay === null) {
+        if (messageToDisplay === null || (displayList && displayList.length)) {
             userListBlock =
                 displayList.map((user) =>
                     <li className="animated jackInTheBox" key={user.email} onClick={() => userClick(user)}>
@@ -23,7 +23,7 @@ class userList extends Component {
             userListBlock = messageToDisplay;
         }
 
-        if(Object.keys(selectedUser).length === 0)
+        if(Object.keys(selectedUser || {}).length === 0)
             userinfo = 'select user to see more information';
         else{
              userinfo = 
