@@ -33,32 +33,21 @@ module.exports = {
         newUser.password = params.password;
         newUser.gender = params.gender;
 
-        return newUser.save((err, user) => {
-            if (err)
-                return { err };
-
-            // return responseAdapters.createResponseUserModel(user); // return doesn't come from this row (returns db schema from 'save' function), also cause error in responseModels.js
-            return user;
-        }).catch((err) => ({ err }));
+        const newUserModelPromise = newUser.save();
+        return newUserModelPromise.then((newUserModel) => responseAdapters.createResponseUserModel(newUserModel))
+        .catch((err) => ({ err }));
     },
 
     updateUser: (userId, params) => userModel.findById(userId)
-        .exec((err, userToChange) => {
-            if (err)
-                return { err };
+        .then((userToChange) => {
             userToChange.firstName = params.firstName;
             userToChange.lastName = params.lastName;
             userToChange.email = params.email;
             userToChange.password = params.password;
             userToChange.gender = params.gender;
 
-            return userToChange.save((saveErr, savedUser) => {
-                if (saveErr) {
-                    return { err: saveErr }; // doesn't return it *****
-                }
-                // return responseAdapters.createResponseUserModel(user); // return doesn't come from this row (returns db schema from 'save' function), also cause error in responseModels.js
-                return savedUser;
-            });
+            const updatedUserModelPromise = userToChange.save();
+            return updatedUserModelPromise.then((updatedUserModel) => responseAdapters.createResponseUserModel(updatedUserModel));
         })
         .catch((err) => ({ err })),
 

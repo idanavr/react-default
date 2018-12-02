@@ -28,31 +28,34 @@ class logger {
         return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
 
-    _saveLog(log, type, obj) {
+    _saveLog(type, log, obj) {
         const todayDate = new Date(Date.now());
         const dateTodayFormatted = `${todayDate.getDate()}-${todayDate.getMonth() + 1}-${todayDate.getFullYear()}`;
         const filePath = `${LOG_PATH}/${dateTodayFormatted}.log`;
         const timeNow = this._formatDateToTime(todayDate);
         let message = `[${timeNow}][${type}] ${this._fileName ? `${this._fileName}` : ''} - ${log.stack ? log.stack : log} \r\n`;
-        if(obj)
+        if (obj)
             message += `Parameters: ${JSON.stringify(obj)} \r\n`;
 
         console.log(`logger - ${message}`);
 
         this._ensureDirectoryExists(filePath);
-        fs.appendFile(filePath, message, { flag: 'a' });
+        fs.appendFile(filePath, message, { flag: 'a' }, (err) => {
+            if (err)
+                console.log(err);
+        });
     }
 
     info(msg, params) {
-        this._saveLog(msg, 'Info', params);
+        this._saveLog('Info', msg, params);
     }
 
     warn(msg, params) {
-        this._saveLog(msg, 'Warn', params);
+        this._saveLog('Warn', msg, params);
     }
 
-    error(err, params) {
-        this._saveLog(err, 'Error', params);
+    error(msg, params) {
+        this._saveLog('Error', msg, params);
     }
 }
 

@@ -59,6 +59,7 @@ describe('Users', () => {
                     res.body.should.have.property('firstName').eql(usersTestData.generalUser.firstName);
                     res.body.should.have.property('lastName').eql(usersTestData.generalUser.lastName);
                     res.body.should.have.property('email').eql(usersTestData.generalUser.email);
+                    res.body.should.not.have.property('password');
                     res.body.should.have.property('gender').eql(usersTestData.generalUser.gender);
                     done();
                 });
@@ -88,7 +89,7 @@ describe('Users', () => {
                     res.body.should.have.property('firstName').eql(data.firstName);
                     res.body.should.have.property('lastName').eql(data.lastName);
                     res.body.should.have.property('email').eql(data.email);
-                    res.body.should.have.property('password').eql(data.password);
+                    res.body.should.not.have.property('password');
                     res.body.should.have.property('gender').eql(data.gender);
                     done();
                 });
@@ -109,7 +110,7 @@ describe('Users', () => {
                         res.body.should.have.property('firstName').eql(updatedUserData.firstName);
                         res.body.should.have.property('lastName').eql(updatedUserData.lastName);
                         res.body.should.have.property('email').eql(updatedUserData.email);
-                        res.body.should.have.property('password').eql(updatedUserData.password);
+                        res.body.should.not.have.property('password');
                         res.body.should.have.property('gender').eql(updatedUserData.gender);
                         done();
                     });

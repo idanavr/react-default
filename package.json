@@ -9,7 +9,7 @@
     "develop": "npm-run-all --parallel serverdebug:open *:watch",
     "serverdebug:open": "SET NODE_ENV=development && nodemon server/server.js --watch ./server",
     "prebuild": "npm-run-all --parallel test lint security-check",
-    "build": "rimraf public && webpack --config ./server/config/webpack.config.prod",
+    "build": "rimraf public && webpack --config ./server/settings/webpack.config.prod",
     "preadd": "npm run build",
     "add": "git add .",
     "test-client": "mocha --require ignore-styles --compilers js:babel-core/register client/**/*.test.js",
