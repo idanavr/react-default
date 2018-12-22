@@ -15,7 +15,7 @@ ReactGA.pageview(location.pathname + location.search);
 import Navbar from './nav/nav';
 import About from './about/about';
 import authCheck from './authCheck';
-import UsersList from './usersList/usersList';
+import UserList from './userList/userList';
 import Register from './register/register';
 import Login from './login/login';
 
@@ -32,10 +32,12 @@ class Main extends React.Component {
                 <div className="container">{props.children}</div>
                 <div className="footer">Copyrights © section</div>
             </div>;
+
         const NoMatch = () =>
             <div>
-                <h2>No page was found 404! </h2>
+                <h2>No page was found 404!</h2>
             </div>;
+
         const Welcome = () =>
             <div>
                 <h2>Welcome to React Default</h2>
@@ -43,7 +45,7 @@ class Main extends React.Component {
                 If you have any questions or requests, feel free to contact me. <br /><br />
                 Enjoy it!
             </div>;
-            
+
         if (this.props.authority !== null) {
             return (
                 <BrowserRouter>
@@ -51,7 +53,7 @@ class Main extends React.Component {
                         <Switch>
                             <Route exact path="/" component={Welcome} />
                             <Route path="/about" component={About} />
-                            <Route path="/users" component={authCheck(UsersList, 1)} />
+                            <Route path="/users" component={authCheck(UserList, 1)} />
                             <Route path="/login" component={authCheck(Login, 0)} />
                             <Route path="/register" component={authCheck(Register, 0)} />
                             <Route path="*" component={NoMatch} />
@@ -59,13 +61,12 @@ class Main extends React.Component {
                     </Container>
                 </BrowserRouter>
             );
-        } 
+        }
         return (
             <div className="loadingPage">
                 <i className="fa fa-spinner fa-pulse fa-3x" title="loading"></i>
             </div>
         );
-        
     }
 }
 function mapStateToProps(state) {

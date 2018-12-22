@@ -34,7 +34,7 @@
         ],
         "block-scoped-var": "warn",
         "block-spacing": "warn",
-        "brace-style": "warn",
+        "brace-style": "off",
         "callback-return": "warn",
         "camelcase": "off",
         "class-methods-use-this": "off",

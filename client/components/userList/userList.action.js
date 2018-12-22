@@ -7,7 +7,7 @@ export const filterUserList = 'filterUserList';
 export const removeUser = 'removeUser';
 import axios from 'axios';
 
-export function getUsersListFunc() {
+export function getUserListFunc() {
     return (dispatch) => {
         console.log('loading list..');
         dispatch({ type: loadingUserList, msg: 'loading...' });

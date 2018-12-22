@@ -6,8 +6,8 @@ import axios from 'axios';
 export function LoginFunc(data) {
     console.log('log in function started');
     return (dispatch) => {
-        if (data.errors) {
-            dispatch({ type: loginStatus, payload: data.errors });
+        if (data.error) {
+            dispatch({ type: loginStatus, payload: data.error });
         } else {
             axios.post('/api/login', data)
                 .then((result) => {

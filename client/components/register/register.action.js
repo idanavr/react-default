@@ -5,8 +5,8 @@ import axios from 'axios';
 export function createUserFunc(data) {
     return (dispatch) => {
 
-        if (data.errors)
-            dispatch({ type: creatingUserMsg, msg: data.errors });
+        if (data.error)
+            dispatch({ type: creatingUserMsg, msg: data.error });
         else {
             dispatch({ type: creatingUserMsg, msg: 'Creating user..' });
 
