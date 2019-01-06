@@ -1,7 +1,7 @@
-// These are the models the client will receive from the API.
+// These models are the API responses.
 
 module.exports = {
-    createResponseUserModel: (user) => {
+    createUserModel: (user) => {
         const responseUser = {
             id: user._id,
             firstName: user.firstName,
@@ -11,5 +11,4 @@ module.exports = {
         };
         return responseUser;
     },
-
 };

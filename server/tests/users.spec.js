@@ -2,7 +2,7 @@
 process.env.NODE_ENV = 'test';
 
 const mongoose = require('mongoose');
-const userModel = require('../models/user');
+const userModel = require('../models/db/user');
 const usersTestData = require('./test-data').users;
 
 let chai = require('chai');

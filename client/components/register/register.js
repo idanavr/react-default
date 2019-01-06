@@ -61,17 +61,27 @@ class register extends Component {
     }
 
     checkValidation(newUser) {
-        // Do better validation for string input (like spaces should return warning)
         const removeSpacesRegex = /\s/g;
+        const nameValidation = /^(?!.{51})[0-9a-zA-Z]+(?:[ -][0-9a-zA-Z]+)*$/;
+        const emailValidation = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/;
+        const minPasswordLength = 6;
 
         if (!newUser.firstName.replace(removeSpacesRegex, '').length)
             newUser.error = 'First name is required';
+        else if (!nameValidation.test(newUser.firstName))
+            newUser.error = 'First name is not valid';
         else if (!newUser.lastName.replace(removeSpacesRegex, '').length)
             newUser.error = 'Last name is required';
+        else if (!nameValidation.test(newUser.lastName))
+            newUser.error = 'Last name is not valid';
         else if (!newUser.email.replace(removeSpacesRegex, '').length)
-            newUser.error = 'Email name is required';
+            newUser.error = 'Email is required';
+        else if (!emailValidation.test(newUser.email))
+            newUser.error = 'Email is not valid';
         else if (!newUser.password.replace(removeSpacesRegex, '').length)
             newUser.error = 'Password is required';
+        else if (newUser.password.length < minPasswordLength)
+            newUser.error = `Password must be at least ${minPasswordLength} characters long`;
         else if (!newUser.gender)
             newUser.error = 'Gender is required';
 

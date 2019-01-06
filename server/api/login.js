@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userModel = require('../models/user');
+const userModel = require('../models/db/user');
 const jwt = require('jsonwebtoken');
 const checkAuthority = require('./middlewares');
 const logger = new (require('../logger'))('Login API');

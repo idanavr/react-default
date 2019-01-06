@@ -6,21 +6,33 @@ const enumGender = {
     message: 'Invalid gender'
 };
 
+function nameValidator(str) {
+    return (/^[0-9a-zA-Z]+(?:[ -][0-9a-zA-Z]+)*$/).test(str);
+}
+
 function emailValidator(email) {
-    return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/).test(email);
-  }
+    return (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/).test(email);
+}
 
 const userSchema = new Schema(
     {
         firstName: {
             type: String,
-            maxlength: [40, 'First name is too long'],
+            maxlength: [50, 'First name is too long'],
             required: [true, 'First name is required'],
+            validate: {
+                validator: nameValidator,
+                message: '{VALUE} is not a valid first name'
+            },
         },
         lastName: {
             type: String,
-            maxlength: [40, 'Last name is too long'],
+            maxlength: [50, 'Last name is too long'],
             required: [true, 'Last name is required'],
+            validate: {
+                validator: nameValidator,
+                message: '{VALUE} is not a valid last name'
+            },
         },
         email: {
             type: String,
@@ -30,7 +42,7 @@ const userSchema = new Schema(
             validate: {
                 validator: emailValidator,
                 message: '{VALUE} is not a valid email'
-              },
+            },
         },
         password: {
             type: String,

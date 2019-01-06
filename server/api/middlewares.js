@@ -1,5 +1,5 @@
 /* eslint prefer-destructuring: off, callback-return: off */
-const userModel = require('../models/user');
+const userModel = require('../models/db/user');
 const jwt = require('jsonwebtoken');
 const privatekey = global.config.jwtKey;
 const logger = new (require('../logger'))('Middlewares');

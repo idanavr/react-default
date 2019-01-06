@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const userModel = require('../models/user');
-const responseAdapters = require('./responseModels');
+const userModel = require('../models/db/user');
+const userAdapters = require('../models/client/user');
 
 module.exports = {
     getUsers: () =>
@@ -10,7 +10,7 @@ module.exports = {
                 if (!users) {
                     return null;
                 }
-                const responseUsers = users.map((user) => responseAdapters.createResponseUserModel(user));
+                const responseUsers = users.map((user) => userAdapters.createUserModel(user));
                 return responseUsers;
             }),
 
@@ -21,7 +21,7 @@ module.exports = {
                 if (!user) {
                     return null;
                 }
-                const responseUser = responseAdapters.createResponseUserModel(user);
+                const responseUser = userAdapters.createUserModel(user);
                 return responseUser;
             }),
 
@@ -34,7 +34,7 @@ module.exports = {
         newUser.gender = params.gender;
 
         const newUserModelPromise = newUser.save();
-        return newUserModelPromise.then((newUserModel) => responseAdapters.createResponseUserModel(newUserModel))
+        return newUserModelPromise.then((newUserModel) => userAdapters.createUserModel(newUserModel))
         .catch((err) => ({ err }));
     },
 
@@ -47,7 +47,7 @@ module.exports = {
             userToChange.gender = params.gender;
 
             const updatedUserModelPromise = userToChange.save();
-            return updatedUserModelPromise.then((updatedUserModel) => responseAdapters.createResponseUserModel(updatedUserModel));
+            return updatedUserModelPromise.then((updatedUserModel) => userAdapters.createUserModel(updatedUserModel));
         })
         .catch((err) => ({ err })),
 
