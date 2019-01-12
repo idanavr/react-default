@@ -1,14 +1,14 @@
 .header {
     background: lavender;
     border-bottom: 1px solid black;
-    font-size: 20px;
+    font-size: 18px;
     height: 40px;
-    line-height: 40px;
 }
 
 .navbar {
     width: 1000px;
     margin: 0 auto;
+    line-height: 40px;
 }
 .navbar a, a:visited {
     padding: 5px;
@@ -30,8 +30,8 @@
 }
 .small-menu {
     display: none;
-    margin:10px;
     height: 100%;
+    margin:10px;
 }
 
 
@@ -48,19 +48,18 @@
         position: fixed;
         display: flex;
         flex-direction: column;
-        background-color: #b9b9e6;
         height: 100%;
-        border-radius: 3px;
         width:100px;
-        font: bold;
-        margin: 0px;
+        background-color: #b9b9e6;
+        border-right: 1px solid #0000002e;
+        border-radius: 3px;
         padding-top: 25px;
         padding-left:10px;
-        left: -110px;
+        left: -120px;
+        transition-duration: 1s;
     }
     .open {
         left:0;
-        transition-duration: 2s;
     }
 
     .navbar a {
@@ -69,6 +68,8 @@
     }
 
     .rightNav{
+        display: flex;
+        flex-direction: column;
         float: none;
         margin-top: 10px;
     }

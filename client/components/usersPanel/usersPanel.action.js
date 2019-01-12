@@ -32,7 +32,7 @@ export function filterUserListFunc(expr) {
 }
 
 export function userClickAction(user) { 
-    return { type: showSelectedUser, payload :user };
+    return { type: showSelectedUser, payload: user };
 }
 
 export function deleteUserByIdFunc(id) {
@@ -41,7 +41,7 @@ export function deleteUserByIdFunc(id) {
         console.log('Deleting user: ', id);
         return axios.delete('/api/users', { data: { id } })
             .then(() => {
-                dispatch({ type: showSelectedUser, payload: '' });
+                dispatch({ type: showSelectedUser, payload: {} });
                 dispatch({ type: removeUser, payload: id });
             });
     };

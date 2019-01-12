@@ -1,4 +1,4 @@
-import { getUserList, loadingUserList, showSelectedUser, nextUserList, prevUserList, filterUserList, removeUser } from './userList.action';
+import { getUserList, loadingUserList, showSelectedUser, nextUserList, prevUserList, filterUserList, removeUser } from './usersPanel.action';
 import { usersInPage } from 'config';
 let originalUserList = [];
 let newDisplayList = originalUserList.slice(0, usersInPage);

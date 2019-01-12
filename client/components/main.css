@@ -8,6 +8,7 @@ body {
     width: 100%;
     background-color:#e9ebee;
     margin: 0px;
+    font-family: sans-serif;
 }
 
 button {
@@ -47,14 +48,14 @@ li {
 
 .container {
     padding-top:10px;
-    /* width: 1000px; */
     display: flex;
     width: 80%;
     margin: auto auto ;
     font:  25px 'Merienda One', Helvetica, sans-serif;
     text-align: center;
-}
-.container > form, div { /* Should be on all elements */
+} 
+.container > div, 
+.container > form { 
     margin:auto;
 }
 

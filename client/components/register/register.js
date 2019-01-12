@@ -5,7 +5,7 @@ import { createUserFunc } from './register.action';
 import { LoginFunc } from '../login/login.action';
 import './register.css';
 
-class register extends Component {
+class Register extends Component {
 
     render() {
         const { newUserStatus } = this.props;
@@ -102,10 +102,10 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-register.propTypes = {
+Register.propTypes = {
     newUserStatus: PropTypes.string,
     createUser: PropTypes.func.isRequired,
     userLogin: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

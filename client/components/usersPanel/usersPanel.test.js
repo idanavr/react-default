@@ -1,5 +1,5 @@
 /* eslint-disable */
-import userList from './userList';
+import userList from './usersPanel';
 
 // import assert from 'assert';
 import { expect } from 'chai';

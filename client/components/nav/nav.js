@@ -16,61 +16,66 @@ class Navbar extends Component {
 		this.state = { showMenu: false };
 	}
 
+	render() {
+		const nav = this.getNavBar();
+		const mobileMenuIcon = this.getMobileMenuIcon();
+
+		return (
+			<nav className="header">
+				{mobileMenuIcon}
+				{nav}
+			</nav>
+		);
+	}
+	
 	toggleMenu() {
 		this.setState({ showMenu: !this.state.showMenu });
 	}
 
-	beforeLogout() {
-		this.props.Logout();
-	}
+	getNavBar() {
+		const { authority, user, Logout } = this.props;
 
-	render() {
-		const { authorities, user } = this.props;
-
-		let nav = '';
-		if (authorities)
-			nav =
-				<div className={`navbar ${(this.state.showMenu ? 'open' : '')}`}>
-					<NavLink activeClassName="activeLink" exact to="/"> Home </NavLink>
-					<NavLink activeClassName="activeLink" exact to="/about"> About us </NavLink>
-					<NavLink activeClassName="activeLink" to="/users"> Users </NavLink>
-					<div className="rightNav">
-						{user.firstName},<NavLink to="#" onClick={() => this.beforeLogout()}> Logout </NavLink>
-					</div>
-				</div>;
-		else
-			nav =
+		if (authority)
+			return (
 				<div className={`navbar ${(this.state.showMenu ? 'open' : '')}`}>
 					<NavLink activeClassName="activeLink" exact to="/">Home</NavLink>
-					<NavLink activeClassName="activeLink" exact to="/about"> About us</NavLink>
+					<NavLink activeClassName="activeLink" exact to="/about">About us</NavLink>
+					<NavLink activeClassName="activeLink" exact to="/users">Users</NavLink>
 					<div className="rightNav">
-						<NavLink activeClassName="activeLink" exact to="/login"> Login</NavLink>
-						<NavLink activeClassName="activeLink" exact to="/register"> Register</NavLink>
+						<div>
+							{user.firstName}, <NavLink to="#" onClick={() => Logout()}>Logout</NavLink>
+						</div>
 					</div>
-				</div>;
-
-		const smallMenu = this.state.showMenu
-			? <span className="small-menu fa-stack" onClick={() => this.toggleMenu()}>
-				<i className="far fa-times-circle fa-2x"></i>
-				</span>
-			: <span className="small-menu fa-stack" onClick={() => this.toggleMenu()}>
-				<i className="far fa-circle fa-stack-2x"></i>
-				<i className="fas fa-bars fa-stack-1x">
-				</i>
-			</span>;
+				</div>);
 
 		return (
-			<nav className="header">
-				{smallMenu}
-				{nav}
-			</nav>
-		);
+			<div className={`navbar ${(this.state.showMenu ? 'open' : '')}`}>
+				<NavLink activeClassName="activeLink" exact to="/">Home</NavLink>
+				<NavLink activeClassName="activeLink" exact to="/about">About us</NavLink>
+				<div className="rightNav">
+					<NavLink activeClassName="activeLink" exact to="/login">Login</NavLink>
+					<NavLink activeClassName="activeLink" exact to="/register">Register</NavLink>
+				</div>
+			</div>);
+	}
+
+	getMobileMenuIcon() {
+		return (
+			this.state.showMenu
+				? <span className="small-menu fa-stack" onClick={() => this.toggleMenu()}>
+					<i className="far fa-times-circle fa-2x"></i>
+				</span>
+				: <span className="small-menu fa-stack" onClick={() => this.toggleMenu()}>
+					<i className="far fa-circle fa-stack-2x"></i>
+					<i className="fas fa-bars fa-stack-1x">
+					</i>
+				</span>);
 	}
 }
 
 function mapStateToProps(state) {
 	return {
-		authorities: state.loginReducer.auth,
+		authority: state.loginReducer.auth,
 		user: state.loginReducer.user,
 	};
 }
@@ -82,7 +87,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 Navbar.propTypes = {
-	authorities: PropTypes.string.isRequired,
+	authority: PropTypes.string.isRequired,
 	user: PropTypes.object,
 	Logout: PropTypes.func.isRequired,
 	history: PropTypes.object.isRequired,

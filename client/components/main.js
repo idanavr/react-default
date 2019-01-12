@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import '../style/main.css';
+import './main.css';
 import '../assets/css/animate.css';
 import '../assets/css/font-awesome/css/fontawesome-all.css';
 import { checkTokenFunc } from './login/login.action';
@@ -15,7 +15,7 @@ ReactGA.pageview(location.pathname + location.search);
 import Navbar from './nav/nav';
 import About from './about/about';
 import authCheck from './authCheck';
-import UserList from './userList/userList';
+import UsersPanel from './usersPanel/usersPanel';
 import Register from './register/register';
 import Login from './login/login';
 
@@ -52,10 +52,10 @@ class Main extends React.Component {
                     <Container>
                         <Switch>
                             <Route exact path="/" component={Welcome} />
-                            <Route path="/about" component={About} />
-                            <Route path="/users" component={authCheck(UserList, 1)} />
-                            <Route path="/login" component={authCheck(Login, 0)} />
-                            <Route path="/register" component={authCheck(Register, 0)} />
+                            <Route exact path="/about" component={About} />
+                            <Route exact path="/users" component={authCheck(UsersPanel, 1)} />
+                            <Route exact path="/login" component={authCheck(Login, 0)} />
+                            <Route exact path="/register" component={authCheck(Register, 0)} />
                             <Route path="*" component={NoMatch} />
                         </Switch>
                     </Container>

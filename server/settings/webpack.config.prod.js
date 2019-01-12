@@ -14,7 +14,7 @@ module.exports = {
     ],
     output: {
         path: path.join(rootFolder, 'public'),
-        publicPath: './',
+        publicPath: '/',
         filename: 'bundle.[chunkhash].js'
     },
     plugins: [
