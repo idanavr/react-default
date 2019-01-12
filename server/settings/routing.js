@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
-const distFolder = require(`./webpack.config.${(global.config.env === 'development' ? 'dev' : 'prod')}`).output.path;
+const distFolder = path.join(__dirname, '..', '..', 'public');
 
 module.exports = (app) => {
-    app.use(express.static(path.join(__dirname, '..', '..', 'public')));
+    app.use(express.static(distFolder));
 
     const userApi = require('../api/users');
     const loginApi = require('../api/login');

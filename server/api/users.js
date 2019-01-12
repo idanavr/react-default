@@ -4,7 +4,7 @@ const userBL = require('../BL/users');
 const logger = new (require('../logger'))('Users API');
 const checkAuthority = require('./middlewares');
 
-router.get('/', (req, res) => {
+router.get('/', checkAuthority, (req, res) => {
     userBL.getUsers()
     .then((users) => {
         if(users.err) {
@@ -55,7 +55,7 @@ router.post('/', (req, res) => {
     });
 });
 
-router.put('/:id' , checkAuthority , (req, res) => {
+router.put('/:id' , checkAuthority, (req, res) => {
     if(!req.params.id) {
         logger.warn('users PUT method doesn\'t have id in req.params');
         res.status(404);
