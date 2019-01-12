@@ -1,23 +1,29 @@
 # React Default
 
-This is an example of a basic website using React and Node.
+This project may be used as a starter kit for a new projects based on either Node.js or React.js.
 
-It may also be used as a start kit for a new projects.
-
-The project minifies js and css files when running build, and also using fonts instead of images for better performance.
-You will have animate.css and font-awesome ready to be used, you just need to write the class you want to use!
-
-The main features my project includes:
+The main features my project includes: 
 - React.js
 - Redux
 - Node.js
+- Webpack
 - Chai testing
 - Mongoose
 - JSON Web Token
 - ESLint
+- Minify + hash js and css files for production
+- Animate.css and Font-Awesome implemented
 
-** I recommend using yarn as package manager.
+Look at package.json to see the whole list of packages.
 
-Look at package.json to see the whole list, or just clone it and start your project!
+Setup tutorial:
+- Clone master to your local machine
+- Run `npm install`
+- Set up these environment variables: <br />
+reactdefaultTestDB - connection string to mongodb for development <br />
+reactdefaultProdDB - connection string to mongodb for production
+- Run `npm run develop` for develop mode or `npm start` for production
+
+Thats it! 😀
 
 [Online Demo](https://reactdefault.herokuapp.com/).
