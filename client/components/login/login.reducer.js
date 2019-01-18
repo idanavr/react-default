@@ -1,12 +1,12 @@
-import { loginStatus, loginSuccess } from './login.action';
+import { loginStatusMessage, setLoginCredentials } from './login.action';
 const defaultState = { msg : '', user: null, auth: null };
 
 export default function (state = defaultState, action) {
     switch (action.type) {
-        case loginStatus:
+        case loginStatusMessage:
             return { ...state, msg: action.payload };
 
-        case loginSuccess:
+        case setLoginCredentials:
             console.log(action.token);
             return { ...state, msg: '', user: action.user, auth: action.token };
 
