@@ -43,8 +43,8 @@ router.post('/', (req, res) => {
     userBL.saveUser(req.body)
     .then((user) => {
         if(user.err) {
-            logger.error(user.err, req.body);
-            res.status(400).end();
+            logger.info(user.err, req.body);
+            res.status(400).send(user.err.clientMessage);
         } else {
             res.status(201).send(user);
         }

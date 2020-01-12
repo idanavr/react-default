@@ -15,7 +15,11 @@ const mongoose = require('mongoose');
 const dbConnString = config.connStr;
 mongoose.Promise = global.Promise;
 mongoose.connect(dbConnString, {
-    useMongoClient: true
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+}).catch(error => {
+    logger.error(error);
 });
 const port = process.env.PORT || config.port;
 

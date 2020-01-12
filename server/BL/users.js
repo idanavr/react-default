@@ -52,7 +52,7 @@ module.exports = {
         .catch((err) => ({ err })),
 
     deleteUser: (id) =>
-        userModel.find({ _id: id }).remove()
+        userModel.find({ _id: id }).deleteOne()
     // .then((user) => {
     //     if (user.err) {
     //         return { err: user.err };

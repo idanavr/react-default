@@ -2,11 +2,11 @@ const envType = process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'test' ?
 
 const config = {
     production: {
-        connStr: process.env.reactdefaultProdDB,
+        connStr: process.env.reactdefaultProdDB || '',
         logPath: 'log/production',
     },
     test: {
-        connStr: process.env.reactdefaultTestDB,
+        connStr: process.env.reactdefaultTestDB || '',
         logPath: 'log/test',
     },
     common: {

@@ -27,14 +27,11 @@ describe('Users', () => {
             generalUserId = user._id;
             done();
         })
-        .catch((err) => {
-            done();
-        });
     });
 
     after((done) => {
         const usersEmailList = Object.keys(usersTestData).map((user) => usersTestData[user].email);
-        userModel.remove({ email: { $in: usersEmailList } }, (err) => { 
+        userModel.deleteMany({ email: { $in: usersEmailList } }, (err) => { 
            done();
         });
     });

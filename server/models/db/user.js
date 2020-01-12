@@ -55,14 +55,28 @@ const userSchema = new Schema(
             required: [true, 'Gender is required'],
             enum: enumGender
         },
-        // date: {
-        //     type: Date,
-        //     default: Date.now,
-        // },
+        createdDate: {
+            type: Date,
+            default: Date.now,
+        },
     },
     {
         versionKey: false,
     }
 );
+
+var handleDuplicateUniqueKey = function (error, res, next) {
+    if (error.name === 'MongoError' && error.code === 11000) {
+        error.clientMessage = 'The email is already taken';
+        next(error);
+    } else {
+        next();
+    }
+};
+
+userSchema.post('save', handleDuplicateUniqueKey);
+userSchema.post('update', handleDuplicateUniqueKey);
+userSchema.post('findOneAndUpdate', handleDuplicateUniqueKey);
+userSchema.post('insertMany', handleDuplicateUniqueKey);
 
 module.exports = mongoose.model('users', userSchema);

@@ -19,8 +19,12 @@ export function createUserFunc(data) {
 
                 })
                 .catch((err) => {
-                    console.log(err);
-                    dispatch({ type: creatingUserMsg, msg: 'User creation failed' });
+                    const errMsg = err.response.data;
+                    console.log(errMsg);
+                    if (errMsg && typeof(errMsg) === 'string')
+                        dispatch({ type: creatingUserMsg, msg: errMsg });
+                    else
+                        dispatch({ type: creatingUserMsg, msg: 'User creation failed' });
                 });
         }
     };
