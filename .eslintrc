@@ -221,7 +221,7 @@
             "never"
         ],
         "space-infix-ops": "warn",
-        "space-unary-ops": "warn",
+        "space-unary-ops": "off",
         "spaced-comment": "warn",
         "strict": "warn",
         "switch-colon-spacing": "warn",

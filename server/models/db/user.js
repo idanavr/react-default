@@ -65,13 +65,13 @@ const userSchema = new Schema(
     }
 );
 
-var handleDuplicateUniqueKey = function (error, res, next) {
+const handleDuplicateUniqueKey = function handleDuplicateUniqueKey (error, res, next) {
     if (error.name === 'MongoError' && error.code === 11000) {
         error.clientMessage = 'The email is already taken';
-        next(error);
-    } else {
-        next();
+        return next(error);
     }
+    return next();
+    
 };
 
 userSchema.post('save', handleDuplicateUniqueKey);
