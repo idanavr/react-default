@@ -1,7 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const rootFolder = path.join(__dirname, '..', '..');
 const clientConfig = require(path.join(rootFolder, 'client', 'config.js'));
 
@@ -11,13 +12,17 @@ module.exports = {
         'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
         './client/index.js'
     ],
+    mode: 'development',
+    performance: { // false just to avoid a few tips which will be taken care of later
+        hints: false
+    },
     output: {
         path: path.join(rootFolder, 'public'),
         publicPath: '/',
         filename: 'bundle.js'
     },
     plugins: [
-        new ExtractTextPlugin('main.css'),
+        new MiniCssExtractPlugin('main.css'),
         new HtmlWebpackPlugin({
             template: './client/index.html',
             favicon: 'client/assets/images/favicon.ico',
@@ -26,7 +31,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin()
     ],
     module: {
-        loaders: // start loaders
+        rules: // start loaders
             [{
                 exclude: /node_modules/,
                 test: /\.js$/,
@@ -38,11 +43,12 @@ module.exports = {
                 loader: 'json-loader'
             },
             {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
-                    use: 'css-loader'
-                })
-            },
+                test: /\.(css)$/,
+                use: [
+                  MiniCssExtractPlugin.loader,
+                  'css-loader',
+                ],
+              },
             {
                 test: /\.(ico||ttf||eot||woff||woff2||svg)$/,
                 loader: 'url-loader'
