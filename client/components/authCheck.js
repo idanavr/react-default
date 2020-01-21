@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 export default function(ComposedComponent, authorityType) {  
   class Authentication extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
       if(!this.props.auth && authorityType === 1) {
         this.props.history.replace('/login');
       } else if(this.props.auth && authorityType === 0) {
@@ -13,10 +13,10 @@ export default function(ComposedComponent, authorityType) {
       }
     }
 
-    componentWillUpdate(nextProps) {
-      if(!nextProps.auth && authorityType === 1) {
+    componentDidUpdate() { // this function can have 2 variables: prevProps, prevState
+      if(!this.props.auth && authorityType === 1) {
         this.props.history.replace('/login');
-      } else if(nextProps.auth && authorityType === 0) {
+      } else if(this.props.auth && authorityType === 0) {
         this.props.history.replace('/');
       }
     }

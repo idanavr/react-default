@@ -25,11 +25,10 @@ module.exports = {
     },
     plugins: [
         new WebpackMd5Hash(),
-        new MiniCssExtractPlugin(
-            {
-                filename: '[name].[contenthash].css',
-                chunkFilename: '[id].[contenthash].css',
-            }),
+        new MiniCssExtractPlugin({
+            filename: '[name].[contenthash].css',
+            chunkFilename: '[id].[contenthash].css',
+        }),
         new OptimizeCssAssetsPlugin({
             cssProcessorOptions: { discardComments: { removeAll: true } }
         }),

@@ -21,7 +21,7 @@ import Login from './login/login';
 
 class Main extends React.Component {
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.checkToken(localStorage.jwtToken);
     }
 

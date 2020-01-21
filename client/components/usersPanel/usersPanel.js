@@ -7,7 +7,7 @@ import UserList from './userList/userList';
 import UserInfo from './userInfo/userInfo';
 
 class UsersPanel extends Component {
-    componentWillMount() {
+    componentDidMount() {
         this.props.getUserList();
     }
 

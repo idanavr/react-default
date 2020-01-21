@@ -18,7 +18,7 @@ mongoose.connect(dbConnString, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-}).catch(error => {
+}).catch((error) => {
     logger.error(error);
 });
 const port = process.env.PORT || config.port;
