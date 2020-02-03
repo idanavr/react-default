@@ -37,7 +37,7 @@ class Register extends Component {
                     <div>
                         <button>Submit</button>
                     </div>
-                    <h3> {newUserStatus} </h3>
+                    <h5> {newUserStatus} </h5>
                 </form>
             </div>
         );

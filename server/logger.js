@@ -33,7 +33,7 @@ class logger {
         const dateTodayFormatted = `${todayDate.getDate()}-${todayDate.getMonth() + 1}-${todayDate.getFullYear()}`;
         const filePath = `${LOG_PATH}/${dateTodayFormatted}.log`;
         const timeNow = this._formatDateToTime(todayDate);
-        let message = `[${timeNow}][${type}] ${this._fileName ? `${this._fileName}` : ''} - ${log.stack ? log.stack : log} \r\n`;
+        let message = `[${timeNow}][${type}] ${this._fileName ? `${this._fileName}` : ''} - ${log.stack ? log.stack : JSON.stringify(log)} \r\n`;
         if (obj)
             message += `Parameters: ${JSON.stringify(obj)} \r\n`;
 

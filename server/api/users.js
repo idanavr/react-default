@@ -60,13 +60,14 @@ router.put('/:id' , checkAuthority, (req, res) => {
         logger.warn('users PUT method doesn\'t have id in req.params');
         res.status(404);
     }
+    req.body.id = req.params.id;
     userBL.updateUser(req.params.id, req.body)
         .then((user) => {
             if(!user) {
                 logger.error(new Error('Update didn\'t return anything.'));
             } else if (user.err) {
                 logger.error(user.err, { params: req.params, body: req.body });
-                res.status(400).end();
+                res.status(400).send(user.err.clientMessage);
             } else {
                 res.status(200).send(user);
             }

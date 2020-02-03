@@ -21,6 +21,11 @@ module.exports = {
         publicPath: '/',
         filename: 'bundle.js'
     },
+    devServer: {
+        contentBase: './',
+        port: 3000,
+        historyApiFallback: 'true'
+    },
     plugins: [
         new MiniCssExtractPlugin('main.css'),
         new HtmlWebpackPlugin({
@@ -56,10 +61,6 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.jsx']
-    },
-    devServer: {
-        contentBase: './',
-        port: 3000
     },
     externals: {
         'config': JSON.stringify(clientConfig)

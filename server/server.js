@@ -23,6 +23,13 @@ mongoose.connect(dbConnString, {
 });
 const port = process.env.PORT || config.port;
 
+app.use(helmet());
+app.use(bodyParser.json());
+app.use(compression());
+
+// there is one route in this file in addition to the function, in case of development mode
+setRouting(app, env);
+
 // webpack setting with hot reload
 if (env === 'development') {
     const webpackConfig = require('./settings/webpack.config.dev');
@@ -34,13 +41,22 @@ if (env === 'development') {
     const devMiddleware = webpackDevMiddleware(compiler, { noInfo: true, hot: true, publicPath: webpackConfig.output.publicPath });
     app.use(devMiddleware);
     app.use(webpackHotMiddleware(compiler, { log: console.log }));
+
+    app.use('*', (req, res, next) => {
+        const filename = `${compiler.outputPath}/index.html`;
+        devMiddleware.waitUntilValid(() => {
+          compiler.outputFileSystem.readFile(filename, (err, result) => {
+            if (err) {
+              next(err);
+              return;
+            }
+            res.set('content-type','text/html');
+            res.send(result);
+          });
+        });
+      });
 }
 
-app.use(helmet());
-app.use(bodyParser.json());
-app.use(compression());
-
-setRouting(app);
 // app.set('view engine', 'ejs');
 if (!module.parent) {
     app.listen(port, (error) => {

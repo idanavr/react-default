@@ -15,6 +15,7 @@ ReactGA.pageview(location.pathname + location.search);
 import Navbar from './nav/nav';
 import About from './about/about';
 import authCheck from './authCheck';
+import UserEditProfile from './userPanel/userEditProfile/userEditProfile';
 import UsersPanel from './usersPanel/usersPanel';
 import Register from './register/register';
 import Login from './login/login';
@@ -54,6 +55,7 @@ class Main extends React.Component {
                             <Route exact path="/" component={Welcome} />
                             <Route exact path="/about" component={About} />
                             <Route exact path="/users" component={authCheck(UsersPanel, 1)} />
+                            <Route exact path="/user/edit" component={authCheck(UserEditProfile, 1)} />
                             <Route exact path="/login" component={authCheck(Login, 0)} />
                             <Route exact path="/register" component={authCheck(Register, 0)} />
                             <Route path="*" component={NoMatch} />

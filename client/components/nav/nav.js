@@ -40,6 +40,7 @@ class Navbar extends Component {
 				<div className={`navbar ${(this.state.showMenu ? 'open' : '')}`}>
 					<NavLink activeClassName="activeLink" exact to="/">Home</NavLink>
 					<NavLink activeClassName="activeLink" exact to="/about">About us</NavLink>
+					<NavLink activeClassName="activeLink" exact to="/user/edit">Edit Profile</NavLink>
 					<NavLink activeClassName="activeLink" exact to="/users">Users</NavLink>
 					<div className="rightNav">
 						<div>

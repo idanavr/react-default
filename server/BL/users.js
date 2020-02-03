@@ -40,10 +40,13 @@ module.exports = {
 
     updateUser: (userId, params) => userModel.findById(userId)
         .then((userToChange) => {
+            if (userToChange.password !== params.oldPassword)
+                return { err: { clientMessage: 'Incorrect password' } };
             userToChange.firstName = params.firstName;
             userToChange.lastName = params.lastName;
             userToChange.email = params.email;
-            userToChange.password = params.password;
+            if (params.newPassword)
+                userToChange.password = params.newPassword;
             userToChange.gender = params.gender;
 
             const updatedUserModelPromise = userToChange.save();

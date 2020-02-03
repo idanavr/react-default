@@ -25,7 +25,8 @@ module.exports = {
             firstName: 'another first name',
             lastName: 'another last name',
             email: 'updated@email.com',
-            password: '123456789',
+            oldPassword: '12345678',
+            newPassword: '12345679',
             gender: 'female'
         }
     },

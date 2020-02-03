@@ -79,4 +79,4 @@ userSchema.post('update', handleDuplicateUniqueKey);
 userSchema.post('findOneAndUpdate', handleDuplicateUniqueKey);
 userSchema.post('insertMany', handleDuplicateUniqueKey);
 
-module.exports = mongoose.model('users', userSchema);
+module.exports = mongoose.model('User', userSchema);
