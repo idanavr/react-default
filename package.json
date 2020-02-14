@@ -74,7 +74,7 @@
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-md5-hash": "^0.0.6",
-    "yarn": "^1.21.1"
+    "yarn": "^1.22.0"
   },
   "babel": {
     "presets": [
