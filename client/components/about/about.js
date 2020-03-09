@@ -1,22 +1,25 @@
-import React, { Component } from 'react';
-import './about.css';
+import React from 'react';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import './about.scss';
 
-export default class AboutUs extends Component {
-
-    render() {
-        return (
+export default function AboutUs() {
+    return (
+        <div id="about" className="animated fadeIn">
+            <h2>About Us</h2>
             <div>
-                <h2>About Us</h2>
                 My name is Idan Avrahami <br />
                 I am working as a professional full stack developer <br />
                 Feel free to contact me for any question or request: <br />
-                <a href="https://github.com/idanavr">
-                    <i className="fab fa-github icon github" title="GitHub"></i>
-                </a>
+            </div>
+            <div id="social-networks">
                 <a href="https://www.linkedin.com/in/idanavrahami/">
-                    <i className="fab fa-linkedin icon linkedin" title="LinkedIn"></i>
+                    <GitHubIcon fontSize="large" style={{ color: '#24292e' }} />
+                </a>
+                <a href="https://github.com/idanavr">
+                    <LinkedInIcon fontSize="large" style={{ color: '#0077b5' }} />
                 </a>
             </div>
-        );
-    }
+        </div>
+    );
 } 

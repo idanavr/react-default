@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import './main.css';
+import './main.scss';
 import '../assets/css/animate.css';
-import '../assets/css/font-awesome/css/fontawesome-all.css';
-import { checkTokenFunc } from './login/login.action';
+import { checkTokenAction } from './login/login.action';
 // Google analytics
 import ReactGA from 'react-ga';
 ReactGA.initialize('UA-108374358-1');
@@ -19,6 +18,7 @@ import UserEditProfile from './userPanel/userEditProfile/userEditProfile';
 import UsersPanel from './usersPanel/usersPanel';
 import Register from './register/register';
 import Login from './login/login';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 
 class Main extends React.Component {
 
@@ -40,7 +40,7 @@ class Main extends React.Component {
             </div>;
 
         const Welcome = () =>
-            <div>
+            <div className="animated fadeIn">
                 <h2>Welcome to React Default</h2>
                 I hope this template will help you to build your projects. <br />
                 If you have any questions or requests, feel free to contact me. <br /><br />
@@ -66,7 +66,7 @@ class Main extends React.Component {
         }
         return (
             <div className="loadingPage">
-                <i className="fa fa-spinner fa-pulse fa-3x" title="loading"></i>
+                <HourglassEmptyIcon fontSize="large" />
             </div>
         );
     }
@@ -79,7 +79,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        checkToken: (token) => dispatch(checkTokenFunc(token)),
+        checkToken: (token) => dispatch(checkTokenAction(token)),
     };
 }
 

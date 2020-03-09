@@ -1,67 +1,128 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
-import { updateUserFunc } from './userEditProfile.action';
-import './userEditProfile.css';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUserAction } from './userEditProfile.action';
+import './userEditProfile.scss';
+import TextField from '@material-ui/core/TextField';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import Button from '@material-ui/core/Button';
 
-class userEditProfile extends Component {
+function UserEditProfile() {
+    const currentUser = useSelector((state) => state.loginReducer.user) || {};
+    const { msg: updateUserStatus } = useSelector((state) => state.userEditProfileReducer);
+    const [submtting, setSubmitting] = useState(false);
+    const dispatch = useDispatch();
+    const [formData, setFormData] = useState({
+        firstName: currentUser.firstName || '',
+        lastName: currentUser.lastName || '',
+        email: currentUser.email || '',
+        oldPassword: '',
+        newPassword: '',
+        gender: currentUser.gender || '',
+    });
 
-    render() {
-        const { updateUserStatus } = this.props;
-        console.log(this.props.user);
-        const currentInfo = this.props.user;
+    return (
+        <div>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm" onSubmit={(e) => beforeUpdateUser(e)} role="form">
+                <TextField
+                    defaultValue={currentUser.firstName}
+                    id="firstName"
+                    label="First Name"
+                    margin="normal"
+                    required
+                    fullWidth
+                    autoFocus
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                />
+                <TextField
+                    defaultValue={currentUser.lastName}
+                    id="lastName"
+                    label="Last Name"
+                    margin="normal"
+                    required
+                    fullWidth
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                />
+                <TextField
+                    defaultValue={currentUser.email}
+                    id="email"
+                    label="Email Address"
+                    margin="normal"
+                    required
+                    fullWidth
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                />
+                <TextField
+                    id="oldPassword"
+                    type="password"
+                    label="Old Password"
+                    margin="normal"
+                    required
+                    fullWidth
+                    onChange={(e) => setFormData({ ...formData, oldPassword: e.target.value })}
+                />
+                <TextField
+                    id="newPassword"
+                    type="password"
+                    label="New Password"
+                    margin="normal"
+                    fullWidth
+                    onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
+                />
+                <RadioGroup aria-label="position" name="position" row defaultValue={currentUser.gender && currentUser.gender.toLowerCase()}
+                    onChange={(e) => setFormData({ ...formData, gender: e.target.value })}>
+                    <FormControlLabel
+                        value="male"
+                        control={<Radio color="primary" />}
+                        label="Male"
+                        labelPlacement="top"
+                    />
+                    <FormControlLabel
+                        value="female"
+                        control={<Radio color="primary" />}
+                        label="Female"
+                        labelPlacement="top"
+                    />
+                </RadioGroup>
+                <Button
+                    disabled={submtting}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                >
+                    {submtting ? 'Updating...' : 'Update'}
+                </Button>
+                <div className="status-msg">
+                    {updateUserStatus}
+                </div>
+            </form>
+        </div>
+    );
 
-        return (
-            <div>
-                <h2>Edit Profile</h2>
-                <form id="editProfileForm" onSubmit={(e) => this.beforeUpdateUser(e)} role="form">
-                    <div>
-                        <input type="text" id="fName" defaultValue={currentInfo.firstName} placeholder="First Name" ref={(obj) => { this.firstNameInput = obj; }} required />
-                    </div>
-                    <div>
-                        <input type="text" id="lName" defaultValue={currentInfo.lastName} placeholder="Last Name" ref={(obj) => { this.lastNameInput = obj; }} required />
-                    </div>
-                    <div>
-                        <input type="email" id="email" defaultValue={currentInfo.email} placeholder="Email" ref={(obj) => { this.emailInput = obj; }} readOnly />
-                    </div>
-                    <div>
-                        <input type="password" id="oldPassword" placeholder="Old Password" ref={(obj) => { this.oldPasswordInput = obj; }} required />
-                    </div>
-                    <div>
-                        <input type="password" id="newPassword" placeholder="New Password" ref={(obj) => { this.newPasswordInput = obj; }} />
-                    </div>
-                    <div style={{ 'fontSize': '20px' }}>
-                        <label htmlFor="radioMale">Male</label>
-                        <input type="radio" id="radioMale" name="gender" value="male" defaultChecked={currentInfo.gender === 'male'} required />
-                        <label htmlFor="radioFemale">Female</label>
-                        <input type="radio" id="radioFemale" name="gender" value="female" defaultChecked={currentInfo.gender === 'female'} required />
-                    </div>
-                    <div>
-                        <button>Submit</button>
-                    </div>
-                    <h5> {updateUserStatus} </h5>
-                </form>
-            </div>
-        );
-    }
-
-    beforeUpdateUser(e) {
-        let newUserInfo = {};
-        newUserInfo.id = this.props.user.id;
-        newUserInfo.firstName = this.firstNameInput.value;
-        newUserInfo.lastName = this.lastNameInput.value;
-        newUserInfo.email = this.emailInput.value;
-        newUserInfo.oldPassword = this.oldPasswordInput.value;
-        newUserInfo.newPassword = this.newPasswordInput.value;
-        newUserInfo.gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : null;
-        newUserInfo = this.checkValidation(newUserInfo);
-
-        console.log('user for action: ', newUserInfo);
-        this.props.updateUser(newUserInfo);
+    function beforeUpdateUser(e) {
         e.preventDefault();
+        setSubmitting(true);
+        const { firstName, lastName, email, oldPassword, newPassword, gender } = formData;
+        let updatedUser = {
+            id: currentUser.id,
+            firstName,
+            lastName,
+            email,
+            oldPassword,
+            newPassword,
+            gender,
+        };
+        updatedUser = checkValidation(updatedUser);
+        dispatch(updateUserAction(updatedUser))
+            .then(() => {
+                setSubmitting(false);
+            });
     }
 
-        checkValidation(updatedUser) {
+    function checkValidation(updatedUser) {
         const removeSpacesRegex = /\s/g;
         const nameValidation = /^(?!.{51})[0-9a-zA-Z]+(?:[ -][0-9a-zA-Z]+)*$/;
         const emailValidation = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/;
@@ -81,6 +142,8 @@ class userEditProfile extends Component {
             updatedUser.error = 'Email is not valid';
         else if (!updatedUser.oldPassword.replace(removeSpacesRegex, '').length)
             updatedUser.error = 'Old password is required';
+        else if (updatedUser.oldPassword.length < minPasswordLength)
+            updatedUser.error = 'Old password is incorrect';
         else if (updatedUser.newPassword.length && updatedUser.newPassword.length < minPasswordLength)
             updatedUser.error = `The new password must be at least ${minPasswordLength} characters long`;
         else if (!updatedUser.gender)
@@ -90,23 +153,4 @@ class userEditProfile extends Component {
     }
 }
 
-function mapStateToProps(state) {
-	return {
-        user: state.loginReducer.user,
-        updateUserStatus: state.userEditProfileReducer.msg
-	};
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        updateUser: (data) => dispatch(updateUserFunc(data)),
-    };
-}
-
-userEditProfile.propTypes = {
-    updateUserStatus: PropTypes.string.isRequired,
-    user: PropTypes.object.isRequired,
-    updateUser: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(userEditProfile);
+export default UserEditProfile;

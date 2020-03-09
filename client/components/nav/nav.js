@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
-import './nav.css';
-import { LogoutFunc } from '../login/login.action';
+import './nav.scss';
+import { LogoutAction } from '../login/login.action';
+import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
+import KeyboardBackspaceRoundedIcon from '@material-ui/icons/KeyboardBackspaceRounded';
 
 class Navbar extends Component {
 
@@ -21,7 +23,7 @@ class Navbar extends Component {
 		const mobileMenuIcon = this.getMobileMenuIcon();
 
 		return (
-			<nav className="header">
+			<nav id="header">
 				{mobileMenuIcon}
 				{nav}
 			</nav>
@@ -63,13 +65,11 @@ class Navbar extends Component {
 	getMobileMenuIcon() {
 		return (
 			this.state.showMenu
-				? <span className="small-menu fa-stack" onClick={() => this.toggleMenu()}>
-					<i className="far fa-times-circle fa-2x"></i>
+				? <span className="small-menu" onClick={() => this.toggleMenu()}>
+					<KeyboardBackspaceRoundedIcon />
 				</span>
-				: <span className="small-menu fa-stack" onClick={() => this.toggleMenu()}>
-					<i className="far fa-circle fa-stack-2x"></i>
-					<i className="fas fa-bars fa-stack-1x">
-					</i>
+				: <span className="small-menu" onClick={() => this.toggleMenu()}>
+					<MenuRoundedIcon />
 				</span>);
 	}
 }
@@ -83,7 +83,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        Logout: () => dispatch(LogoutFunc()) 
+        Logout: () => dispatch(LogoutAction()) 
     };
 }
 

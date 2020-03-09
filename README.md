@@ -1,18 +1,20 @@
 # React Default
+[![dependencies Status](https://david-dm.org/idanavr/reactdefault/status.svg)](https://david-dm.org/idanavr/reactdefault)
+[![devDependencies Status](https://david-dm.org/idanavr/reactdefault/dev-status.svg)](https://david-dm.org/idanavr/reactdefault?type=dev)
 
 This project may be used as a starter kit for a new projects based on either Node.js or React.js.
 
 The main features my project includes: 
-- React.js
+- React
 - Redux
 - Node.js
 - Webpack
-- Chai testing
+- Mocha tests
 - Mongoose
 - JSON Web Token
 - ESLint
-- Minify + hash js and css files for production
-- Animate.css and Font-Awesome implemented
+- Minify + hash JS and SCSS files for production
+- Material-UI and Animate.css implemented
 
 Look at package.json to see the whole list of packages.
 

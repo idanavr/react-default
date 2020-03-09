@@ -1,69 +1,84 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
-import { LoginFunc } from './login.action';
-import './login.css';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { LoginAction } from './login.action';
+import './login.scss';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
-class Login extends Component {
+function Login() {
+    const { msg: errorMsg } = useSelector((state) => state.loginReducer);
+    const [submtting, setSubmitting] = useState(false);
+    const dispatch = useDispatch();
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
 
-    render() {
-        const { errorMsg } = this.props;
-
-        return (
+    return (
+        <div>
             <div>
-                <div>
-                    <h2>Login</h2>
-                </div>
-                <form id="loginForm" onSubmit={(e) => this.beforeLogin(e)} role="form">
-                    <div>
-                        <input id="email" type="email" placeholder="Email" ref={(obj) => { this.emailInput = obj; }} required />
-                    </div>
-                    <div>
-                        <input id="password" type="password" placeholder="Password" ref={(obj) => { this.passwordInput = obj; }} required />
-                    </div>
-                    <div>
-                        <button type="submit">Log In</button>
-                    </div>
-                    <div>
-                        {errorMsg}
-                    </div>
-                </form>
+                <h2>Login</h2>
             </div>
-        );
+            <form id="loginForm" onSubmit={(e) => handleSubmit(e)}>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Password"
+                    type="password"
+                    id="password"
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                />
+                <Button
+                    disabled={submtting}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                >
+                    Log In
+                </Button>
+                <div className="status-msg">
+                    {errorMsg}
+                </div>
+            </form>
+        </div>
+    );
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        setSubmitting(true);
+        const { email, password } = formData;
+        let userCredential = {
+            email,
+            password
+        };
+        userCredential = checkValidation(userCredential);
+        dispatch(LoginAction(userCredential))
+            .then((res) => {
+                if (!res.user)
+                    setSubmitting(false);
+            });
     }
 
-    beforeLogin(e) {
-        const userCredential = {};
-
-        userCredential.email = this.emailInput.value;
-        userCredential.password = this.passwordInput.value;
-
+    function checkValidation(userCredential) {
         const removeSpacesRegex = /\s/g;
         if (!userCredential.email.replace(removeSpacesRegex, '').length)
-            userCredential.error = 'Email name is required';
+            userCredential.error = 'Email is required';
         else if (!userCredential.password.replace(removeSpacesRegex, '').length)
             userCredential.error = 'Password is required';
 
-        this.props.tryLogin(userCredential);
-        e.preventDefault();
+        return userCredential;
     }
+
 }
 
-function mapStateToProps(state) {
-    return {
-        errorMsg: state.loginReducer.msg,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        tryLogin: (data) => dispatch(LoginFunc(data)),
-    };
-}
-
-Login.propTypes = {
-    errorMsg: PropTypes.string,
-    tryLogin: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

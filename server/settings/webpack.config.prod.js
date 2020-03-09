@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -63,17 +62,17 @@ module.exports = {
                 parallel: true,
                 sourceMap: false,
                 terserOptions: {
-                  // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-                   extractComments: 'all',
-                   compress: {
-                       drop_console: true,
-                   },
-            }
-              }),
+                    // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+                    extractComments: 'all',
+                    compress: {
+                        drop_console: true,
+                    },
+                }
+            }),
         ],
-      },
+    },
     module: {
-        rules: // start loaders
+        rules:
             [{
                 exclude: /node_modules/,
                 test: /\.js$/,
@@ -85,16 +84,17 @@ module.exports = {
                 loader: 'json-loader'
             },
             {
-                test: /\.(css)$/,
+                test: /\.(s?css)$/,
                 use: [
-                  MiniCssExtractPlugin.loader,
-                  'css-loader',
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
                 ],
-              },
+            },
             {
                 test: /\.(ico||ttf||eot||woff||woff2||svg)$/,
                 loader: 'url-loader'
-            }] // end loaders
+            }]
     },
     resolve: {
         extensions: ['.js', '.jsx']

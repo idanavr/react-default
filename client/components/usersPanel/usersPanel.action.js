@@ -1,48 +1,24 @@
-export const showSelectedUser = 'showSelectedUser';
-export const getUserList = 'getUserList';
-export const loadingUserList = 'loadingUserList';
-export const nextUserList = 'nextUserList';
-export const prevUserList = 'prevUserList';
-export const filterUserList = 'filterUserList';
+export const updateUserList = 'updateUserList';
+export const updateUsersPanelStatusMessage = 'updateUsersPanelStatusMessage';
 export const removeUser = 'removeUser';
 import axios from 'axios';
 
-export function getUserListFunc() {
+export function getUserListAction() {
     return (dispatch) => {
-        console.log('loading list..');
-        dispatch({ type: loadingUserList, msg: 'loading...' });
+        dispatch({ type: updateUsersPanelStatusMessage, msg: 'loading...' });
 
         return axios.get('/api/users')
-            .then((res) => dispatch({ type: getUserList, originalList: res.data }))
-            .then(() => dispatch({ type: filterUserList, payload: '' }))
-            .catch(() => dispatch({ type: loadingUserList, msg: 'loading failed' }));
+            .then((res) => dispatch({ type: updateUserList, originalList: res.data }))
+            .catch(() => dispatch({ type: updateUsersPanelStatusMessage, msg: 'loading failed' }));
     };
 }
 
-export function nextUserListFunc() {
-    return { type: nextUserList };
-}
-
-export function prevUserListFunc() {
-    return { type: prevUserList };
-}
-
-export function filterUserListFunc(expr) {
-    return { type: filterUserList, payload: expr };
-}
-
-export function userClickAction(user) { 
-    return { type: showSelectedUser, payload: user };
-}
-
-export function deleteUserByIdFunc(id) {
-
+export function deleteUserByIdAction(id) {
     return (dispatch) => {
         console.log('Deleting user: ', id);
         return axios.delete('/api/users', { data: { id } })
             .then(() => {
-                dispatch({ type: showSelectedUser, payload: {} });
-                dispatch({ type: removeUser, payload: id });
+                dispatch({ type: removeUser, userId: id });
             });
     };
 }

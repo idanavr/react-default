@@ -1,66 +1,119 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
-import { createUserFunc } from './register.action';
-import { LoginFunc } from '../login/login.action';
-import './register.css';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createUserAction } from './register.action';
+import { LoginAction } from '../login/login.action';
+import './register.scss';
+import TextField from '@material-ui/core/TextField';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import Button from '@material-ui/core/Button';
 
-class Register extends Component {
+function Register() {
+    const { msg: newUserStatus } = useSelector((state) => state.registerReducer);
+    const [submtting, setSubmitting] = useState(false);
+    const dispatch = useDispatch();
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        gender: '',
+    });
 
-    render() {
-        const { newUserStatus } = this.props;
-
-        return (
+    return (
+        <div id="register">
             <div>
-                <div>
-                    <h2>Register</h2>
-                </div>
-                <form id="registerForm" onSubmit={(e) => this.beforeCreateUser(e)} role="form">
-                    <div>
-                        <input type="text" id="fName" placeholder="First Name" ref={(obj) => { this.firstNameInput = obj; }} required />
-                    </div>
-                    <div>
-                        <input type="text" id="lName" placeholder="Last Name" ref={(obj) => { this.lastNameInput = obj; }} required />
-                    </div>
-                    <div>
-                        <input type="email" id="email" placeholder="Email" ref={(obj) => { this.emailInput = obj; }} required />
-                    </div>
-                    <div>
-                        <input type="password" id="password" placeholder="Password" ref={(obj) => { this.passwordInput = obj; }} required />
-                    </div>
-                    <div style={{ 'fontSize': '20px' }}>
-                        <label htmlFor="radioMale">Male</label>
-                        <input type="radio" id="radioMale" name="gender" value="male" required />
-                        <label htmlFor="radioFemale">Female</label>
-                        <input type="radio" id="radioFemale" name="gender" value="female" required />
-                    </div>
-                    <div>
-                        <button>Submit</button>
-                    </div>
-                    <h5> {newUserStatus} </h5>
-                </form>
+                <h2>Register</h2>
             </div>
-        );
-    }
+            <form id="registerForm" onSubmit={(e) => handleSubmit(e)}>
+                <TextField
+                    id="firstName"
+                    label="First Name"
+                    margin="normal"
+                    required
+                    fullWidth
+                    autoFocus
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                />
+                <TextField
+                    id="lastName"
+                    label="Last Name"
+                    margin="normal"
+                    required
+                    fullWidth
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                />
+                <TextField
+                    id="email"
+                    label="Email Address"
+                    margin="normal"
+                    required
+                    fullWidth
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                />
+                <TextField
+                    id="password"
+                    type="password"
+                    label="Password"
+                    margin="normal"
+                    required
+                    fullWidth
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                />
+                <RadioGroup aria-label="position" name="position" row
+                    onChange={(e) => setFormData({ ...formData, gender: e.target.value })}>
+                    <FormControlLabel
+                        value="male"
+                        control={<Radio color="primary" />}
+                        label="Male"
+                        labelPlacement="top"
+                    />
+                    <FormControlLabel
+                        value="female"
+                        control={<Radio color="primary" />}
+                        label="Female"
+                        labelPlacement="top"
+                    />
+                </RadioGroup>
+                <Button
+                    disabled={submtting}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                >
+                    {submtting ? 'Registering...' : 'Register'}
+                </Button>
+                <div className="status-msg">
+                    {newUserStatus}
+                </div>
+            </form>
+        </div>
+    );
 
-    beforeCreateUser(e) {
-        let newUser = {};
-        newUser.firstName = this.firstNameInput.value;
-        newUser.lastName = this.lastNameInput.value;
-        newUser.email = this.emailInput.value;
-        newUser.password = this.passwordInput.value;
-        newUser.gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : null;
-        newUser = this.checkValidation(newUser);
-
-        console.log('user for action: ', newUser);
-        Promise.resolve(this.props.createUser(newUser)) // change it - for some reason .then doen't wait for the last dispatch to be done
-            .then(() => setTimeout(() => {
-                this.props.userLogin(newUser);
-            }, 500));
+    function handleSubmit(e) {
         e.preventDefault();
+        setSubmitting(true);
+        const { firstName, lastName, email, password, gender } = formData;
+        let newUser = {
+            firstName,
+            lastName,
+            email,
+            password,
+            gender,
+        };
+        newUser = checkValidation(newUser);
+        dispatch(createUserAction(newUser))
+            .then((res) => {
+                if (!res.msg.length) {
+                    setSubmitting(false);
+                    dispatch(LoginAction(newUser));
+                }
+            });
     }
 
-    checkValidation(newUser) {
+    function checkValidation(newUser) {
         const removeSpacesRegex = /\s/g;
         const nameValidation = /^(?!.{51})[0-9a-zA-Z]+(?:[ -][0-9a-zA-Z]+)*$/;
         const emailValidation = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/;
@@ -89,23 +142,4 @@ class Register extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        newUserStatus: state.registerReducer.msg,
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        createUser: (data) => dispatch(createUserFunc(data)),
-        userLogin: (data) => dispatch(LoginFunc(data)),
-    };
-}
-
-Register.propTypes = {
-    newUserStatus: PropTypes.string,
-    createUser: PropTypes.func.isRequired,
-    userLogin: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default Register;

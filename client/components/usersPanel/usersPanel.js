@@ -1,83 +1,51 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { userClickAction, getUserListFunc, nextUserListFunc, prevUserListFunc, filterUserListFunc, deleteUserByIdFunc } from './usersPanel.action';
-import './usersPanel.css';
+import { getUserListAction, deleteUserByIdAction } from './usersPanel.action';
+import './usersPanel.scss';
 import UserList from './userList/userList';
-import UserInfo from './userInfo/userInfo';
 
-class UsersPanel extends Component {
-    componentDidMount() {
-        this.props.getUserList();
-    }
+function UsersPanel() {
+    const props = useSelector((state) => state.usersReducer);
+    const dispatch = useDispatch();
 
-    render() {
-        const { messageToDisplay } = this.props;
+    useEffect(() => {
+        dispatch(getUserListAction());
+    }, []);
 
-        const contentBlock = messageToDisplay !== null ? this.getMessageBlock(messageToDisplay) : this.getUserListBlock();
+    const { statusMessage, displayList } = props;
 
-        return (
-            <div>
-                <h2>Users Panel</h2>
-                {contentBlock}
-            </div>
-        );
-    }
+    const contentBlock = statusMessage !== null ? getMessageBlock(statusMessage) : getUserListBlock(displayList, dispatch);
 
-    getMessageBlock(message) {
-        return (
-            <div>
-                {message}
-            </div>
-        );
-    }
-
-    getUserListBlock() {
-        const { displayList, selectedUser, userClick, filterUsers, prevUsersPage, nextUsersPage, deleteUserById } = this.props;
-
-        return (
-            <div>
-                <UserList
-                    users={displayList}
-                    userClick={userClick}
-                    filterUsers={filterUsers}
-                    prevUsersPage={prevUsersPage}
-                    nextUsersPage={nextUsersPage} />
-                <UserInfo user={selectedUser} deleteUserById={deleteUserById} />
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h2>Users Panel</h2>
+            {contentBlock}
+        </div>
+    );
 }
 
-function mapStateToProps(state) {
-    return {
-        selectedUser: state.usersReducer.selectedUser,
-        displayList: state.usersReducer.displayList,
-        messageToDisplay: state.usersReducer.msg,
-    };
+function getMessageBlock(message) {
+    return (
+        <div>
+            {message}
+        </div>
+    );
 }
 
-function mapDispatchToProps(dispatch) { // may also get the value of 'ownProps'
-    return {
-        getUserList: () => dispatch(getUserListFunc()),
-        nextUsersPage: () => dispatch(nextUserListFunc()),
-        prevUsersPage: () => dispatch(prevUserListFunc()),
-        userClick: (user) => dispatch(userClickAction(user)),
-        filterUsers: (expr) => dispatch(filterUserListFunc(expr)),
-        deleteUserById: (userId) => dispatch(deleteUserByIdFunc(userId))
-    };
+function getUserListBlock(displayList, dispatch) {
+    return (
+        <div>
+            <UserList
+                users={displayList}
+                deleteUserById={(id) => dispatch(deleteUserByIdAction(id))} />
+        </div>
+    );
 }
 
 UsersPanel.propTypes = {
-    selectedUser: PropTypes.object,
-    displayList: PropTypes.arrayOf(PropTypes.object).isRequired,
-    messageToDisplay: PropTypes.string,
-    getUserList: PropTypes.func.isRequired,
-    userClick: PropTypes.func.isRequired,
-    filterUsers: PropTypes.func.isRequired,
-    prevUsersPage: PropTypes.func.isRequired,
-    nextUsersPage: PropTypes.func.isRequired,
-    deleteUserById: PropTypes.func.isRequired
+    displayList: PropTypes.arrayOf(PropTypes.object),
+    statusMessage: PropTypes.string,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersPanel);
+export default UsersPanel;

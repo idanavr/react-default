@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const rootFolder = path.join(__dirname, '..', '..');
 const clientConfig = require(path.join(rootFolder, 'client', 'config.js'));
@@ -22,9 +21,11 @@ module.exports = {
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: './',
-        port: 3000,
-        historyApiFallback: 'true'
+        stats: 'minimal',
+        overlay: true,
+        noInfo: true,
+        hot: true,
+        historyApiFallback: true
     },
     plugins: [
         new MiniCssExtractPlugin('main.css'),
@@ -36,7 +37,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin()
     ],
     module: {
-        rules: // start loaders
+        rules:
             [{
                 exclude: /node_modules/,
                 test: /\.js$/,
@@ -48,16 +49,17 @@ module.exports = {
                 loader: 'json-loader'
             },
             {
-                test: /\.(css)$/,
+                test: /\.(s?css)$/,
                 use: [
-                  MiniCssExtractPlugin.loader,
-                  'css-loader',
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
                 ],
-              },
+            },
             {
                 test: /\.(ico||ttf||eot||woff||woff2||svg)$/,
                 loader: 'url-loader'
-            }] // end loaders
+            }]
     },
     resolve: {
         extensions: ['.js', '.jsx']
