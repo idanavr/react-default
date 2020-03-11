@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { env } = global.config;
 
 const LOG_PATH = global.config.logPath;
 
@@ -36,8 +37,9 @@ class logger {
         let message = `[${timeNow}][${type}] ${this._fileName ? `${this._fileName}` : ''} - ${log.stack ? log.stack : JSON.stringify(log)} \r\n`;
         if (obj)
             message += `Parameters: ${JSON.stringify(obj)} \r\n`;
-
-        console.log(`logger - ${message}`);
+            
+        if (!(env === 'test'))
+            console.log(`logger - ${message}`);
 
         this._ensureDirectoryExists(filePath);
         fs.appendFile(filePath, message, { flag: 'a' }, (err) => {

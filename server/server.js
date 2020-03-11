@@ -11,16 +11,11 @@ const helmet = require('helmet');
 const compression = require('compression');
 const logger = new (require('./logger'))('server');
 
-const mongoose = require('mongoose');
-const dbConnString = config.connStr;
-mongoose.Promise = global.Promise;
-mongoose.connect(dbConnString, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-}).catch((error) => {
+require('./settings/db-connection')
+  .connect()
+  .catch((error) => {
     logger.error(error);
-});
+  });
 const port = process.env.PORT || config.port;
 
 app.use(helmet());
@@ -38,7 +33,7 @@ if (env === 'development') {
     const webpackHotMiddleware = require('webpack-hot-middleware');
 
     const compiler = webpack(webpackConfig);
-    const devMiddleware = webpackDevMiddleware(compiler, { noInfo: true, hot: true, publicPath: webpackConfig.output.publicPath });
+    const devMiddleware = webpackDevMiddleware(compiler);
     app.use(devMiddleware);
     app.use(webpackHotMiddleware(compiler, { log: console.log }));
 
