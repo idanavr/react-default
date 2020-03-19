@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const userModel = require('../models/db/user');
+const UserModel = mongoose.model('User');
 const userAdapters = require('../models/client/user');
 
 module.exports = {
     getUsers: () =>
-        userModel.find()
+        UserModel.find()
             .exec()
             .then((users) => {
                 if (!users) {
@@ -14,8 +14,8 @@ module.exports = {
                 return responseUsers;
             }),
 
-    getUser: (id) =>
-        userModel.findOne({ _id: new mongoose.Types.ObjectId(id) })
+    getUserById: (id) =>
+        UserModel.findOne({ _id: new mongoose.Types.ObjectId(id) })
             .exec()
             .then((user) => {
                 if (!user) {
@@ -25,20 +25,31 @@ module.exports = {
                 return responseUser;
             }),
 
+    getUserByCredentials: (email, password) =>
+        UserModel.findOne({ email })
+            .exec()
+            .then((user) => {
+                if (!user || user.password !== password) {
+                    return null;
+                }
+                const responseUser = userAdapters.createUserModel(user);
+                return responseUser;
+            }),
+
     saveUser: (params) => {
-        const newUser = new userModel(); // eslint-disable-line new-cap
+        const newUser = new UserModel(); // eslint-disable-line new-cap
         newUser.firstName = params.firstName;
         newUser.lastName = params.lastName;
         newUser.email = params.email;
         newUser.password = params.password;
-        newUser.gender = params.gender;
+        newUser.gender = params.gender && params.gender.toLowerCase();
 
-        const newUserModelPromise = newUser.save();
-        return newUserModelPromise.then((newUserModel) => userAdapters.createUserModel(newUserModel))
-        .catch((err) => ({ err }));
+        return newUser.save()
+            .then((newUserModel) => userAdapters.createUserModel(newUserModel))
+            .catch((err) => ({ err }));
     },
 
-    updateUser: (userId, params) => userModel.findById(userId)
+    updateUser: (userId, params) => UserModel.findById(userId)
         .then((userToChange) => {
             if (userToChange.password !== params.oldPassword)
                 return { err: { clientMessage: 'Incorrect password' } };
@@ -47,7 +58,7 @@ module.exports = {
             userToChange.email = params.email;
             if (params.newPassword)
                 userToChange.password = params.newPassword;
-            userToChange.gender = params.gender;
+            userToChange.gender = params.gender && params.gender.toLowerCase();
 
             const updatedUserModelPromise = userToChange.save();
             return updatedUserModelPromise.then((updatedUserModel) => userAdapters.createUserModel(updatedUserModel));
@@ -55,14 +66,5 @@ module.exports = {
         .catch((err) => ({ err })),
 
     deleteUser: (id) =>
-        userModel.find({ _id: id }).deleteOne()
-    // .then((user) => {
-    //     if (user.err) {
-    //         return { err: user.err };
-    //     }
-    //     return user;
-    // })
-    // .catch((err) => (
-    //     { err }
-    // ))
+        UserModel.find({ _id: id }).deleteOne()
 };

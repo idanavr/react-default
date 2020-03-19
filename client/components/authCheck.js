@@ -1,22 +1,17 @@
-import React, { Component } from 'react';  
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { isAllowedToUserRole } from '../utils';
 
-export default function(ComposedComponent, authorityType) {  
+export default function (ComposedComponent, authorizedRoles) {
   class Authentication extends Component {
 
     componentDidMount() {
-      if(!this.props.auth && authorityType === 1) {
+      if (authorizedRoles && !this.props.user) { // only for users
         this.props.history.replace('/login');
-      } else if(this.props.auth && authorityType === 0) {
+      } else if (!authorizedRoles && this.props.user) { // only for non-users
         this.props.history.replace('/');
-      }
-    }
-
-    componentDidUpdate() { // this function can have 2 variables: prevProps, prevState
-      if(!this.props.auth && authorityType === 1) {
-        this.props.history.replace('/login');
-      } else if(this.props.auth && authorityType === 0) {
+      } else if (authorizedRoles && !isAllowedToUserRole(this.props.user, authorizedRoles)) { // only for users with the authorized roles
         this.props.history.replace('/');
       }
     }
@@ -27,13 +22,13 @@ export default function(ComposedComponent, authorityType) {
   }
 
   function mapStateToProps(state) {
-    return { auth: state.loginReducer.auth };
+    return { user: state.loginReducer.user };
   }
 
-Authentication.propTypes = {
-  auth: PropTypes.string.isRequired,
-  history: PropTypes.object.isRequired
-};
+  Authentication.propTypes = {
+    user: PropTypes.object,
+    history: PropTypes.object.isRequired
+  };
 
   return connect(mapStateToProps)(Authentication);
 }

@@ -1,6 +1,5 @@
 export const updateLoginStatusMessage = 'updateLoginStatusMessage';
-export const setLoginCredentials = 'setLoginCredentials';
-
+export const setUserData = 'setUserData';
 import axios from 'axios';
 
 export function LoginAction(data) {
@@ -9,13 +8,9 @@ export function LoginAction(data) {
             return new Promise((resolve) => resolve(dispatch({ type: updateLoginStatusMessage, msg: data.error })));
         return axios.post('/api/login', data)
             .then((res) => {
-                console.log(res);
-                if (res.status === 200) {
-                    localStorage.setItem('jwtToken', res.data.token);
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
-                    return dispatch({ type: setLoginCredentials, user: res.data.user, token: res.data.token });
-                }
-                throw Error('Connection failed');
+                if (res.status === 200)
+                    return dispatch({ type: setUserData, user: res.data });
+                throw new Error('Connection failed');
             })
             .catch((err) => {
                 if (err.response.status === 404)
@@ -26,27 +21,22 @@ export function LoginAction(data) {
 }
 
 export function LogoutAction() {
-    localStorage.removeItem('jwtToken');
-    delete axios.defaults.headers.common['Authorization'];
-    return { type: setLoginCredentials, token: '' };
+    return (dispatch) =>
+        axios.post('/api/login/logout')
+            .then((result) => {
+                if (result.status === 204)
+                    return dispatch({ type: setUserData, user: null });                    
+                throw Error('Couldn\'t log out');
+            });
 }
 
-export function checkTokenAction(key) {
-    console.log(key);
-    if (!key)
-        return { type: setLoginCredentials, token: '' };
-    return (dispatch) => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${key}`;
-        axios.get(`/api/login/${key}`)
+export function verifyUserAction() {
+    return (dispatch) =>
+        axios.get('/api/users/me')
             .then((result) => {
-                if (result.status !== 403) {
-                    dispatch({ type: setLoginCredentials, user: result.data.user, token: key });
-                } else
-                    dispatch({ type: setLoginCredentials, token: '' });
+                if (result.status === 200)
+                    return dispatch({ type: setUserData, user: result.data });
+                return dispatch({ type: setUserData, user: null });
             })
-            .catch((err) => {
-                console.log(err);
-                dispatch({ type: setLoginCredentials, token: '' });
-            });
-    };
+            .catch(() => dispatch({ type: setUserData, user: null }));
 }

@@ -58,7 +58,7 @@
         "func-name-matching": "warn",
         "func-names": "warn",
         "func-style": "off",
-        "function-paren-newline": "warn",
+        "function-paren-newline": ["warn", "multiline-arguments"],
         "generator-star-spacing": "warn",
         "getter-return": "warn",
         "guard-for-in": "warn",

@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import './main.scss';
 import '../assets/css/animate.css';
-import { checkTokenAction } from './login/login.action';
+import { verifyUserAction } from './login/login.action';
 // Google analytics
 import ReactGA from 'react-ga';
 ReactGA.initialize('UA-108374358-1');
@@ -15,7 +15,7 @@ import Navbar from './nav/nav';
 import About from './about/about';
 import authCheck from './authCheck';
 import UserEditProfile from './userPanel/userEditProfile/userEditProfile';
-import UsersPanel from './usersPanel/usersPanel';
+import UsersPanel from './adminPanel/usersPanel/usersPanel';
 import Register from './register/register';
 import Login from './login/login';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
@@ -23,7 +23,7 @@ import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 class Main extends React.Component {
 
     componentDidMount() {
-        this.props.checkToken(localStorage.jwtToken);
+        this.props.verifyUser();
     }
 
     render() {
@@ -34,9 +34,9 @@ class Main extends React.Component {
                 <div className="footer">Copyrights © section</div>
             </div>;
 
-        const NoMatch = () =>
+        const NotFound = () =>
             <div>
-                <h2>No page was found 404!</h2>
+                <h2>This page is not available</h2>
             </div>;
 
         const Welcome = () =>
@@ -47,18 +47,18 @@ class Main extends React.Component {
                 Enjoy it!
             </div>;
 
-        if (this.props.authority !== null) {
+        if (typeof this.props.user !== 'undefined') {
             return (
                 <BrowserRouter>
                     <Container>
                         <Switch>
                             <Route exact path="/" component={Welcome} />
                             <Route exact path="/about" component={About} />
-                            <Route exact path="/users" component={authCheck(UsersPanel, 1)} />
-                            <Route exact path="/user/edit" component={authCheck(UserEditProfile, 1)} />
-                            <Route exact path="/login" component={authCheck(Login, 0)} />
-                            <Route exact path="/register" component={authCheck(Register, 0)} />
-                            <Route path="*" component={NoMatch} />
+                            <Route exact path="/admin/users" component={authCheck(UsersPanel, ['admin'])} />
+                            <Route exact path="/user/edit" component={authCheck(UserEditProfile, [])} />
+                            <Route exact path="/login" component={authCheck(Login)} />
+                            <Route exact path="/register" component={authCheck(Register)} />
+                            <Route path="*" component={NotFound} />
                         </Switch>
                     </Container>
                 </BrowserRouter>
@@ -73,19 +73,19 @@ class Main extends React.Component {
 }
 function mapStateToProps(state) {
     return {
-        authority: state.loginReducer.auth,
+        user: state.loginReducer.user,
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        checkToken: (token) => dispatch(checkTokenAction(token)),
+        verifyUser: () => dispatch(verifyUserAction()),
     };
 }
 
 Main.propTypes = {
-    authority: PropTypes.string,
-    checkToken: PropTypes.func.isRequired,
+    user: PropTypes.object,
+    verifyUser: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

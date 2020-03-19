@@ -30,4 +30,13 @@ module.exports = {
             gender: 'female'
         }
     },
+    login: {
+        user: {
+            firstName: 'first name',
+            lastName: 'last name',
+            email: 'login@email.com',
+            password: '123456789',
+            gender: 'male'
+        }
+    }
 };

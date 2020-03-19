@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const { roleEnum, roles, genders } = require('./utils');
 
 const enumGender = {
-    values: ['male', 'female'],
+    values: genders,
     message: 'Invalid gender'
+};
+
+const roleEnumOptions = {
+    values: roles,
+    message: 'Invalid role'
 };
 
 function nameValidator(str) {
@@ -59,6 +65,11 @@ const userSchema = new Schema(
             type: Date,
             default: Date.now,
         },
+        role: {
+            type: String,
+            default: roleEnum.Normal,
+            enum: roleEnumOptions,
+          },
     },
     {
         versionKey: false,
@@ -79,4 +90,11 @@ userSchema.post('update', handleDuplicateUniqueKey);
 userSchema.post('findOneAndUpdate', handleDuplicateUniqueKey);
 userSchema.post('insertMany', handleDuplicateUniqueKey);
 
-module.exports = mongoose.model('User', userSchema);
+let userModel = null;
+try {
+    userModel = mongoose.model('User');
+} catch (err) {
+    userModel = mongoose.model('User', userSchema);
+}
+
+module.exports = userModel;

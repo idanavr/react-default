@@ -1,4 +1,5 @@
-const envType = process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'test' ? 'test' : 'production';
+const env = process.env.NODE_ENV && process.env.NODE_ENV.trim();
+const envType = env === 'test' ? 'test' : 'production';
 
 const config = {
     production: {
@@ -6,12 +7,13 @@ const config = {
         logPath: 'log/production',
     },
     test: {
-        connStr: process.env.reactdefaultTestDB || '',
         logPath: 'log/test',
     },
     common: {
         port: 3000,
-        jwtKey: 'somePrivateKey',        
+        env,
+        jwtKey: 'somePrivateKey',
+        cookiesSessionInSecs: 604800, // 7 days
     }
 };
 

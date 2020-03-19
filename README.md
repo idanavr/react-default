@@ -9,9 +9,9 @@ The main features my project includes:
 - Redux
 - Node.js
 - Webpack
-- Mocha tests
 - Mongoose
-- JSON Web Token
+- Mocha tests
+- Passport.js with JWT
 - ESLint
 - Minify + hash JS and SCSS files for production
 - Material-UI and Animate.css implemented
@@ -21,8 +21,7 @@ Look at package.json to see the whole list of packages.
 Setup tutorial:
 - Clone master to your local machine
 - Run `npm install`
-- Set up these environment variables: <br />
-reactdefaultTestDB - connection string to mongodb for development <br />
+- Set up these environment variable: <br />
 reactdefaultProdDB - connection string to mongodb for production
 - Run `npm run develop` for develop mode or `npm start` for production
 

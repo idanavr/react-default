@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import usersReducer from './components/usersPanel/usersPanel.reducer';
+import usersReducer from './components/adminPanel/usersPanel/usersPanel.reducer';
 import registerReducer from './components/register/register.reducer';
 import loginReducer from './components/login/login.reducer';
 import userEditProfileReducer from './components/userPanel/userEditProfile/userEditProfile.reducer';

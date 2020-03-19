@@ -1,0 +1,1 @@
+export const isAllowedToUserRole = (user, rolesAllowed) => (user && user.role && (!rolesAllowed.length || rolesAllowed.includes(user.role.toLowerCase())));

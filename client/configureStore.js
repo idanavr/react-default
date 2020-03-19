@@ -30,8 +30,8 @@ const configureStore = () => {
 };
 
 const formatStateToStorage = (state) => ({
-    usersReducer: {
-        displayList: state.usersReducer.displayList
+    loginReducer: {
+        user: state.loginReducer.user
     }
 });
 

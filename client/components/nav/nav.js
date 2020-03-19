@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
-import './nav.scss';
 import { LogoutAction } from '../login/login.action';
+import { v4 as uuidv4 } from 'uuid';
+import { isAllowedToUserRole } from '../../utils';
+import './nav.scss';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import KeyboardBackspaceRoundedIcon from '@material-ui/icons/KeyboardBackspaceRounded';
 
@@ -19,7 +21,7 @@ class Navbar extends Component {
 	}
 
 	render() {
-		const nav = this.getNavBar();
+		const nav = this.getNavbar();
 		const mobileMenuIcon = this.getMobileMenuIcon();
 
 		return (
@@ -29,37 +31,50 @@ class Navbar extends Component {
 			</nav>
 		);
 	}
-	
+
 	toggleMenu() {
 		this.setState({ showMenu: !this.state.showMenu });
 	}
 
-	getNavBar() {
-		const { authority, user, Logout } = this.props;
+	getNavbar() {
+		const { user, Logout } = this.props;
 
-		if (authority)
-			return (
-				<div className={`navbar ${(this.state.showMenu ? 'open' : '')}`}>
-					<NavLink activeClassName="activeLink" exact to="/">Home</NavLink>
-					<NavLink activeClassName="activeLink" exact to="/about">About us</NavLink>
-					<NavLink activeClassName="activeLink" exact to="/user/edit">Edit Profile</NavLink>
-					<NavLink activeClassName="activeLink" exact to="/users">Users</NavLink>
-					<div className="rightNav">
-						<div>
-							{user.firstName}, <NavLink to="#" onClick={() => Logout()}>Logout</NavLink>
-						</div>
-					</div>
-				</div>);
-
-		return (
+		const generateNavFromComponentList = (components) => (
 			<div className={`navbar ${(this.state.showMenu ? 'open' : '')}`}>
-				<NavLink activeClassName="activeLink" exact to="/">Home</NavLink>
-				<NavLink activeClassName="activeLink" exact to="/about">About us</NavLink>
+				{components.map((component) =>
+					<React.Fragment key={uuidv4()}>
+						{component}
+					</React.Fragment>)}
+			</div>
+		);
+
+		const optionsList = [];
+		optionsList.push(<NavLink activeClassName="activeLink" exact to="/">Home</NavLink>);
+		optionsList.push(<NavLink activeClassName="activeLink" exact to="/about">About Us</NavLink>);
+
+		if (user) {
+			optionsList.push(<NavLink activeClassName="activeLink" exact to="/user/edit">Edit Profile</NavLink>);
+
+			if (isAllowedToUserRole(user, ['admin'])) {
+				optionsList.push(<NavLink activeClassName="activeLink" exact to="/admin/users">Users</NavLink>);
+			}
+
+			optionsList.push(
+				<div className="rightNav">
+					<div>
+						{user.firstName},<NavLink to="#" onClick={() => Logout()}>Log Out</NavLink>
+					</div>
+				</div>
+			);
+		} else {
+			optionsList.push(
 				<div className="rightNav">
 					<NavLink activeClassName="activeLink" exact to="/login">Login</NavLink>
 					<NavLink activeClassName="activeLink" exact to="/register">Register</NavLink>
 				</div>
-			</div>);
+			);
+		}
+		return generateNavFromComponentList(optionsList);
 	}
 
 	getMobileMenuIcon() {
@@ -76,19 +91,17 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
 	return {
-		authority: state.loginReducer.auth,
 		user: state.loginReducer.user,
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        Logout: () => dispatch(LogoutAction()) 
-    };
+	return {
+		Logout: () => dispatch(LogoutAction())
+	};
 }
 
 Navbar.propTypes = {
-	authority: PropTypes.string.isRequired,
 	user: PropTypes.object,
 	Logout: PropTypes.func.isRequired,
 	history: PropTypes.object.isRequired,

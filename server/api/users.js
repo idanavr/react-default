@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const userBL = require('../BL/users');
 const logger = new (require('../logger'))('Users API');
-const checkAuthority = require('./middlewares');
+const passport = require('passport');
+const { login: loginJWT, checkIsInRole } = require('./middlewares/jwt');
+const { roleEnum } = require('../models/db/utils');
 
-router.get('/', checkAuthority, (req, res) => {
+router.get('/', passport.authenticate('jwt'), checkIsInRole(roleEnum.Admin), (req, res) => {
     userBL.getUsers()
     .then((users) => {
         if(users.err) {
@@ -19,10 +21,17 @@ router.get('/', checkAuthority, (req, res) => {
     });
 });
 
+router.get('/me', passport.authenticate('jwt'), (req, res) => {
+    if (req.user)
+        res.status(200).send(req.user);
+    else
+        res.status(400).end();
+});
+
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     if (id.length === 24) {
-        userBL.getUser(id)
+        userBL.getUserById(id)
             .then((user) => {
                 if (!user)
                     res.status(404).end();
@@ -41,21 +50,21 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
     userBL.saveUser(req.body)
-    .then((user) => {
-        if(user.err) {
-            logger.info(user.err, req.body);
-            res.status(400).send(user.err.clientMessage);
-        } else {
-            res.status(201).send(user);
-        }
-    })
-    .catch((err) => {
-        logger.error(err, req.body);
-        res.status(500).end();
-    });
+        .then((user) => {
+            if (user.err) {
+                logger.info(user.err, req.body);
+                res.status(400).send(user.err.clientMessage);
+            } else {
+                loginJWT(req, res, user, 201);
+            }
+        })
+        .catch((err) => {
+            logger.error(err, req.body);
+            res.status(500).end();
+        });
 });
 
-router.put('/:id' , checkAuthority, (req, res) => {
+router.put('/:id', passport.authenticate('jwt'), (req, res) => {
     if(!req.params.id) {
         logger.warn('users PUT method doesn\'t have id in req.params');
         res.status(404);
@@ -78,7 +87,7 @@ router.put('/:id' , checkAuthority, (req, res) => {
         });
 });
 
-router.delete('/', checkAuthority, (req, res) => {
+router.delete('/', passport.authenticate('jwt'), checkIsInRole(roleEnum.Admin), (req, res) => {
     const { id } = req.body;
     if (id) {
         userBL.deleteUser(id)
