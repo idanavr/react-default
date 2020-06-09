@@ -1,7 +1,7 @@
 import { updateUserMsg } from './userEditProfile.action';
 const defaultState = { msg: '' };
 
-export default function (state = defaultState, action) {
+export default function userEditProfile(state = defaultState, action) {
     switch (action.type) {
         case updateUserMsg:
             return { ...state, msg: action.msg };

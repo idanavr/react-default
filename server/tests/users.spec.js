@@ -1,4 +1,3 @@
-/* eslint no-undef: 0 */
 process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -10,10 +9,10 @@ const agent = chai.request.agent(app);
 
 const usersData = require('./test-data').users;
 
-describe('Users', () => {
+describe('Users', function () {
     let generalUserId = '';
 
-    before((done) => {
+    before(function (done) {
         const data = usersData.generalUser;
 
         agent
@@ -29,13 +28,13 @@ describe('Users', () => {
             });
     });
 
-    after(() => {
+    after(function () {
         agent.close();
     });
 
-    describe('GET /users', () => {
+    describe('GET /users', function () {
         const { generalUser } = usersData;
-        it('it should fail returning all users since user\'s role is not authorized for that', (done) => {
+        it('it should fail returning all users since user\'s role is not authorized for that', function (done) {
             agent
                 .get('/api/users')
                 .end((err, res) => {
@@ -47,8 +46,8 @@ describe('Users', () => {
                 });
         });
 
-        describe('GET /users/me', () => {
-            it('it should return the user in the current session', (done) => {
+        describe('GET /users/me', function () {
+            it('it should return the user in the current session', function (done) {
                 agent
                     .get('/api/users/me')
                     .end((err, res) => {
@@ -69,8 +68,8 @@ describe('Users', () => {
             });
         });
 
-        describe('GET /users/:id', () => {
-            it('it should return the user with the given id', (done) => {
+        describe('GET /users/:id', function () {
+            it('it should return the user with the given id', function (done) {
                 agent
                     .get(`/api/users/${generalUserId}`)
                     .end((err, res) => {
@@ -93,8 +92,8 @@ describe('Users', () => {
     });
 
 
-    describe('POST /users', () => {
-        it('it should fail create user because there are no parameters', (done) => {
+    describe('POST /users', function () {
+        it('it should fail create user because there are no parameters', function (done) {
             chai.request(app)
                 .post('/api/users')
                 .end((err, res) => {
@@ -106,7 +105,7 @@ describe('Users', () => {
                 });
         });
 
-        it('it should create a new user', (done) => {
+        it('it should create a new user', function (done) {
             const data = usersData.newUser;
 
             chai.request(app)
@@ -131,8 +130,8 @@ describe('Users', () => {
     });
 
 
-    describe('UPDATE /users', () => {
-        it('it should fail updating a user since request has no user', (done) => {
+    describe('UPDATE /users', function () {
+        it('it should fail updating a user since request has no user', function (done) {
             const updatedUserData = usersData.updateUser;
             updatedUserData.oldPassword = usersData.generalUser.password;
 
@@ -148,7 +147,7 @@ describe('Users', () => {
                 });
         });
 
-        it('it should update the user in the current session', (done) => {
+        it('it should update the user in the current session', function (done) {
             const updatedUserData = usersData.updateUser;
             updatedUserData.oldPassword = usersData.generalUser.password;
 
@@ -173,8 +172,8 @@ describe('Users', () => {
         });
     });
 
-    describe('DELETE /users', () => {
-        it('it should fail deleting the user since user\'s role is not authorized for that', (done) => {
+    describe('DELETE /users', function () {
+        it('it should fail deleting the user since user\'s role is not authorized for that', function (done) {
             agent
                 .delete('/api/users')
                 .send({ id: generalUserId })

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { isAllowedToUserRole } from '../utils';
 
-export default function (ComposedComponent, authorizedRoles) {
+export default function authCheck(ComposedComponent, authorizedRoles) {
   class Authentication extends Component {
 
     componentDidMount() {

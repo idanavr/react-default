@@ -2,7 +2,7 @@ import { updateUserList, updateUsersPanelStatusMessage, removeUser } from './use
 let originalUserList = [];
 const defaultState = { displayList: [], statusMessage: null };
 
-export default function (state = defaultState, action) {
+export default function usersPanel(state = defaultState, action) {
     switch (action.type) {
         case updateUserList:
             console.log('display list is:', action.originalList);

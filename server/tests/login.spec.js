@@ -1,4 +1,3 @@
-/* eslint no-undef: 0 */
 process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -10,9 +9,9 @@ const agent = chai.request.agent(app);
 
 const loginData = require('./test-data').login;
 
-describe('Login', () => {
+describe('Login', function () {
 
-    before((done) => {
+    before(function (done) {
         const data = loginData.user;
 
         agent
@@ -27,13 +26,13 @@ describe('Login', () => {
             });
     });
 
-    after(() => {
+    after(function () {
         agent.close();
     });
 
-    describe('POST /login', () => {
+    describe('POST /login', function () {
         const { user } = loginData;
-        it('it should fail login since email does not exist', (done) => {
+        it('it should fail login since email does not exist', function (done) {
             const wrongEmail = `wrong${user.email}`;
 
             agent
@@ -48,7 +47,7 @@ describe('Login', () => {
                 });
         });
 
-        it('it should fail login since password is wrong', (done) => {
+        it('it should fail login since password is wrong', function (done) {
             const wrongPassword = `${user.password}wrong`;
 
             agent
@@ -63,7 +62,7 @@ describe('Login', () => {
                 });
         });
 
-        it('it should success login and return the user', (done) => {
+        it('it should success login and return the user', function (done) {
             agent
                 .post('/api/login')
                 .send({ email: user.email, password: user.password })
@@ -84,8 +83,8 @@ describe('Login', () => {
                 });
         });
 
-        describe('GET /users/me', () => {
-            it('it should validate there is a user in the current session', (done) => {
+        describe('GET /users/me - after login', function () {
+            it('it should validate there is a user in the current session', function (done) {
                 agent
                     .get('/api/users/me')
                     .end((err, res) => {
@@ -106,8 +105,8 @@ describe('Login', () => {
             });
         });
 
-        describe('POST /login/logout', () => {
-            it('it should end user session', (done) => {
+        describe('POST /login/logout', function () {
+            it('it should end user session', function (done) {
                 agent
                     .post('/api/login/logout')
                     .end((err, res) => {
@@ -120,8 +119,8 @@ describe('Login', () => {
             });
         });
 
-        describe('GET /users/me', () => {
-            it('it should return unauthorized since user session ended', (done) => {
+        describe('GET /users/me - after logout', function () {
+            it('it should return unauthorized since user session ended', function (done) {
                 agent
                     .get('/api/users/me')
                     .end((err, res) => {

@@ -1,8 +1,9 @@
 {
     "root": true,
     "extends": [
-        "eslint:recommended", 
-        "plugin:react/recommended"
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:mocha/recommended"
     ],
     "parser": "babel-eslint",
     "parserOptions": {
@@ -13,12 +14,14 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "mocha"
     ],
     "env": {
         "browser": true,
         "node": true,
-        "es6": true
+        "es6": true,
+        "mocha": true
     },
     "rules": {
         "accessor-pairs": "warn",
@@ -58,7 +61,10 @@
         "func-name-matching": "warn",
         "func-names": "warn",
         "func-style": "off",
-        "function-paren-newline": ["warn", "multiline-arguments"],
+        "function-paren-newline": [
+            "warn",
+            "multiline-arguments"
+        ],
         "generator-star-spacing": "warn",
         "getter-return": "warn",
         "guard-for-in": "warn",
@@ -176,7 +182,10 @@
         "no-warning-comments": "warn",
         "no-whitespace-before-property": "warn",
         "no-with": "warn",
-        "nonblock-statement-body-position": ["warn", "below"],
+        "nonblock-statement-body-position": [
+            "warn",
+            "below"
+        ],
         "object-curly-newline": "off",
         "object-curly-spacing": [
             "warn",
@@ -239,7 +248,6 @@
         "wrap-regex": "warn",
         "yield-star-spacing": "warn",
         "yoda": "warn",
-
         "react/jsx-uses-vars": "warn",
         "react/no-deprecated": "off",
         "no-console": "off", // webpack build will remove it anyway
@@ -248,19 +256,12 @@
     "overrides": [
         {
             "files": [
-                "*.test.js"
+                "*.spec.js"
             ],
             "rules": {
-                "no-undef": "off",
-                "func-names": "off"
-            }
-        },
-        {
-            "files": [
-                "*.reducer.js"
-            ],
-            "rules": {
-                "func-names": "off"
+                "func-names": "off",
+                "prefer-arrow-callback": "off",
+                "node/no-unpublished-require": "off"
             }
         }
     ]
