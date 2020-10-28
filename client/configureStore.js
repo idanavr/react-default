@@ -7,7 +7,7 @@ import throttle from 'lodash/throttle';
 import { minMillisecondToSaveState } from 'config';
 
 const middlewares = [ReduxThunk];
-if (process.env.NODE_ENV !== 'production') {
+if (typeof process !== 'undefined' && process?.env?.NODE_ENV !== 'production') {
     middlewares.push(createLogger());
     console.log(process.env);
 }

@@ -1,0 +1,399 @@
+/*
+            if (isIFrameElement(node)) {
+                return this.createIFrameClone(node);
+            }
+    */
+
+/*
+        createIFrameClone(iframe: HTMLIFrameElement) {
+            const tempIframe = <HTMLIFrameElement>iframe.cloneNode(false);
+            const iframeKey = generateIframeKey();
+            tempIframe.setAttribute('data-html2canvas-internal-iframe-key', iframeKey);
+
+            const {width, height} = parseBounds(iframe);
+
+            this.resourceLoader.cache[iframeKey] = getIframeDocumentElement(iframe, this.options)
+                .then(documentElement => {
+                    return this.renderer(
+                        documentElement,
+                        {
+                            allowTaint: this.options.allowTaint,
+                            backgroundColor: '#ffffff',
+                            canvas: null,
+                            imageTimeout: this.options.imageTimeout,
+                            logging: this.options.logging,
+                            proxy: this.options.proxy,
+                            removeContainer: this.options.removeContainer,
+                            scale: this.options.scale,
+                            foreignObjectRendering: this.options.foreignObjectRendering,
+                            useCORS: this.options.useCORS,
+                            target: new CanvasRenderer(),
+                            width,
+                            height,
+                            x: 0,
+                            y: 0,
+                            windowWidth: documentElement.ownerDocument.defaultView.innerWidth,
+                            windowHeight: documentElement.ownerDocument.defaultView.innerHeight,
+                            scrollX: documentElement.ownerDocument.defaultView.pageXOffset,
+                            scrollY: documentElement.ownerDocument.defaultView.pageYOffset
+                        },
+                    );
+                })
+                .then(
+                    (canvas: HTMLCanvasElement) =>
+                        new Promise((resolve, reject) => {
+                            const iframeCanvas = document.createElement('img');
+                            iframeCanvas.onload = () => resolve(canvas);
+                            iframeCanvas.onerror = (event) => {
+                                // Empty iframes may result in empty "data:," URLs, which are invalid from the <img>'s point of view
+                                // and instead of `onload` cause `onerror` and unhandled rejection warnings
+                                // https://github.com/niklasvh/html2canvas/issues/1502
+                                iframeCanvas.src == 'data:,' ? resolve(canvas) : reject(event);
+                            };
+                            iframeCanvas.src = canvas.toDataURL();
+                            if (tempIframe.parentNode && iframe.ownerDocument && iframe.ownerDocument.defaultView) {
+                                tempIframe.parentNode.replaceChild(
+                                    copyCSSStyles(
+                                        iframe.ownerDocument.defaultView.getComputedStyle(iframe),
+                                        iframeCanvas
+                                    ),
+                                    tempIframe
+                                );
+                            }
+                        })
+                );
+            return tempIframe;
+        }
+    */
+
+/* BACKGROUND_BORDERS */
+
+/* BLINK */
+
+/* BLOCK */
+
+/* BORDER_BOX */
+
+/* CLIP */
+
+/* CONTENT */
+
+/* CONTENTS */
+
+/* CONTENT_BOX */
+
+/* CREATES_REAL_STACKING_CONTEXT */
+
+/* CREATES_STACKING_CONTEXT */
+
+/* FLEX */
+
+/* FLOW */
+
+/* FLOW_ROOT */
+
+/* GRID */
+
+/* INLINE */
+
+/* INLINE_BLOCK */
+
+/* INLINE_FLEX */
+
+/* INLINE_GRID */
+
+/* INLINE_LIST_ITEM */
+
+/* INLINE_TABLE */
+
+/* IS_LIST_OWNER */
+
+/* LINE_THROUGH */
+
+/* LIST_ITEM */
+
+/* NONE */
+
+/* OVERLINE */
+
+/* PADDING_BOX */
+
+/* RUBY */
+
+/* RUBY_BASE */
+
+/* RUBY_BASE_CONTAINER */
+
+/* RUBY_TEXT */
+
+/* RUBY_TEXT_CONTAINER */
+
+/* RUN_IN */
+
+/* SUBGRID */
+
+/* TABLE */
+
+/* TABLE_CAPTION */
+
+/* TABLE_CELL */
+
+/* TABLE_COLUMN */
+
+/* TABLE_COLUMN_GROUP */
+
+/* TABLE_FOOTER_GROUP */
+
+/* TABLE_HEADER_GROUP */
+
+/* TABLE_ROW */
+
+/* TABLE_ROW_GROUP */
+
+/* TRANSFORM */
+
+/* UNDERLINE */
+
+/* global Reflect, Promise */
+
+/*!
+ * html2canvas 1.0.0-rc.7 <https://html2canvas.hertzen.com>
+ * Copyright (c) 2020 Niklas von Hertzen <https://hertzen.com>
+ * Released under MIT License
+ */
+
+/*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+
+/**
+         * Get the value for a code point as stored in the Trie.
+         *
+         * @param codePoint the code point
+         * @return the value
+         */
+
+/** @class */
+
+/***/
+
+/*break*/
+
+/*return*/
+
+/*yield**/
+
+/*yield*/
+
+//       surrogate code points will be so rare in practice that it's not worth it.
+
+//   For this function, we need the code point data.
+
+//   The main index has the code unit data.
+
+// ( OP | HY ) × NU
+
+// (PR | PO) × ( OP | HY )? NU
+
+// 1. the background and borders of the element forming the stacking context.
+
+// 16 bit data is stored in the index array itself.
+
+// 3. For all its in-flow, non-positioned, block-level descendants in tree order:
+
+// @ts-ignore
+
+// BMP uses a single level lookup.  BMP index starts at offset 0 in the Trie2 index.
+
+// Chrome scrolls the parent document for some reason after the write to the cloned window???
+
+// Compute the ratio ry/rx (which is to be the same as for "closest-side")
+
+// Compute the ratio ry/rx (which is to be the same as for "farthest-side")
+
+// Draws a line at the baseline of the font
+
+// Edge does not provide value for cssText
+
+// Edge does not render background-images
+
+// Fall through.  The code point is outside of the legal range of 0..0x10ffff.
+
+// Firefox 55 does not render inline <img /> tags
+
+// For supplementary characters, a useful default is to treat characters in the range 10000..1FFFD as AL
+
+// If the background-size is auto or auto auto:
+
+// If the image has both horizontal and vertical intrinsic dimensions, it's rendered at that size.
+
+// If the image has intrinsic proportions, it's stretched to the specified dimension.
+
+// If the image has no intrinsic dimensions and has no intrinsic proportions,
+
+// If the image has no intrinsic proportions, it's stretched to the specified dimension.
+
+// If the image has only one intrinsic dimension and has intrinsic proportions, it's rendered at the size corresponding to that one dimension.
+
+// If the shape is an ellipse, it exactly meets the closest side in each dimension.
+
+// If the shape is an ellipse, the ending shape is given the same aspect ratio it would have if farthest-side were specified.
+
+// If the shape is an ellipse, the ending shape is given the same aspect-ratio it would have if closest-side were specified.
+
+// Inline XML images may fail to parse, throwing an Error later on
+
+// LB10 Treat any remaining combining mark or ZWJ as AL.
+
+// LB11 Do not break before or after Word joiner and related characters.
+
+// LB12 Do not break after NBSP and related characters.
+
+// LB12a Do not break before NBSP and related characters, except after spaces and hyphens.
+
+// LB13 Do not break before ‘]’ or ‘!’ or ‘;’ or ‘/’, even after spaces.
+
+// LB14 Do not break after ‘[’, even after spaces.
+
+// LB15 Do not break within ‘”[’, even with intervening spaces.
+
+// LB16 Do not break between closing punctuation and a nonstarter (lb=NS), even with intervening spaces.
+
+// LB17 Do not break within ‘——’, even with intervening spaces.
+
+// LB18 Break after spaces.
+
+// LB19 Do not break before or after quotation marks, such as ‘ ” ’.
+
+// LB20 Break before and after unresolved CB.
+
+// LB21 Do not break before hyphen-minus, other hyphens, fixed-width spaces, small kana, and other non-starters, or after acute accents.
+
+// LB21a Don't break after Hebrew + Hyphen.
+
+// LB21b Don’t break between Solidus and Hebrew letters.
+
+// LB22 Do not break between two ellipses, or between letters, numbers or exclamations and ellipsis.
+
+// LB23 Do not break between digits and letters.
+
+// LB23a Do not break between numeric prefixes and ideographs, or between ideographs and numeric postfixes.
+
+// LB24 Do not break between numeric prefix/postfix and letters, or between letters and prefix/postfix.
+
+// LB25 Do not break between the following pairs of classes relevant to numbers:
+
+// LB26 Do not break a Korean syllable.
+
+// LB27 Treat a Korean Syllable Block the same as ID.
+
+// LB28 Do not break between alphabetics (“at”).
+
+// LB29 Do not break between numeric punctuation and alphabetics (“e.g.”).
+
+// LB30 Do not break between letters, numbers, or ordinary symbols and opening or closing parentheses.
+
+// LB30a Break between two regional indicator symbols if and only if there are an even number of regional
+
+// LB30b Do not break between an emoji base and an emoji modifier.
+
+// LB6 Do not break before hard line breaks.
+
+// LB7 Do not break before spaces or zero width space.
+
+// LB8 Break before any character following a zero-width space, even if one or more spaces intervene.
+
+// LB8a Do not break between a zero width joiner and an ideograph, emoji base or emoji modifier.
+
+// LB9 Do not break a combining character sequence; treat it as if it has the line breaking class of
+
+// Lead Surrogate Code Point.  A Separate index section is stored for
+
+// NU (NU | SY | IS)* (CL | CP)? × (PO | PR))
+
+// NU (NU | SY | IS)* × (NU | SY | IS | CL | CP)
+
+// NU ×	(NU | SY | IS)
+
+// Note: this expression could be refactored for slightly improved efficiency, but
+
+// Ordinary BMP code point, excluding leading surrogates.
+
+// Safari shows pseudoelements if content is set
+
+// Same as closest-corner, except the ending shape is sized based on the farthest corner.
+
+// Same as closest-side, except the ending shape is sized based on the farthest side(s)
+
+// Supplemental code point, use two-level lookup.
+
+// TODO As some browsers display the line as more than 1px if the font-size is big,
+
+// TODO If the image has no intrinsic dimensions but has intrinsic proportions, it's rendered as if contain had been specified instead.
+
+// TODO try and find exact position for line-through
+
+// TODO use correct font-size
+
+// The ending shape is sized so that that it exactly meets the side of the gradient box closest to the gradient’s center.
+
+// The ending shape is sized so that that it passes through the corner of the gradient box closest to the gradient’s center.
+
+// The other dimension is computed using the specified dimension and the intrinsic proportions.
+
+// The unspecified dimension is computed using the image's corresponding intrinsic dimension,
+
+// The unspecified dimension is computed using the specified dimension and the intrinsic proportions.
+
+// accessing node.sheet.cssRules throws a DOMException
+
+// and characters in the ranges 20000..2FFFD and 30000..3FFFD as ID, until the implementation can be revised
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+// eslint-disable-next-line no-console
+
+// getBoundingClientRect takes transforms into account
+
+// http://www.w3.org/TR/css3-background/#special-backgrounds
+
+// https://www.w3.org/TR/css-position-3/#painting-order
+
+// if there is one. If there is no such intrinsic dimension,
+
+// indicators preceding the position of the break.
+
+// ios won't scroll without it
+
+// it becomes the corresponding dimension of the background positioning area.
+
+// it's rendered at the size of the background positioning area.
+
+// lead surrogate code units and code points.
+
+// need to take that into account both in position and size
+
+// safari doesn't parse string tokens correctly because of lack of quotes
+
+// the base character in all of the following rules. Treat ZWJ as if it were CM.
+
+// to take into account the actual line breaking properties for these characters.
+
+// y-middle
+
+//# sourceMappingURL=html2canvas.js.map
+
+//ios safari 10.3 taints canvas with data urls unless crossOrigin is set to anonymous
+
+//this.inlineAllImages(clone);

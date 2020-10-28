@@ -6,12 +6,12 @@ const rootFolder = path.join(__dirname, '..', '..');
 const clientConfig = require(path.join(rootFolder, 'client', 'config.js'));
 
 module.exports = {
-    devtool: 'inline-source-map',
     entry: [
         'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
         './client/index.js'
     ],
     mode: 'development',
+    devtool: 'eval-source-map',
     performance: { // false just to avoid a few tips which will be taken care of later
         hints: false
     },
@@ -28,13 +28,18 @@ module.exports = {
         historyApiFallback: true
     },
     plugins: [
-        new MiniCssExtractPlugin('main.css'),
+        new MiniCssExtractPlugin({
+            filename: 'main.css'
+        }),
         new HtmlWebpackPlugin({
             template: './client/index.html',
             favicon: 'client/assets/images/favicon.ico',
             inject: true
         }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        }),
     ],
     module: {
         rules:

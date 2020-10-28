@@ -9,21 +9,23 @@ const rootFolder = path.join(__dirname, '..', '..');
 const clientConfig = require(path.join(rootFolder, 'client', 'config.js'));
 
 module.exports = {
-    devtool: 'source-map',
     entry: [
         './client/index.js'
     ],
     mode: 'production',
+    devtool: false,
+    cache: {
+        type: 'filesystem'
+    },
     performance: { // false just to avoid a few tips which will be taken care of later
         hints: false
     },
     output: {
         path: path.join(rootFolder, 'public'),
         publicPath: '/',
-        filename: 'bundle.[chunkhash].js'
+        filename: 'bundle.[contenthash].js'
     },
     plugins: [
-        new WebpackMd5Hash(),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
             chunkFilename: '[id].[contenthash].css',
@@ -48,26 +50,22 @@ module.exports = {
                 minifyURLs: true
             }
         }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
     ],
     optimization: {
+        emitOnErrors: true,
         minimizer: [
             new TerserPlugin({
-                extractComments: true,
-                cache: true,
                 parallel: true,
-                sourceMap: false,
                 terserOptions: {
                     // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-                    extractComments: 'all',
                     compress: {
                         drop_console: true,
                     },
-                }
+                },
+                extractComments: 'all',
             }),
         ],
     },
